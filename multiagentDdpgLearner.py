@@ -121,7 +121,7 @@ def run(seed, steps, hiddenL, hiddenNActor, hiddenNCritic, gamma, lr, mem, batch
     
     # After training is done, we save the final weights.
     if learn:
-        ddpg.save_weights('weights/{}_ddpg_{}_weights_{}_{}_{}.h5f'.format(str(stepSum).zfill(12), ENV_NAME, socket.gethostname(), datetime.datetime.now().isoformat(), "_".join(map(str, (seed, steps, hiddenL, hiddenNActor, hiddenNCritic, gamma, lr, mem, batch_size, warmup, fish, obsFish)))), overwrite=True)
+        ddpg.save_weights('weights/{}_ddpg_{}_weights_{}_{}_{}.h5f'.format(str(stepSum).zfill(12), ENV_NAME, socket.gethostname(), datetime.datetime.now().strftime("%Y-%m-%dT%H-%M-%S"), "_".join(map(str, (seed, steps, hiddenL, hiddenNActor, hiddenNCritic, gamma, lr, mem, batch_size, warmup, fish, obsFish)))), overwrite=True)
 
 
 #     ddpg.save_weights('weights/dqn_{}_weights_{}_{}.h5f'.format(ENV_NAME, socket.gethostname(), datetime.datetime.now().isoformat()), overwrite=True)

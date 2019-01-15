@@ -102,7 +102,7 @@ def run(seed, steps, hiddenL, hiddenN, gamma, lr, mem, batch_size, warmup, fish,
     
     # After training is done, we save the final weights.
     if learn:
-        dqn.save_weights('weights/{}_dqn_{}_weights_{}_{}_{}.h5f'.format(str(stepSum).zfill(12), ENV_NAME, socket.gethostname(), datetime.datetime.now().isoformat(), "_".join(map(str, (seed, steps, hiddenL, hiddenN, gamma, lr, mem, batch_size, warmup, fish, obsFish)))), overwrite=True)
+        dqn.save_weights('weights/{}_dqn_{}_weights_{}_{}_{}.h5f'.format(str(stepSum).zfill(12), ENV_NAME, socket.gethostname(), datetime.datetime.now().strftime("%Y-%m-%dT%H-%M-%S"), "_".join(map(str, (seed, steps, hiddenL, hiddenN, gamma, lr, mem, batch_size, warmup, fish, obsFish)))), overwrite=True)
 
 
 #     dqn.save_weights('weights/dqn_{}_weights_{}_{}.h5f'.format(ENV_NAME, socket.gethostname(), datetime.datetime.now().isoformat()), overwrite=True)
