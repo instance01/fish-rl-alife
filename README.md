@@ -1,3 +1,0 @@
-# FishDomain
-
-Author: Carsten Hahn
