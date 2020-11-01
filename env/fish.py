@@ -48,7 +48,8 @@ class Fish(Animal, ABC):
         noise = ([0.1, 0.1], [0.1, 0.0], [0.0, 0.1])[np.random.randint(0, 3)]
         new_position = deepcopy(self.position) + noise
         start_speed, orientation = util.cartesian_to_polar(*self.velocity)
-        new_fish = type(self)(identifier, new_position, start_speed, orientation)
+        #new_fish = type(self)(identifier, new_position, start_speed, orientation)
+        new_fish = type(self)(identifier, new_position, orientation)
         self.children += 1
         return new_fish
 

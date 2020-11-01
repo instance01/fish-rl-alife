@@ -38,6 +38,8 @@ class Aquarium:
                  fish_collision: bool = True,
                  lock_screen: bool = False,
                  seed=42,
+                 nr_sharks=1,  # TODO unused
+                 nr_fishes=1  # TODO unused
                  ):
 
         self.seed: int = seed

@@ -85,8 +85,10 @@ class Experiment:
         self.logger.info('building experiment')
         env_init_params = self.config.items_evaluated(section='ENVIRONMENT')
         fish_controller = self.config.items_evaluated(section='FISH_CONTROLLER')
+        shark_controller = self.config.items_evaluated(section='SHARK_CONTROLLER')
         env = Aquarium(**env_init_params)
         env.select_fish_types(*fish_controller.values())
+        env.select_shark_types(*shark_controller.values())
 
         self.env = env
         self.logger.info(self.env)
@@ -154,7 +156,7 @@ class Experiment:
         # ====================== begin episode =========================================================================
 
             episode_reward = 0
-            while not self.env.is_finished():
+            while not self.env.is_finished:
 
                 # ToDo: this only works with one shark !!!!!!
                 assert len(joint_shark_observation) == 1
@@ -261,7 +263,7 @@ class Experiment:
             # ====================== begin episode =================================================================
 
                 episode_reward = 0
-                while not self.env.is_finished():
+                while not self.env.is_finished:
 
                     # ToDo: this only works with one shark !!!!!!
                     assert len(joint_shark_observation) == 1
@@ -336,7 +338,7 @@ class Experiment:
         # ====================== begin episode =========================================================================
 
             episode_reward = 0
-            while not self.env.is_finished():
+            while not self.env.is_finished:
 
                 # ToDo: this only works with one shark !!!!!!
                 assert len(joint_shark_observation) == 1
@@ -442,7 +444,7 @@ class Experiment:
             # ====================== begin episode =================================================================
 
                 episode_reward = 0
-                while not self.env.is_finished():
+                while not self.env.is_finished:
 
                     # ToDo: this only works with one shark !!!!!!
                     assert len(joint_shark_observation) == 1
