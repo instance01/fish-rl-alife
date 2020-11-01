@@ -150,15 +150,12 @@ class Experiment:
             observation_history = deque(history_list[:], maxlen=self.trace_len)
             new_observation_history = deque(history_list[:], maxlen=self.trace_len)
 
-            # Begin episode.
-            # TODO different comment
-
+            # Run episode.
             episode_reward = 0
             while not self.env.is_finished:
                 # TODO: This only works with one shark !!!!!!
                 assert len(joint_shark_observation) == 1
 
-                # Shark action.
                 joint_shark_action = {}
                 shark_dqn_action = {}
                 # select_random_actors = np.random.permutation(list(joint_shark_observation.keys()))
@@ -244,37 +241,33 @@ class Experiment:
             if 'phase_one' not in checkpoint:
                 return
 
-            self.logger.info('\nstart eval at checkpoint\n{}\n -epsilon disabled\n'.format(checkpoint))
+            self.logger.info('\nStart eval at checkpoint\n{}\n -epsilon disabled\n'.format(checkpoint))
             agent = load_agent(agent_ini)
-
-            # ====================== logging ===========================================================================
 
             collect_stats = StatsLogger()
 
-            # ====================== setup fish ========================================================================
-
+            # Setup fish.
             Fish.PROCREATE_AFTER_N_POINTS = 1024
             Fish.MAX_SPEED_CHANGE = 0.04
             self.env.nr_fishes = 1
 
-            # ====================== start =============================================================================
-
             for training_episode in range(1, self.evaluation_episodes + 1):
-
                 joint_shark_observation = self.env.reset()
 
-                observation_history = deque([[0] * self.env.observation_length for _ in range(self.trace_len)],
-                                            maxlen=self.trace_len)
+                observation_history = deque(
+                    [
+                        [0] * self.env.observation_length
+                        for _ in range(self.trace_len)
+                    ],
+                    maxlen=self.trace_len
+                )
 
-            # ====================== begin episode =================================================================
-
+                # Run episode.
                 episode_reward = 0
                 while not self.env.is_finished:
-
-                    # ToDo: this only works with one shark !!!!!!
+                    # TODO: This only works with one shark !!!!!!
                     assert len(joint_shark_observation) == 1
 
-                    # shark act
                     joint_shark_action = {}
                     shark_dqn_action = {}
                     # select_random_actors = np.random.permutation(list(joint_shark_observation.keys()))
@@ -284,7 +277,7 @@ class Experiment:
                         shark_dqn_action[shark] = action
                         joint_shark_action[shark] = self.action_map.translate(action)
 
-                    # update observation
+                    # Update observation.
                     new_state = self.env.step(joint_shark_action)
                     new_shark_observation, shark_reward, shark_done = new_state
 
@@ -292,27 +285,34 @@ class Experiment:
                     joint_shark_observation = new_shark_observation
                     #self.env.render()
 
-            # ========================= log run stats ==================================================================
+                # Log run stats.
+                collect_stats.log_stats(
+                    episodes=training_episode,
+                    episode_rewards=episode_reward,
+                    epsilons=agent.epsilon,
+                    killed_fish=self.env.killed_fishes,
+                    nr_fishes=self.env.nr_fishes,
+                    procreations=self.env.fish_procreated,
+                )
 
-                collect_stats.log_stats(episodes=training_episode,
-                                        episode_rewards=episode_reward,
-                                        epsilons=agent.epsilon,
-                                        killed_fish=self.env.killed_fishes,
-                                        nr_fishes=self.env.nr_fishes,
-                                        procreations=self.env.fish_procreated,
-                                        )
+                msg = "evaluating phase one >>> {} episode: {}, reward: {:.2f}, nr_fishes {}"
+                self.logger.info(
+                    msg.format(
+                        checkpoint,
+                        training_episode,
+                        episode_reward,
+                        self.env.nr_fishes
+                    )
+                )
 
-                self.logger.info("evaluating phase one >>> {} episode: {}, reward: {:.2f}, nr_fishes {}".
-                                 format(checkpoint, training_episode, episode_reward, self.env.nr_fishes))
-
-            # ========================== save stats ====================================================================
-
-            collect_stats.write_statistics(self.evaluation_folder, file_name='eval_{}.csv'.
-                                    format(checkpoint))
+            # Save stats.
+            collect_stats.write_statistics(
+                self.evaluation_folder,
+                file_name='eval_{}.csv'.format(checkpoint)
+            )
 
     def start_phase_two(self):
-
-        self.logger.info('\nstarting phase two')
+        self.logger.info('\nStarting phase two.')
 
         # ====================== logging ===============================================================================
 
