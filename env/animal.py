@@ -4,18 +4,18 @@ from abc import ABC, abstractmethod
 
 
 class Animal(ABC):
-
-    def __init__(self,
-                 identifier: int,
-                 position: np.array,
-                 orientation: float,
-                 radius: float,
-                 view_distance: float,
-                 friction: float,
-                 max_speed_change: float,
-                 max_orientation_change: float,
-                 color: (int, int, int)):
-
+    def __init__(
+        self,
+        identifier: int,
+        position: np.array,
+        orientation: float,
+        radius: float,
+        view_distance: float,
+        friction: float,
+        max_speed_change: float,
+        max_orientation_change: float,
+        color: (int, int, int)
+    ):
         self.__identifier = identifier
         self.position = position
 
@@ -26,7 +26,10 @@ class Animal(ABC):
         self.max_speed_change = max_speed_change
         self.max_orientation_change = max_orientation_change
 
-        self.velocity = np.asarray(util.polar_to_cartesian(0, orientation), "float32")
+        self.velocity = np.asarray(
+            util.polar_to_cartesian(0, orientation),
+            "float32"
+        )
         self.orientation = orientation
 
         self.color = color
@@ -49,26 +52,37 @@ class Animal(ABC):
         return np.arctan2(self.velocity[1], self.velocity[0])
 
     def move(self) -> None:
-        # update orientation
-        self.orientation = util.add_angles(self.orientation, self.__orientation_change)
-        
-        # change velocity
-        movement_x, movement_y = util.polar_to_cartesian(self.__speed_change, self.orientation)
+        # Update orientation.
+        self.orientation = util.add_angles(
+            self.orientation,
+            self.__orientation_change
+        )
 
+        # Change velocity.
+        movement_x, movement_y = util.polar_to_cartesian(
+            self.__speed_change,
+            self.orientation
+        )
         self.velocity[0] += movement_x
         self.velocity[1] += movement_y
 
-        # apply water friction
+        # Apply water friction and update position.
         self.velocity *= (1 - self.friction)
-
-        # move it
         self.position += self.velocity
-        
+
     def act(self, speed_change: float, orientation_change: float) -> None:
         # 1 -> max_speed
         # 1 -> -np.pi / np.pi
-        self.__speed_change = np.clip(speed_change, -self.max_speed_change, self.max_speed_change)
-        self.__orientation_change = np.clip(orientation_change, -self.max_orientation_change, self.max_orientation_change)
+        self.__speed_change = np.clip(
+            speed_change,
+            -self.max_speed_change,
+            self.max_speed_change
+        )
+        self.__orientation_change = np.clip(
+            orientation_change,
+            -self.max_orientation_change,
+            self.max_orientation_change
+        )
         self.move()
 
     @abstractmethod
