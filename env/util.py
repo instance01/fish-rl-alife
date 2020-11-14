@@ -13,7 +13,7 @@ def length_of(vector: np.array) -> float:
 def normalize_vector(vector: np.array) -> np.array:
     length = length_of(vector)
     if not length > 0.0:
-        return vector 
+        return vector
     else:
         return vector / length
 
@@ -30,7 +30,6 @@ def normalize_angle(angle: float) -> float:
 
 
 def cartesian_to_polar(x: float, y: float) -> (float, float):
-
     rho = np.sqrt(x**2 + y**2)
     phi = np.arctan2(y, x)
     return rho, phi
@@ -42,8 +41,12 @@ def polar_to_cartesian(rho: float, phi: float) -> (float, float):
     return x, y
 
 
-def vector_in_torus_space(vector_1: np.array, vector_2: np.array, env_width: float, env_height: float) -> (float, float):
-    """ https://blog.demofox.org/2017/10/01/calculating-the-distance-between-points-in-wrap-around-toroidal-space/"""
+def vector_in_torus_space(
+        vector_1: np.array,
+        vector_2: np.array,
+        env_width: float,
+        env_height: float) -> (float, float):
+    """https://blog.demofox.org/2017/10/01/calculating-the-distance-between-points-in-wrap-around-toroidal-space/"""
 
     dx = vector_2[0] - vector_1[0]
     dy = vector_2[1] - vector_1[1]
@@ -61,38 +64,35 @@ def vector_in_torus_space(vector_1: np.array, vector_2: np.array, env_width: flo
     return dx, dy
 
 
-def vector_in_torus_space_upgraded(vector_1: np.array, vector_2: np.array,
-                                   env_width: float, env_height: float) -> (float, float):
-    """
-    Returns the distance between two vectors in Torus space.
+# TODO This is unused right now. Also, weird naming.
+def vector_in_torus_space_upgraded(
+        vector_1: np.array,
+        vector_2: np.array,
+        env_width: float,
+        env_height: float) -> (float, float):
+    """Returns the distance between two vectors in Torus space.
     This function is equal to vector_in_torus_space(above).
     Upgrade: This function allows single and stacked vectors as input.
     """
-
     distance = (vector_2 - vector_1).T
     dx = distance[0]
     dy = distance[1]
 
-    # read it like an if statement:
-    # where(condition is True: dx =  env_width * 0.5,  dx - (np.sign(dx) * env_width) else dx = dx)
-    dx = np.where(abs(dx) > env_width * 0.5,  dx - (np.sign(dx) * env_width), dx)
+    dx = np.where(abs(dx) > env_width * 0.5, dx - (np.sign(dx) * env_width), dx)
     dy = np.where(abs(dy) > env_width * 0.5, dy - (np.sign(dy) * env_height), dy)
 
     return dx, dy
 
 
 def shortest_angle_between(source_angle: float, target_angle: float) -> float:
-    """
-    Returns the shortest way to turn between two angles
-    Source:
-        https://stackoverflow.com/questions/1878907/the-smallest-difference-between-2-angles
+    """Returns the shortest way to turn between two angles
+    Source: https://stackoverflow.com/questions/1878907/
     """
     return (target_angle - source_angle + np.pi) % (2 * np.pi) - np.pi
 
 
 def scale(value, input_min, input_max, output_min, output_max):
-    """" https://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio """
+    """https://stackoverflow.com/questions/929103/"""
     input_range = input_max - input_min
     output_range = output_max - output_min
     return (((value - input_min) * output_range) / input_range) + output_min
-
