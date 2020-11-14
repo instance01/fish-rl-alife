@@ -5,12 +5,10 @@ from pygame.locals import QUIT, K_ESCAPE
 
 
 class View:
-
     def __init__(self, width, height, scale, caption, fps):
-
         pygame.init()
         pygame.display.set_caption(caption)
-        
+
         self.width = width
         self.height = height
         self.scale = scale
@@ -18,21 +16,28 @@ class View:
         self.font = pygame.font.Font(None, 25)
         self.clock = pygame.time.Clock()
         self.fps = fps
-    
+
     def draw_background(self):
         self.screen.fill(pygame.Color('Black'))
         self.clock.tick(self.fps)
         fps = self.clock.get_fps()
         fps_string = self.font.render(str(int(fps)), True, pygame.Color('white'))
         self.screen.blit(fps_string, (1, 1))
-        
+
     def render(self):
         pygame.display.flip()
         #pygame.time.delay(3000)
 
-    def draw_creature(self, position: np.ndarray, velocity: np.ndarray, orientation: float,
-                      radius: int, outer_radius: int, color: tuple, draw_view_distance: bool = False):
-
+    def draw_creature(
+        self,
+        position: np.ndarray,
+        velocity: np.ndarray,
+        orientation: float,
+        radius: int,
+        outer_radius: int,
+        color: tuple,
+        draw_view_distance: bool = False
+    ):
         p_x, p_y = (position * self.scale).astype(int)
         v_x, v_y = (velocity * self.scale).astype(int)
         o_x, o_y = util.polar_to_cartesian(1.0, orientation)
