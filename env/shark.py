@@ -6,36 +6,38 @@ from env.animal_controller import RandomSharkController, DefaultSharkController
 
 
 class Shark(Animal, ABC):
-
     COLOR = (255, 140, 0)  # orange
     RADIUS = 1.0
-    FRICTION = 0.10  # high values decrease acceleration, maximum speed and turning circle
-    MAX_SPEED_CHANGE = 0.06  # high values increase acceleration, maximum speed and turning circle
-    MAX_ORIENTATION_CHANGE = float(np.radians(10.0))  # high values decrease the turning circle
+    # high values decrease acceleration, maximum speed and turning circle
+    FRICTION = 0.10
+    # high values increase acceleration, maximum speed and turning circle
+    MAX_SPEED_CHANGE = 0.06
+    # high values decrease the turning circle
+    MAX_ORIENTATION_CHANGE = float(np.radians(10.0))
     VIEW_DISTANCE = 100.0
     PROLONGED_SURVIVAL_PER_EATEN_FISH = 75
     INITIAL_SURVIVAL_TIME = 5000
     PROCREATE_AFTER_N_EATEN_FISH = 5
     CONTROLLER = None
 
-    def __init__(self,
-                 identifier: int,
-                 position: np.array,
-                 orientation: float,
-                 ):
-
-        Animal.__init__(self,
-                        identifier,
-                        position,
-                        orientation,
-                        self.RADIUS,
-                        self.VIEW_DISTANCE,
-                        self.FRICTION,
-                        self.MAX_SPEED_CHANGE,
-                        self.MAX_ORIENTATION_CHANGE,
-                        self.COLOR,
-                        )
-
+    def __init__(
+        self,
+        identifier: int,
+        position: np.array,
+        orientation: float
+    ):
+        Animal.__init__(
+            self,
+            identifier,
+            position,
+            orientation,
+            self.RADIUS,
+            self.VIEW_DISTANCE,
+            self.FRICTION,
+            self.MAX_SPEED_CHANGE,
+            self.MAX_ORIENTATION_CHANGE,
+            self.COLOR,
+        )
         self.controller = self.CONTROLLER
         self.children = 0
         self.eaten_fish = 0
@@ -46,7 +48,9 @@ class Shark(Animal, ABC):
 
     # Override
     def procreate(self, identifier: int) -> Animal:
-        new_position = np.array([self.position[0] + 0.1 * self.radius, self.position[1]])
+        new_position = np.array(
+            [self.position[0] + 0.1 * self.radius, self.position[1]]
+        )
         start_speed, orientation = util.cartesian_to_polar(*self.velocity)
         new_shark = Shark(identifier, new_position, start_speed, orientation)
         self.children += 1
@@ -65,7 +69,6 @@ class Shark(Animal, ABC):
 
 
 class ControllerShark(Shark, ABC):
-
     CONTROLLER = None
 
     def __init__(self, *args, **kwargs):
@@ -77,7 +80,6 @@ class ControllerShark(Shark, ABC):
 
 
 class RandomShark(ControllerShark):
-
     CONTROLLER = RandomSharkController
 
     def name(self):
@@ -85,7 +87,6 @@ class RandomShark(ControllerShark):
 
 
 class DefaultShark(ControllerShark):
-
     CONTROLLER = DefaultSharkController
 
     def name(self):
@@ -95,8 +96,3 @@ class DefaultShark(ControllerShark):
 class SharkAgent(Shark):
     """Provided for Name Space"""
     pass
-
-
-
-
-
