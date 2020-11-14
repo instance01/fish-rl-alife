@@ -1,40 +1,45 @@
 import numpy as np
 from env.animal import Animal
 import env.util as util
-from env.animal_controller import RandomFishController, DemoFishController, TurnAwayFishController, BoidFishController
+from env.animal_controller import RandomFishController
+from env.animal_controller import DemoFishController
+from env.animal_controller import TurnAwayFishController
+from env.animal_controller import BoidFishController
 from copy import deepcopy
 from abc import ABC
 
 
 class Fish(Animal, ABC):
-
-    COLOR = (51, 204, 59)  # light green
+    COLOR = (51, 204, 59)  # Light green.
     RADIUS = 1.0
-    FRICTION = 0.08  # high values decrease acceleration, maximum speed and turning circle
-    MAX_SPEED_CHANGE = 0.04  # high values increase acceleration, maximum speed and turning circle
-    MAX_ORIENTATION_CHANGE = float(np.radians(180.0))  # high values decrease the turning circle
+    # High values decrease acceleration, maximum speed and turning circle.
+    FRICTION = 0.08
+    # High values increase acceleration, maximum speed and turning circle.
+    MAX_SPEED_CHANGE = 0.04
+    # High values decrease the turning circle.
+    MAX_ORIENTATION_CHANGE = float(np.radians(180.0))
     VIEW_DISTANCE = 10.0
-    DRAW_VIEW_DISTANCE = False  # drawn circle around animal
+    DRAW_VIEW_DISTANCE = False  # Drawn circle around animal.
     PROCREATE_AFTER_N_STEPS = 100
 
-    def __init__(self,
-                 identifier: int,
-                 position: np.array,
-                 orientation: float,
-                 ):
-
-        Animal.__init__(self,
-                        identifier,
-                        position,
-                        orientation,
-                        self.RADIUS,
-                        self.VIEW_DISTANCE,
-                        self.FRICTION,
-                        self.MAX_SPEED_CHANGE,
-                        self.MAX_ORIENTATION_CHANGE,
-                        self.COLOR,
-                        )
-
+    def __init__(
+        self,
+        identifier: int,
+        position: np.array,
+        orientation: float,
+    ):
+        Animal.__init__(
+            self,
+            identifier,
+            position,
+            orientation,
+            self.RADIUS,
+            self.VIEW_DISTANCE,
+            self.FRICTION,
+            self.MAX_SPEED_CHANGE,
+            self.MAX_ORIENTATION_CHANGE,
+            self.COLOR,
+        )
         self.children = 0
         self.survived_steps = 0
 
@@ -48,6 +53,7 @@ class Fish(Animal, ABC):
         noise = ([0.1, 0.1], [0.1, 0.0], [0.0, 0.1])[np.random.randint(0, 3)]
         new_position = deepcopy(self.position) + noise
         start_speed, orientation = util.cartesian_to_polar(*self.velocity)
+        # TODO: That was one of my fixes. Consider adding back.
         #new_fish = type(self)(identifier, new_position, start_speed, orientation)
         new_fish = type(self)(identifier, new_position, orientation)
         self.children += 1
@@ -55,7 +61,6 @@ class Fish(Animal, ABC):
 
 
 class ControllerFish(Fish, ABC):
-
     CONTROLLER = None
 
     def __init__(self, *args):
@@ -67,7 +72,6 @@ class ControllerFish(Fish, ABC):
 
 
 class RandomFish(ControllerFish):
-
     CONTROLLER = RandomFishController
 
     def name(self):
@@ -75,7 +79,6 @@ class RandomFish(ControllerFish):
 
 
 class DemoFish(ControllerFish):
-
     CONTROLLER = DemoFishController
 
     def name(self):
@@ -83,7 +86,6 @@ class DemoFish(ControllerFish):
 
 
 class TurnAwayFish(ControllerFish):
-
     CONTROLLER = TurnAwayFishController
 
     def name(self):
@@ -91,7 +93,6 @@ class TurnAwayFish(ControllerFish):
 
 
 class BoidFish(ControllerFish):
-
     CONTROLLER = BoidFishController
 
     def name(self):
@@ -101,5 +102,3 @@ class BoidFish(ControllerFish):
 class FishAgent(Fish):
     """Provided for Name Space"""
     pass
-
-
