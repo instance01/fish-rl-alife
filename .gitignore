@@ -16,6 +16,8 @@ presentation/
 
 framework/__pycache__/
 
+guide/guide.bbl
+guide/guide.blg
 guide/guide.log
 guide/guide.aux
 __pycache__
