@@ -15,3 +15,6 @@ venv/
 presentation/
 
 framework/__pycache__/
+
+guide/guide.log
+guide/guide.aux
