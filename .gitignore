@@ -18,3 +18,5 @@ framework/__pycache__/
 
 guide/guide.log
 guide/guide.aux
+__pycache__
+.swp
