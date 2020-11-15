@@ -46,8 +46,3 @@ class SafeConfigParser(ConfigParser):
         if any([(c in literal) for c in self.harmful_calls]):
             raise ValueError("Harmful literal found in config!")
         return literal
-
-
-
-
-
