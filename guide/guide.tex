@@ -68,8 +68,8 @@ key and its respective observation as the value. Now, the observation includes
 a few status informations about the shark itself but also the animals it sees.
 For scalability, only a subset of animals can be observed, making the
 environment a partially observable one. Specifically, the orientation (scaled
-from radians to the range $[-1, 1]$) and the readiness to procreate ar
-eincluded as status information. Next, distance and angle to each wall that is
+from radians to the range $[-1, 1]$) and the readiness to procreate are
+included as status information. Next, distance and angle to each wall that is
 in the view distance of the current shark is added. Since there are 4 walls,
 this results in 8 values. If walls are disabled (i.e.\ a torus is used), the 8
 values are replaced by zeroes. One of the main principles of the environment is
@@ -82,13 +82,21 @@ that are outside of the visible range lead to zero-padding. After this, $m$
 slots of the same structure are available for the fishes.
 
 \subsection{Reward}
+
 The environment returns a dictionary with sharks as keys and the reward
 attained by the respective shark. The reward of a shark increases by $+10$ when
 it eats a fish.
 
-% Here step() return: obs, reward
+\subsection{Step}
 
-% TODO: Partial observability.
+After a step in the environment, the standard 3-tuple known for gym
+environments is returned. However, all three elements of that tuple are
+dictionaries with sharks as keys and the observation, reward and done flag for
+the respective shark as the value.
+
+\subsection{Further Settings}
+
+% TODO: Radius
 
 \bibliographystyle{alpha}
 \bibliography{bibliography}
