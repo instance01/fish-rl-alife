@@ -138,10 +138,10 @@ class Aquarium:
     def killed_sharks(self) -> int:
         return self.dead_sharks
 
-    def select_fish_types(self, Random_Fish=0, Turn_Away_Fish=0, Boid_Fish=0):
-        self.fish_types['RandomFish'] = Random_Fish
-        self.fish_types['TurnAwayFish'] = Turn_Away_Fish
-        self.fish_types['BoidFish'] = Boid_Fish
+    def select_fish_types(self, random_fish=0, turn_away_fish=0, boid_fish=0):
+        self.fish_types['RandomFish'] = random_fish
+        self.fish_types['TurnAwayFish'] = turn_away_fish
+        self.fish_types['BoidFish'] = boid_fish
         return self
 
     def select_shark_types(self, Shark_Agents=0):
