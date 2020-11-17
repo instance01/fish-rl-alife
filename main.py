@@ -1,14 +1,60 @@
 #!/usr/bin/env python3
+import os
+import time
+import numpy as np
+from gym import spaces
 from baselines import logger
-from baselines.common import tf_util as U
-from baselines.ppo1 import mlp_policy, pposgd_simple
+from baselines import bench
+from baselines.ppo2 import ppo2
 from env.aquarium import Aquarium
+
+
+os.environ['OPENAI_LOGDIR'] = '/tmp'
+os.environ['OPENAI_LOG_FORMAT'] = 'stdout,tensorboard'
+
+
+class EnvWrapper(bench.Monitor):
+    def __init__(self, env):
+        self.env = env
+        self.env.action_space = spaces.Box(low=-1.0, high=1.0, shape=(2,))
+        # spaces.Tuple((
+        #     spaces.Box(low=-1.0, high=1.0, shape=(1,)),
+        #     spaces.Box(low=-1.0, high=1.0, shape=(1,)),
+        #     spaces.Discrete(2)
+        # ))
+        self.n = 2 + self.env.observable_sharks * 3 +\
+            self.env.observable_fishes * 3 +\
+            self.env.observable_walls * 2
+        self.env.observation_space = spaces.Box(
+            low=-1.0, high=1.0, shape=(self.n,)
+        )
+        self.env.reward_range = (-float('inf'), float('inf'))
+        self.env.spec = None
+        self.env.metadata = {'render.modes': ['human']}
+        self.env.num_envs = 1
+        bench.Monitor.__init__(
+            self, self.env, 'log' + str(int(time.time())) + '.txt'
+        )
+
+    def step(self, action):
+        sharks = list(self.env.sharks)
+        if not sharks:
+            # TODO .. yikes
+            return ([0.] * self.n, 0, True, {})
+        shark = sharks[0]
+        action = (action[0][0], action[0][1], False)
+        obs, reward, done = self.env.step({shark.name: action})
+        shark = next(iter(done.keys()))
+        return (obs.get(shark, np.array([0.] * self.n)), reward[shark], done[shark], {})
+
+    def reset(self):
+        obs = self.env.reset()
+        shark = next(iter(obs.keys()))
+        return obs[shark]
 
 
 class Experiment:
     def __init__(self):
-        self.num_timesteps = 10000
-
         self.env = Aquarium(
             nr_sharks=1,
             nr_fishes=10,
@@ -21,37 +67,45 @@ class Experiment:
             max_sharks=1,
             torus=False,
             fish_collision=True,
-            lock_screen=True,
+            lock_screen=False,
             seed=42
         )
         self.env.select_fish_types(
-            RandomFish=0,
-            TurnAwayFish=10,
-            BoidFish=0
+            random_fish=0,
+            turn_away_fish=10,
+            boid_fish=0
         )
         self.env.select_shark_types(Shark_Agents=1)
+        self.env = EnvWrapper(self.env)
 
     def train(self):
         logger.configure()
 
-        U.make_session(num_cpu=1).__enter__()
-
-        def policy_fn(name, ob_space, ac_space):
-            return mlp_policy.MlpPolicy(
-                name=name,
-                ob_space=ob_space,
-                ac_space=ac_space,
-                hid_size=64,
-                num_hid_layers=2
-            )
-
-        pposgd_simple.learn(
-            self.env, policy_fn, max_timesteps=self.num_timesteps,
-            timesteps_per_actorbatch=2048, clip_param=0.2, entcoeff=0.0,
-            optim_epochs=10, optim_stepsize=3e-4, optim_batchsize=64,
-            gamma=0.99, lam=0.95, schedule='linear'
+        model = ppo2.learn(
+            network="mlp",
+            env=self.env,
+            total_timesteps=600000,
+            nsteps=500
         )
-        self.env.close()
+        # self.env.close()
+
+        import pdb; pdb.set_trace()
+
+        obs = self.env.reset()
+        i = 0
+        tot_rew = 0
+        while not self.env.env.is_finished:
+            i += 1
+            model_inference = model.step(obs.reshape(1, -1))
+            action = model_inference[0].numpy()
+            print(action)
+            obs, rewards, dones, info = self.env.step(action)
+            self.env.env.render()
+            tot_rew += rewards
+            if i % 100 == 0:
+                print(tot_rew)
+            if dones:
+                break
 
 
 if __name__ == '__main__':
