@@ -7,7 +7,7 @@ def angle_of(vector: np.array) -> float:
 
 
 def length_of(vector: np.array) -> float:
-    return np.sqrt(vector[0]**2 + vector[1]**2)
+    return np.sqrt(vector[0] ** 2 + vector[1] ** 2)
 
 
 def normalize_vector(vector: np.array) -> np.array:
@@ -30,7 +30,7 @@ def normalize_angle(angle: float) -> float:
 
 
 def cartesian_to_polar(x: float, y: float) -> (float, float):
-    rho = np.sqrt(x**2 + y**2)
+    rho = np.sqrt(x ** 2 + y ** 2)
     phi = np.arctan2(y, x)
     return rho, phi
 
@@ -46,8 +46,7 @@ def vector_in_torus_space(
         vector_2: np.array,
         env_width: float,
         env_height: float) -> (float, float):
-    """https://blog.demofox.org/2017/10/01/calculating-the-distance-between-points-in-wrap-around-toroidal-space/"""
-
+    """https://blog.demofox.org/2017/10/01/"""
     dx = vector_2[0] - vector_1[0]
     dy = vector_2[1] - vector_1[1]
 
