@@ -108,9 +108,11 @@ class Aquarium:
 
         self.current_step: int = 0
 
-        # Count the dead.
+        # In general, let's include things we track here.
         self.dead_fishes: int = 0
         self.dead_sharks: int = 0
+        self.fish_population_counter = []
+        self.shark_population_counter = []
 
         # GUI
         self.show_gui = show_gui
@@ -167,6 +169,8 @@ class Aquarium:
 
         self.dead_sharks = 0
         self.dead_fishes = 0
+        self.fish_population_counter = []
+        self.shark_population_counter = []
 
         # Initialize fishes at random positions.
         for f_type, amount in self.fish_types.items():
@@ -187,6 +191,9 @@ class Aquarium:
             for s1, s2 in it.combinations(self.sharks, 2):
                 if self.collision_space.check_collision(s1, s2):
                     self.collision_space.perform_collision(s1, s2)
+
+        self.fish_population_counter.append(len(self.fishes))
+        self.shark_population_counter.append(len(self.sharks))
 
         return self.create_named_shark_observation()
 
@@ -269,6 +276,9 @@ class Aquarium:
             shark.name: not(shark in self.sharks)
             for shark in self.track_shark_reward.keys()
         }
+
+        self.fish_population_counter.append(len(self.fishes))
+        self.shark_population_counter.append(len(self.sharks))
 
         return self.create_named_shark_observation(), shark_reward, shark_done
 
@@ -364,6 +374,7 @@ class Aquarium:
                     self.fishes.remove(fish)
                     if shark in self.track_shark_reward:
                         self.track_shark_reward[shark] += 10
+                        self.dead_fishes += 1
                 else:
                     fish.survived_n_steps += 1
 

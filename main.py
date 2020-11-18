@@ -3,14 +3,17 @@ import os
 import time
 import numpy as np
 from gym import spaces
+from custom_logger import Logger
 from baselines import logger
 from baselines import bench
 from baselines.ppo2 import ppo2
 from env.aquarium import Aquarium
 
 
-os.environ['OPENAI_LOGDIR'] = '/tmp'
-os.environ['OPENAI_LOG_FORMAT'] = 'stdout,tensorboard'
+os.environ['OPENAI_LOGDIR'] = 'runs/'
+# os.environ['OPENAI_LOG_FORMAT'] = 'stdout,tensorboard'
+# The tensorboard part is now handled by my own logger.
+os.environ['OPENAI_LOG_FORMAT'] = 'stdout'
 
 
 class EnvWrapper(bench.Monitor):
@@ -79,13 +82,15 @@ class Experiment:
         self.env = EnvWrapper(self.env)
 
     def train(self):
+        tb_logger = Logger('cfgid')
         logger.configure()
 
         model = ppo2.learn(
             network="mlp",
             env=self.env,
-            total_timesteps=600000,
-            nsteps=500
+            total_timesteps=1000000,
+            nsteps=500,
+            tb_logger=tb_logger
         )
         # self.env.close()
 
