@@ -39,7 +39,8 @@ class Aquarium:
         seed=42,
         # TODO That was one of my fixes. Unused right now.
         nr_sharks=1,  # TODO unused
-        nr_fishes=1  # TODO unused
+        nr_fishes=1,  # TODO unused
+        show_gui=False
     ):
         self.seed: int = seed
         np.random.seed(seed=seed)
@@ -112,15 +113,17 @@ class Aquarium:
         self.dead_sharks: int = 0
 
         # GUI
+        self.show_gui = show_gui
         self.close = lock_screen
         self.screen_height = self.screen_width = 800
-        self.view = View(
-            self.screen_width,
-            self.screen_height,
-            self.screen_width / self.width,
-            WINDOW_NAME,
-            FPS
-        )
+        if self.show_gui:
+            self.view = View(
+                self.screen_width,
+                self.screen_height,
+                self.screen_width / self.width,
+                WINDOW_NAME,
+                FPS
+            )
 
     @property
     def current_shark_population(self) -> int:
@@ -250,9 +253,10 @@ class Aquarium:
 
         # GUI
         if not self.close:
-            self.close = self.view.check_for_interrupt()
-            if self.close:
-                self.view.close()
+            if self.show_gui:
+                self.close = self.view.check_for_interrupt()
+                if self.close:
+                    self.view.close()
 
         # Turn fish to name.
         shark_reward = {
@@ -623,7 +627,7 @@ class Aquarium:
         return banner + str(env_params)[1:-1].replace(', ', '\n')
 
     def render(self, draw_view_distance: bool = False):
-        if self.close:
+        if self.close or not self.show_gui:
             return
 
         self.view.draw_background()
