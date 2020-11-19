@@ -149,13 +149,13 @@ class Aquarium:
         self.fish_types['BoidFish'] = boid_fish
         return self
 
-    def select_shark_types(self, Shark_Agents=0):
+    def select_shark_types(self, shark_agents=0):
         # TODO: Update the docstring below.
         """Derzeit gibt es not keine Möglichkeit, statische und normale Agent zu kombinieren
            Das kommt noch"""
         #self.shark_types['RandomShark'] = Random_Shark
         #self.shark_types['DefaultShark'] = Default_Shark
-        self.shark_types['Shark_Agents'] = Shark_Agents
+        self.shark_types['shark_agents'] = shark_agents
         return self
 
     def reset(self) -> np.array:
@@ -219,9 +219,9 @@ class Aquarium:
 
         # TODO Make this a global variable.
         types = {
-            "RandomShark": RandomShark,
-            "DefaultShark": DefaultShark,
-            "Shark_Agents": SharkAgent
+            "random_shark": RandomShark,
+            "default_shark": DefaultShark,
+            "shark_agents": SharkAgent
         }
 
         x_pos = np.random.uniform(0, self.width)

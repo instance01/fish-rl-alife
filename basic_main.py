@@ -23,7 +23,7 @@ if __name__ == '__main__':
         boid_fish=0
     )
 
-    env.select_shark_types(Shark_Agents=1)
+    env.select_shark_types(shark_agents=1)
 
     for training_episode in range(1, EPISODES + 1):
         print(training_episode)
