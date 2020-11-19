@@ -18,7 +18,7 @@ strategies and the number of sharks is defined. There are a multitude of
 further settings such as the number of walls or fishes that can be observed.
 Even the behavior of the walls themselves may be adapted, for instance to
 define the world as a torus.
-A major architectural point of the environment is exchangeability --- there is
+A major architectural point of the environment is exchangeability - there is
 a base animal class from which both fishes and sharks inherit, and each fish
 may have a different strategy. Same can be said about the sharks.
 
@@ -47,23 +47,23 @@ key and its respective observation as the value. Now, the observation includes
 a few status informations about the shark itself but also the animals it sees.
 For scalability, only a subset of animals can be observed, making the
 environment a partially observable one. Specifically, the orientation (scaled
-from radians to the range $[-1, 1]$) and the readiness to procreate are
+from radians to the range `[-1, 1]`) and the readiness to procreate are
 included as status information. Next, distance and angle to each wall that is
 in the view distance of the current shark is added. Since there are 4 walls,
 this results in 8 values. If walls are disabled (i.e. a torus is used), the 8
 values are replaced by zeroes. One of the main principles of the environment is
 a consistent observation space, which is achieved by this sort of zero-padding.
-Next, $n$ 3-tuple slots are used for sharks that may or may not be visible. $n$
+Next, `n` 3-tuple slots are used for sharks that may or may not be visible. `n`
 is a hyperparameter that is set beforehand and stays constant throughout
 training and evaluation. One 3-tuple slot consists of the distance to the other
 shark, the angle to the shark and the orientation of the other shark. Sharks
-that are outside of the visible range lead to zero-padding. After this, $m$
+that are outside of the visible range lead to zero-padding. After this, `m`
 slots of the same structure are available for the fishes.
 
 ## Reward
 
 The environment returns a dictionary with sharks as keys and the reward
-attained by the respective shark. The reward of a shark increases by $+10$ when
+attained by the respective shark. The reward of a shark increases by `+10` when
 it eats a fish.
 
 ## Step
