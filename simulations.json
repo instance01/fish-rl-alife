@@ -1,0 +1,40 @@
+{
+    "1": {
+        "aquarium": {
+            "nr_sharks": 1,
+            "nr_fishes": 10,
+            "observable_sharks": 3,
+            "observable_fishes": 3,
+            "observable_walls": 2,
+            "size": 30,
+            "max_steps": 500,
+            "max_fish": 10,
+            "max_sharks": 1,
+            "torus": false,
+            "fish_collision": true,
+            "lock_screen": false,
+            "seed": 42,
+            "show_gui": false,
+            "random_fish": 0,
+            "turn_away_fish": 10,
+            "boid_fish": 0,
+            "shark_agents": 1
+        },
+        "ppo": {
+             "network": "mlp",
+             "total_timesteps": 2e6,
+             "seed": 42,
+             "ent_coef": 0.0,
+             "lr": 3e-4,
+             "vf_coef": 0.5,
+             "max_grad_norm": 0.5,
+             "gamma": 0.99,
+             "lam": 0.95,
+             "log_interval": 10,
+             "nminibatches": 4,
+             "noptepochs": 4,
+             "cliprange": 0.2,
+             "save_interval": 0
+        }
+    }
+}

@@ -25,12 +25,12 @@ class Logger:
         self.custom_metrics = defaultdict(list)
         self.custom_file = self.logdir + "/custom.pickle"
 
-    def log_summary(self, env, rewards, n_episode):
-        tf.summary.scalar('Train/Tot_Reward', sum(rewards), n_episode)
-        tf.summary.scalar('Train/Dead_Fishes', env.dead_fishes, n_episode)
-        tf.summary.scalar('Train/Dead_Sharks', env.dead_sharks, n_episode)
-        self.log_file('Train/Fish_Population', env.fish_population_counter)
-        self.log_file('Train/Shark_Population', env.shark_population_counter)
+    def log_summary(self, env, rewards, n_episode, prefix='Train'):
+        tf.summary.scalar(prefix + '/Tot_Reward', sum(rewards), n_episode)
+        tf.summary.scalar(prefix + '/Dead_Fishes', env.dead_fishes, n_episode)
+        tf.summary.scalar(prefix + '/Dead_Sharks', env.dead_sharks, n_episode)
+        self.log_file(prefix + '/Fish_Population', env.fish_population_counter)
+        self.log_file(prefix + '/Shark_Population', env.shark_population_counter)
 
     def log_kv(self, k, v, step):
         tf.summary.scalar(k, v, step)
