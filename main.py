@@ -102,7 +102,8 @@ class Experiment:
             env=self.env,
             network=self.cfg['ppo']['network'],
             total_timesteps=total_timesteps,
-            seed=self.cfg['ppo']['seed'],
+            # TODO Seed..
+            # seed=self.cfg['ppo']['seed'],
             # TODO: For now for consistency we use Aquarium max_steps as nsteps
             nsteps=max_steps,
             ent_coef=self.cfg['ppo']['ent_coef'],
@@ -116,6 +117,8 @@ class Experiment:
             noptepochs=self.cfg['ppo']['noptepochs'],
             cliprange=self.cfg['ppo']['cliprange'],
             save_interval=self.cfg['ppo']['save_interval'],
+            num_layers=self.cfg['ppo']['num_layers'],
+            num_hidden=self.cfg['ppo']['num_hidden'],
             tb_logger=self.tb_logger,
             evaluator=self.evaluate
         )

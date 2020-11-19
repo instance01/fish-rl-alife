@@ -7,7 +7,7 @@
             "observable_fishes": 3,
             "observable_walls": 2,
             "size": 30,
-            "max_steps": 500,
+            "max_steps": 1000,
             "max_fish": 10,
             "max_sharks": 1,
             "torus": false,
@@ -34,7 +34,9 @@
              "nminibatches": 4,
              "noptepochs": 4,
              "cliprange": 0.2,
-             "save_interval": 0
+             "save_interval": 0,
+             "num_layers": 2,
+             "num_hidden": 64
         }
     }
 }
