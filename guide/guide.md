@@ -60,20 +60,20 @@ shark, the angle to the shark and the orientation of the other shark. Sharks
 that are outside of the visible range lead to zero-padding. After this, `m`
 slots of the same structure are available for the fishes.
 
-## Reward
+### Reward
 
 The environment returns a dictionary with sharks as keys and the reward
 attained by the respective shark. The reward of a shark increases by `+10` when
 it eats a fish.
 
-## Step
+### Step
 
 After a step in the environment, the standard 3-tuple known for gym
 environments is returned. However, all three elements of that tuple are
 dictionaries with sharks as keys and the observation, reward and done flag for
 the respective shark as the value.
 
-## Further Settings
+### Further Settings
 
 TODO: Radius
 
