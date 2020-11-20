@@ -120,13 +120,14 @@ class Experiment:
             num_layers=self.cfg['ppo']['num_layers'],
             num_hidden=self.cfg['ppo']['num_hidden'],
             tb_logger=self.tb_logger,
-            evaluator=self.evaluate
+            evaluator=self.evaluate_and_log
         )
 
         # import pdb; pdb.set_trace()  # noqa
-        self.evaluate(model, int(total_timesteps / max_steps))
+        self.evaluate_and_log(model, int(total_timesteps / max_steps))
 
     def evaluate(self, model, n_episode):
+        """Run an evaluation game."""
         obs = self.env.reset()
         i = 0
         rewards = []
@@ -143,9 +144,19 @@ class Experiment:
             if done:
                 break
         print(tot_rew)
+        return rewards
+
+    def evaluate_and_log(self, model, n_episode):
+        """Run an evaluation game and log to tensorboard."""
+        rewards = self.evaluate(model, n_episode)
         self.tb_logger.log_summary(self.env, rewards, n_episode, prefix='Eval')
 
 
 if __name__ == '__main__':
     cfg_id = sys.argv[1]
-    Experiment(cfg_id).train()
+    if len(sys.argv) > 2:
+        from shark_baselines import get_model
+        experiment = Experiment(cfg_id)
+        print('TOT REW', sum(experiment.evaluate(get_model(experiment.env), 0)))
+    else:
+        Experiment(cfg_id).train()
