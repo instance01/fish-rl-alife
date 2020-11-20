@@ -14,6 +14,10 @@ class Config:
             raise Exception(
                 'Error: Key %s does not exist in simulations.json.' % cfg_id
             )
-        cfg.update(self.cfg[cfg_id])
+        # We support one level for now.
+        for k in self.cfg[cfg_id].keys():
+            if k == 'base_cfg':
+                continue
+            cfg[k].update(self.cfg[cfg_id][k])
         cfg['cfg_id'] = cfg_id
         return cfg

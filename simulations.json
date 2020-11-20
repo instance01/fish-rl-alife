@@ -34,9 +34,13 @@
              "nminibatches": 4,
              "noptepochs": 4,
              "cliprange": 0.2,
-             "save_interval": 0,
-             "num_layers": 2,
-             "num_hidden": 64
+             "save_interval": 0
+        }
+    },
+    "2": {
+        "base_cfg": "1",
+        "ppo": {
+            "total_timesteps": 3e6
         }
     }
 }
