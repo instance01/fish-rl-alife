@@ -22,3 +22,4 @@ guide/guide.log
 guide/guide.aux
 __pycache__
 .swp
+plottex/*
