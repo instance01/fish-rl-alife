@@ -12,18 +12,19 @@ lock = threading.Lock()
 
 
 class Logger:
-    def __init__(self, cfg_id):
+    def __init__(self, cfg):
         _id = "-".join([
             datetime.datetime.now().strftime("%y-%m-%d_%H:%M:%S"),
             str(int(random.random() * 1000)),
             socket.gethostname(),
-            cfg_id
+            cfg['cfg_id']
         ])
         self.logdir = "runs/" + _id
         self.writer = tf.summary.create_file_writer(self.logdir)
         self.writer.set_as_default()
         self.custom_metrics = defaultdict(list)
         self.custom_file = self.logdir + "/custom.pickle"
+        tf.summary.text('Info/Params', str(cfg))
 
     def log_summary(self, env, rewards, n_episode, prefix='Train'):
         tf.summary.scalar(prefix + '/Tot_Reward', sum(rewards), n_episode)

@@ -92,7 +92,7 @@ class Experiment:
         self.env = EnvWrapper(self.env)
 
     def train(self):
-        self.tb_logger = Logger(self.cfg['cfg_id'])
+        self.tb_logger = Logger(self.cfg)
         logger.configure()
 
         total_timesteps = self.cfg['ppo']['total_timesteps']
