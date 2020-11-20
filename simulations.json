@@ -42,5 +42,13 @@
         "ppo": {
             "total_timesteps": 3e6
         }
+    },
+    "3": {
+        "base_cfg": "1",
+        "ppo": {
+            "total_timesteps": 3e6,
+             "nminibatches": 8,
+             "noptepochs": 3
+        }
     }
 }
