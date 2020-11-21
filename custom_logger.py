@@ -24,7 +24,7 @@ class Logger:
         self.writer.set_as_default()
         self.custom_metrics = defaultdict(list)
         self.custom_file = self.logdir + "/custom.pickle"
-        tf.summary.text('Info/Params', str(cfg))
+        tf.summary.text('Info/Params', str(cfg), 0)
 
     def log_summary(self, env, rewards, n_episode, prefix='Train'):
         tf.summary.scalar(prefix + '/Tot_Reward', sum(rewards), n_episode)
