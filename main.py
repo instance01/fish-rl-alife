@@ -9,6 +9,8 @@ from gym import spaces
 from baselines import logger
 from baselines.ppo2 import ppo2
 
+# Importing network models registers them.
+import network_models  # noqa
 from env.aquarium import Aquarium
 from custom_logger import Logger
 from config import Config
