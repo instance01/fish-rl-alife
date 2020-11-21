@@ -59,7 +59,57 @@
             "total_timesteps": 3e6,
             "nminibatches": 8,
             "noptepochs": 3,
-            "lr": 1e-4
+            "lr": 5e-5,
+            "num_hidden": 128
+        }
+    },
+    "5": {
+        "base_cfg": "1",
+        "ppo": {
+            "total_timesteps": 3e6,
+            "ent_coef": 0.001
+        }
+    },
+    "6": {
+        "base_cfg": "1",
+        "ppo": {
+            "total_timesteps": 3e6,
+            "ent_coef": 0.001,
+            "num_layers": 3
+        }
+    },
+    "7_dbg": {
+        "base_cfg": "1",
+        "ppo": {
+            "total_timesteps": 20e6
+        }
+    },
+    "7": {
+        "base_cfg": "1",
+        "ppo": {
+            "total_timesteps": 4e6,
+            "ent_coef": 0.001
+        }
+    },
+    "8": {
+        "base_cfg": "1",
+        "ppo": {
+            "total_timesteps": 4e6,
+            "ent_coef": 0.005
+        }
+    },
+    "5_1": {
+        "base_cfg": "1",
+        "ppo": {
+            "total_timesteps": 4e6,
+            "ent_coef": 0.001
+        }
+    },
+    "9": {
+        "base_cfg": "1",
+        "ppo": {
+            "total_timesteps": 4e6,
+            "network": "mlp_batchnorm"
         }
     }
 }
