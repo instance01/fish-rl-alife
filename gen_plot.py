@@ -1,3 +1,4 @@
+import tensorflow as tf
 import glob
 import sys
 import os
@@ -32,7 +33,10 @@ def aggregate(path):
     agg_runs = defaultdict(lambda: defaultdict(list))
     agg_keys = {}
 
-    path = glob.glob(os.path.join(path, "events.out.tfevents.*"))[0]
+    path = glob.glob(os.path.join(path, "events.out.tfevents.*"))
+    if not path:
+        return None, None
+    path = path[0]
     for event in my_summary_iterator(path):
         if not event.summary.value:
             continue
@@ -40,7 +44,8 @@ def aggregate(path):
         for key in keys:
             if tag.startswith(key):
                 run = tag[tag.rfind('/')+1:]
-                agg_runs[key][run].append(event.summary.value[0].simple_value)
+                val = tf.make_ndarray(event.summary.value[0].tensor)
+                agg_runs[key][run].append(val)
 
     for key in agg_runs:
         aggregated = []
@@ -67,9 +72,19 @@ def gen_tex_single_key(data, key, use_percentile):
     if use_percentile:
         new_data = [
             # Smoothing loses 20 data points.
-            # smooth(np.percentile(data, percentile, axis=0), 20)[10:-9]
-            smooth(np.percentile(data, percentile, axis=0), 2)[1:-1]
-            for percentile in [50, 10, 25, 75, 90, 0, 100]
+            #smooth(np.percentile(data, percentile, axis=0), 2)[1:-1]
+            smooth(np.percentile(data, 50, axis=0), 20)[10:-9],
+            #smooth(np.percentile(data, 10, axis=0), 20)[10:-9],
+            [],
+            smooth(np.percentile(data, 25, axis=0), 20)[10:-9],
+            smooth(np.percentile(data, 75, axis=0), 20)[10:-9],
+            #smooth(np.percentile(data, 90, axis=0), 20)[10:-9],
+            [],
+            #smooth(np.percentile(data, 0, axis=0), 20)[10:-9],
+            [],
+            #smooth(np.percentile(data, 100, axis=0), 20)[10:-9],
+            [],
+            #for percentile in [50, 10, 25, 75, 90, 0, 100]
         ]
     else:
         stddev = np.var(data, axis=0, ddof=1) ** .5
@@ -91,13 +106,15 @@ def gen_tex_single_key(data, key, use_percentile):
     ]
 
     red_line = ""
-    if "Eval" in key and 'Confidence' not in key:
-        red_line = "".join(["(%d, 195)" % i for i, _ in enumerate(data[0])])
+    if "Train" in key or "Eval" in key:
+        red_line = "".join(["(%d, 310)" % i for i, _ in enumerate(data[0])])
 
     if key == 'Eval/Reward':
         key = 'Mean evaluation reward'
     if key == 'Eval/MCTS_Confidence':
         key = 'Search confidence'
+    if key == 'Train/Tot_Reward':
+        key = 'Total Reward'
 
     return """
         \\begin{tikzpicture}
@@ -109,20 +126,20 @@ def gen_tex_single_key(data, key, use_percentile):
                 ylabel={%s}]
             ]
             \\addplot+[name path=A,black,line width=1pt] coordinates {%s};
-            \\addplot+[name path=B,black,line width=.1pt] coordinates {%s};
+            %%\\addplot+[name path=B,black,line width=.1pt] coordinates {%s};
             \\addplot+[name path=C,black,line width=.1pt] coordinates {%s};
             \\addplot+[name path=D,black,line width=.1pt] coordinates {%s};
-            \\addplot+[name path=E,black,line width=.1pt] coordinates {%s};
+            %%\\addplot+[name path=E,black,line width=.1pt] coordinates {%s};
 
-            \\addplot+[name path=F,black,line width=.1pt] coordinates {%s};
-            \\addplot+[name path=G,black,line width=.1pt] coordinates {%s};
+            %%\\addplot+[name path=F,black,line width=.1pt] coordinates {%s};
+            %%\\addplot+[name path=G,black,line width=.1pt] coordinates {%s};
 
-            \\addplot+[name path=ZZZ,red,line width=.3pt] coordinates {%s};
+            \\addplot+[name path=ZZZ,red,dashed,line width=.3pt] coordinates {%s};
 
-            \\addplot[blue!50,fill opacity=0.2] fill between[of=A and B];
+            %%\\addplot[blue!50,fill opacity=0.2] fill between[of=A and B];
             \\addplot[blue!50,fill opacity=0.2] fill between[of=A and C];
             \\addplot[blue!50,fill opacity=0.2] fill between[of=A and D];
-            \\addplot[blue!50,fill opacity=0.2] fill between[of=A and E];
+            %%\\addplot[blue!50,fill opacity=0.2] fill between[of=A and E];
             \\end{axis}
         \\end{tikzpicture}
         """ % (
@@ -197,6 +214,8 @@ def run():
             print('##-- Loading', path)
             paths.append(path)
             agg_runs, agg_keys = aggregate(path)
+            if not agg_runs and not agg_keys:
+                continue
             for key in agg_runs:
                 if key not in data:
                     data[key] = agg_keys[key]
