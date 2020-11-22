@@ -111,5 +111,43 @@
             "total_timesteps": 4e6,
             "network": "mlp_batchnorm"
         }
+    },
+    "10": {
+        "base_cfg": "1",
+        "ppo": {
+            "total_timesteps": 4e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3
+        }
+    },
+    "11": {
+        "base_cfg": "1",
+        "ppo": {
+            "total_timesteps": 4e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 1e-4
+        }
+    },
+    "12": {
+        "base_cfg": "1",
+        "ppo": {
+            "total_timesteps": 5e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 1e-4
+        }
+    },
+    "13": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 1500
+        },
+        "ppo": {
+            "total_timesteps": 5e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 1e-4
+        }
     }
 }
