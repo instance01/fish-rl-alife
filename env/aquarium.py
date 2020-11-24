@@ -371,7 +371,8 @@ class Aquarium:
             combinations = it.product(self.sharks, self.fishes)
             for shark, fish in combinations:
                 if self.collision_space.check_collision(shark, fish):
-                    self.fishes.remove(fish)
+                    if fish in self.fishes:
+                        self.fishes.remove(fish)
                     if shark in self.track_shark_reward:
                         self.track_shark_reward[shark] += 10
                         self.dead_fishes += 1
