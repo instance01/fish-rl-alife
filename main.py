@@ -22,6 +22,11 @@ os.environ['OPENAI_LOGDIR'] = 'runs/'
 os.environ['OPENAI_LOG_FORMAT'] = 'stdout'
 
 
+def model_inference(model, obs):
+    model_action = model.step(obs.reshape(1, -1))
+    return model_action[0].numpy()
+
+
 class EnvWrapper(Wrapper):
     def __init__(self, env):
         self.env = env
@@ -60,6 +65,55 @@ class EnvWrapper(Wrapper):
         return obs[shark]
 
 
+class MultiAgentEnvWrapper(Wrapper):
+    def __init__(self, env):
+        self.env = env
+        self.env.action_space = spaces.Box(low=-1.0, high=1.0, shape=(2,))
+        self.n = 2 + self.env.observable_sharks * 3 +\
+            self.env.observable_fishes * 3 +\
+            self.env.observable_walls * 2
+        self.env.observation_space = spaces.Box(
+            low=-1.0, high=1.0, shape=(self.n,)
+        )
+        self.env.reward_range = (-float('inf'), float('inf'))
+        self.env.spec = None
+        self.env.metadata = {'render.modes': ['human']}
+        self.env.num_envs = 1
+
+        self.last_obs = None
+        self.model = None  # Needs to be set.
+
+        Wrapper.__init__(self, env=env)
+
+    def step(self, action):
+        sharks = list(self.env.sharks)
+        if not sharks:
+            # TODO .. yikes
+            return ([0.] * self.n, 0, True, {})
+        joint_action = {}
+        for i, shark in enumerate(sharks):
+            if i != 0:
+                action = model_inference(self.model, self.last_obs)
+            action = (action[0][0], action[0][1], False)
+            joint_action[shark.name] = action
+
+        obs, reward, done = self.env.step(joint_action)
+
+        shark = next(iter(done.keys()))
+        return (
+            obs.get(shark, np.array([0.] * self.n)),
+            reward[shark],
+            done[shark],
+            {}
+        )
+
+    def reset(self):
+        obs = self.env.reset()
+        shark = next(iter(obs.keys()))
+        self.last_obs = obs[shark]
+        return obs[shark]
+
+
 class Experiment:
     def __init__(self, cfg_id):
         self.cfg = Config().get_cfg(cfg_id)
@@ -91,7 +145,10 @@ class Experiment:
             self.cfg["aquarium"]["shark_agents"]
         )
 
-        self.env = EnvWrapper(self.env)
+        if self.cfg["aquarium"]["shark_agents"] > 1:
+            self.env = MultiAgentEnvWrapper(self.env)
+        else:
+            self.env = EnvWrapper(self.env)
 
     def train(self):
         self.tb_logger = Logger(self.cfg)
@@ -136,8 +193,7 @@ class Experiment:
         tot_rew = 0
         while not self.env.env.is_finished:
             i += 1
-            model_inference = model.step(obs.reshape(1, -1))
-            action = model_inference[0].numpy()
+            action = model_inference(model, obs)
             obs, reward, done, info = self.env.step(action)
             if self.show_gui:
                 self.env.env.render()
