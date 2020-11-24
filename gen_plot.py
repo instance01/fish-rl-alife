@@ -187,7 +187,7 @@ def gen_tex_multiple(agg_runs, agg_keys):
 def run():
     use_percentile = True
     pad_to_constant = True
-    pad_constant = 3000
+    pad_constant = 5000
 
     if len(sys.argv) < 2:
         for filename in os.listdir('runs/'):
