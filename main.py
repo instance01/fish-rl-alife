@@ -2,12 +2,16 @@
 import os
 import sys
 import json
+import socket
+import datetime
 
 import numpy as np
 from gym.core import Wrapper
 from gym import spaces
 from baselines import logger
 from baselines.ppo2 import ppo2
+from baselines.ppo2.model import Model
+from baselines.common.models import get_network_builder
 
 # Importing network models registers them.
 import network_models  # noqa
@@ -116,6 +120,7 @@ class MultiAgentEnvWrapper(Wrapper):
 
 class Experiment:
     def __init__(self, cfg_id):
+        self.cfg_id = cfg_id
         self.cfg = Config().get_cfg(cfg_id)
         print(json.dumps(self.cfg, indent=4))
         self.show_gui = self.cfg["aquarium"]["show_gui"]
@@ -182,8 +187,41 @@ class Experiment:
             evaluator=self.evaluate_and_log
         )
 
+        hostname = socket.gethostname()
+        time_str = datetime.datetime.now().strftime('%y.%m.%d-%H:%M:%S')
+        model.save('runs/' + cfg_id + '-' + hostname + '-' + time_str + '-model')
+
         # import pdb; pdb.set_trace()  # noqa
         self.evaluate_and_log(model, int(total_timesteps / max_steps))
+
+    def load_eval(self, model_filename):
+        self.show_gui = True
+
+        network = self.cfg['ppo']['network']
+        ent_coef = self.cfg['ppo']['ent_coef']
+        vf_coef = self.cfg['ppo']['vf_coef']
+        max_grad_norm = self.cfg['ppo']['max_grad_norm']
+
+        ob_space = self.env.observation_space
+        ac_space = self.env.action_space
+
+        policy_network_fn = get_network_builder(network)(
+            num_layers=self.cfg['ppo']['num_layers'],
+            num_hidden=self.cfg['ppo']['num_hidden']
+        )
+        network = policy_network_fn(ob_space.shape)
+
+        model = Model(
+            ac_space=ac_space,
+            policy_network=network,
+            ent_coef=ent_coef,
+            vf_coef=vf_coef,
+            max_grad_norm=max_grad_norm
+        )
+        model.load(model_filename)
+        self.env.model = model
+
+        self.evaluate(model, 0)
 
     def evaluate(self, model, n_episode):
         """Run an evaluation game."""
@@ -213,8 +251,12 @@ class Experiment:
 if __name__ == '__main__':
     cfg_id = sys.argv[1]
     if len(sys.argv) > 2:
-        from shark_baselines import get_model
-        experiment = Experiment(cfg_id)
-        print('TOT REW', sum(experiment.evaluate(get_model(experiment.env), 0)))
+        extra_action = sys.argv[2]
+        if extra_action == 'det':
+            from shark_baselines import get_model
+            experiment = Experiment(cfg_id)
+            print('TOT REW', sum(experiment.evaluate(get_model(experiment.env), 0)))
+        elif extra_action == 'load':
+            Experiment(cfg_id).load_eval(sys.argv[3])
     else:
         Experiment(cfg_id).train()
