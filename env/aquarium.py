@@ -37,12 +37,11 @@ class Aquarium:
         fish_collision: bool = True,
         lock_screen: bool = False,
         seed=42,
-        # TODO That was one of my fixes. Unused right now.
-        nr_sharks=1,  # TODO unused
-        nr_fishes=1,  # TODO unused
         show_gui=False
     ):
-        self.seed: int = seed
+        if seed is None or seed == 'none':
+            seed = int(1000000000 * np.random.random())
+        self.seed = seed
         np.random.seed(seed=seed)
 
         self.fishes: [Fish] = set()

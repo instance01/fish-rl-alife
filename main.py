@@ -126,8 +126,6 @@ class Experiment:
         self.show_gui = self.cfg["aquarium"]["show_gui"]
 
         self.env = Aquarium(
-            nr_sharks=self.cfg["aquarium"]["nr_sharks"],
-            nr_fishes=self.cfg["aquarium"]["nr_fishes"],
             observable_sharks=self.cfg["aquarium"]["observable_sharks"],
             observable_fishes=self.cfg["aquarium"]["observable_fishes"],
             observable_walls=self.cfg["aquarium"]["observable_walls"],
