@@ -1,8 +1,6 @@
 {
     "1": {
         "aquarium": {
-            "nr_sharks": 1,
-            "nr_fishes": 10,
             "observable_sharks": 3,
             "observable_fishes": 3,
             "observable_walls": 2,
@@ -171,6 +169,18 @@
             "lr": 1e-4
         }
     },
+    "13_2": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 1500
+        },
+        "ppo": {
+            "total_timesteps": 12e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 8e-5
+        }
+    },
     "14": {
         "base_cfg": "1",
         "aquarium": {
@@ -206,6 +216,65 @@
             "network": "mlp_batchnorm",
             "num_layers": 3,
             "lr": 1e-4
+        }
+    },
+    "13_3": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 1500
+        },
+        "ppo": {
+            "total_timesteps": 9e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 1e-4,
+            "cliprange": 0.1
+        }
+    },
+    "13_4": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 1500
+        },
+        "ppo": {
+            "total_timesteps": 9e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 1e-4,
+            "cliprange": 0.3
+        }
+    },
+    "14_2": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 2000
+        },
+        "ppo": {
+            "total_timesteps": 14e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 1e-4,
+            "cliprange": 0.1
+        }
+    },
+    "dbg": {
+        "base_cfg": "1",
+        "ppo": {
+            "total_timesteps": 1000
+        }
+    },
+    "13_3_noseed": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 1500,
+            "seed": "none"
+        },
+        "ppo": {
+            "total_timesteps": 9e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 1e-4,
+            "cliprange": 0.1
         }
     }
 }
