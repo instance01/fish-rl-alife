@@ -17,6 +17,8 @@ from baselines.common.models import get_network_builder
 # Importing network models registers them.
 import network_models  # noqa
 from env.aquarium import Aquarium
+from env.shark import Shark
+from env.fish import Fish
 from custom_logger import Logger
 from config import Config
 
@@ -129,6 +131,30 @@ class Experiment:
         self.show_gui = self.cfg["aquarium"]["show_gui"]
         if show_gui is not None:
             self.show_gui = show_gui
+
+        # High values increase acceleration, maximum speed and turning circle.
+        Shark.FRICTION = self.cfg["aquarium"]["shark_friction"]
+        # High values increase acceleration, maximum speed and turning circle.
+        Shark.MAX_SPEED_CHANGE = self.cfg["aquarium"]["shark_max_speed_change"]
+        # High values decrease the turning circle.
+        Shark.MAX_ORIENTATION_CHANGE = float(np.radians(
+            self.cfg["aquarium"]["shark_max_orientation_change"]
+        ))
+        Shark.VIEW_DISTANCE = self.cfg["aquarium"]["shark_view_distance"]
+        Shark.PROLONGED_SURVIVAL_PER_EATEN_FISH = self.cfg["aquarium"]["shark_prolonged_survival_per_eaten_fish"]
+        Shark.INITIAL_SURVIVAL_TIME = self.cfg["aquarium"]["shark_initial_survival_time"]
+        Shark.PROCREATE_AFTER_N_EATEN_FISH = self.cfg["aquarium"]["shark_procreate_after_n_eaten_fish"]
+
+        # High values decrease acceleration, maximum speed and turning circle.
+        Fish.FRICTION = self.cfg["aquarium"]["fish_friction"]
+        # High values increase acceleration, maximum speed and turning circle.
+        Fish.MAX_SPEED_CHANGE = self.cfg["aquarium"]["fish_max_speed_change"]
+        # High values decrease the turning circle.
+        Fish.MAX_ORIENTATION_CHANGE = float(np.radians(
+            self.cfg["aquarium"]["fish_max_orientation_change"]
+        ))
+        Fish.VIEW_DISTANCE = self.cfg["aquarium"]["fish_view_distance"]
+        Fish.PROCREATE_AFTER_N_STEPS = self.cfg["aquarium"]["fish_procreate_after_n_steps"]
 
         self.env = Aquarium(
             observable_sharks=self.cfg["aquarium"]["observable_sharks"],
