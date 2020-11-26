@@ -30,6 +30,8 @@ class Logger:
         tf.summary.scalar(prefix + '/Tot_Reward', sum(rewards), n_episode)
         tf.summary.scalar(prefix + '/Dead_Fishes', env.dead_fishes, n_episode)
         tf.summary.scalar(prefix + '/Dead_Sharks', env.dead_sharks, n_episode)
+        tf.summary.scalar(prefix + '/Last_Fish_Population', env.fish_population_counter[-1], n_episode)
+        tf.summary.scalar(prefix + '/Last_Shark_Population', env.env.shark_population_counter[-1], n_episode)
         self.log_file(prefix + '/Fish_Population', env.fish_population_counter)
         self.log_file(prefix + '/Shark_Population', env.shark_population_counter)
 
