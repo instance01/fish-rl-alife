@@ -39,10 +39,11 @@ class Aquarium:
         seed=42,
         show_gui=False
     ):
-        if seed is None or seed == 'none':
-            seed = int(1000000000 * np.random.random())
-        self.seed = seed
-        np.random.seed(seed=seed)
+        # if seed is None or seed == 'none':
+        #     seed = int(1000000000 * np.random.random())
+        if seed is not None and seed != 'none':
+            self.seed = seed
+            np.random.seed(seed=seed)
 
         self.fishes: [Fish] = set()
         self.sharks: [Shark] = set()

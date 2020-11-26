@@ -5,6 +5,7 @@ import json
 import socket
 import datetime
 
+import tensorflow as tf
 import numpy as np
 from gym.core import Wrapper
 from gym import spaces
@@ -27,7 +28,8 @@ os.environ['OPENAI_LOG_FORMAT'] = 'stdout'
 
 
 def model_inference(model, obs):
-    model_action = model.step(obs.reshape(1, -1))
+    obs = tf.cast(obs.reshape(1, -1), tf.float32)
+    model_action = model.step(obs)
     return model_action[0].numpy()
 
 
@@ -97,11 +99,12 @@ class MultiAgentEnvWrapper(Wrapper):
         joint_action = {}
         for i, shark in enumerate(sharks):
             if i != 0:
-                action = model_inference(self.model, self.last_obs)
+                action = model_inference(self.model, self.last_obs[shark.name])
             action = (action[0][0], action[0][1], False)
             joint_action[shark.name] = action
 
         obs, reward, done = self.env.step(joint_action)
+        self.last_obs = obs
 
         shark = next(iter(done.keys()))
         return (
@@ -114,16 +117,18 @@ class MultiAgentEnvWrapper(Wrapper):
     def reset(self):
         obs = self.env.reset()
         shark = next(iter(obs.keys()))
-        self.last_obs = obs[shark]
+        self.last_obs = obs
         return obs[shark]
 
 
 class Experiment:
-    def __init__(self, cfg_id):
+    def __init__(self, cfg_id, show_gui=None):
         self.cfg_id = cfg_id
         self.cfg = Config().get_cfg(cfg_id)
         print(json.dumps(self.cfg, indent=4))
         self.show_gui = self.cfg["aquarium"]["show_gui"]
+        if show_gui is not None:
+            self.show_gui = show_gui
 
         self.env = Aquarium(
             observable_sharks=self.cfg["aquarium"]["observable_sharks"],
@@ -154,6 +159,9 @@ class Experiment:
             self.env = EnvWrapper(self.env)
 
     def train(self):
+        hostname = socket.gethostname()
+        time_str = datetime.datetime.now().strftime('%y.%m.%d-%H:%M:%S')
+
         self.tb_logger = Logger(self.cfg)
         logger.configure()
 
@@ -185,8 +193,6 @@ class Experiment:
             evaluator=self.evaluate_and_log
         )
 
-        hostname = socket.gethostname()
-        time_str = datetime.datetime.now().strftime('%y.%m.%d-%H:%M:%S')
         model.save('runs/' + cfg_id + '-' + hostname + '-' + time_str + '-model')
 
         # import pdb; pdb.set_trace()  # noqa
@@ -255,6 +261,6 @@ if __name__ == '__main__':
             experiment = Experiment(cfg_id)
             print('TOT REW', sum(experiment.evaluate(get_model(experiment.env), 0)))
         elif extra_action == 'load':
-            Experiment(cfg_id).load_eval(sys.argv[3])
+            Experiment(cfg_id, show_gui=True).load_eval(sys.argv[3])
     else:
         Experiment(cfg_id).train()
