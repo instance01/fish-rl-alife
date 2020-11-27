@@ -107,7 +107,8 @@ def gen_tex_single_key(data, key, use_percentile):
 
     red_line = ""
     if "Train" in key or "Eval" in key:
-        red_line = "".join(["(%d, 310)" % i for i, _ in enumerate(data[0])])
+        #red_line = "".join(["(%d, 310)" % i for i, _ in enumerate(data[0])])
+        red_line = "".join(["(%d, 430)" % i for i, _ in enumerate(data[0])])
 
     if key == 'Eval/Reward':
         key = 'Mean evaluation reward'
