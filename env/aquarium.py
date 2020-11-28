@@ -380,6 +380,7 @@ class Aquarium:
                     if shark in self.track_shark_reward:
                         self.track_shark_reward[shark] += 10
                         self.dead_fishes += 1
+                        shark.eaten_fish += 1
                 else:
                     fish.survived_n_steps += 1
 
