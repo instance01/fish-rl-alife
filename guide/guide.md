@@ -80,6 +80,9 @@ TODO: Radius
 ## References
 
 Emergent escape-based flocking behavior using multi-agent reinforcement learning, Hahn et al., 2019.
+
 Towards Ecosystem Management from Greedy Reinforcement Learning in a Predator-Prey Setting, Ritz et al., 2020
+
 Foraging Swarms using Multi-Agent Reinforcement Learning, Hahn et al., 2020
+
 Nash Equilibria in Multi-Agent Swarms, Hahn et al., 2020
