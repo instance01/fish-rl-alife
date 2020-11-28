@@ -32,10 +32,15 @@ class Logger:
         tf.summary.scalar(prefix + '/Dead_Sharks', env.dead_sharks, n_episode)
         tf.summary.scalar(prefix + '/Last_Fish_Population', env.fish_population_counter[-1], n_episode)
         tf.summary.scalar(prefix + '/Last_Shark_Population', env.env.shark_population_counter[-1], n_episode)
+        tf.summary.histogram(prefix + '/Last_Fish_Population_H', env.fish_population_counter, n_episode)
+        tf.summary.histogram(prefix + '/Last_Shark_Population_H', env.env.shark_population_counter, n_episode)
+        tf.summary.histogram(prefix + '/Shark_Speed_H', env.env.shark_speed_history, n_episode)
         self.log_file(prefix + '/Fish_Population', env.fish_population_counter)
         self.log_file(prefix + '/Shark_Population', env.shark_population_counter)
 
     def log_kv(self, k, v, step):
+        # Used by the PPO algorithm internally to log things like policy
+        # entropy etc.
         tf.summary.scalar(k, v, step)
 
     def log_file(self, key, arr):

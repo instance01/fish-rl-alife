@@ -274,7 +274,7 @@
     "dbg": {
         "base_cfg": "1",
         "ppo": {
-            "total_timesteps": 1000
+            "total_timesteps": 10000
         }
     },
     "13_3_noseed": {

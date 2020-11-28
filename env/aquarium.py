@@ -113,6 +113,7 @@ class Aquarium:
         self.dead_sharks: int = 0
         self.fish_population_counter = []
         self.shark_population_counter = []
+        self.shark_speed_history = []
 
         # GUI
         self.show_gui = show_gui
@@ -171,6 +172,7 @@ class Aquarium:
         self.dead_fishes = 0
         self.fish_population_counter = []
         self.shark_population_counter = []
+        self.shark_speed_history = []
 
         # Initialize fishes at random positions.
         for f_type, amount in self.fish_types.items():
@@ -356,6 +358,8 @@ class Aquarium:
                 angle = util.scale(angle, -1.0, 1.0, -np.pi, np.pi)
                 shark.act(speed, angle)
                 shark.survived_n_steps += 1
+
+                self.shark_speed_history.append(speed)
 
                 # Solve shark-wall-collisions.
                 self.collision_space.perform_boundary_collision(shark)
