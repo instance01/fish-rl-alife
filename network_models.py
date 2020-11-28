@@ -18,7 +18,7 @@ def mlp_norm(norm, num_layers=2, num_hidden=64, activation=tf.tanh):
                 name='mlp_fc{}'.format(i),
                 activation=activation
             )(h)
-            h = norm(h)
+            h = norm()(h)
 
         network = tf.keras.Model(inputs=[x_input], outputs=[h])
         return network
