@@ -226,6 +226,7 @@ class Experiment:
 
     def load_eval(self, model_filename):
         self.show_gui = True
+        self.env.env.max_steps = 10000
 
         network = self.cfg['ppo']['network']
         ent_coef = self.cfg['ppo']['ent_coef']
@@ -269,7 +270,7 @@ class Experiment:
             tot_rew += reward
             if done:
                 break
-        print(tot_rew)
+        print(i, tot_rew)
         return rewards
 
     def evaluate_and_log(self, model, n_episode):

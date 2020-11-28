@@ -395,5 +395,18 @@
             "lr": 1e-4,
             "cliprange": 0.15
         }
+    },
+    "13_3_layernorm": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 1500
+        },
+        "ppo": {
+            "total_timesteps": 12e6,
+            "network": "mlp_layernorm",
+            "num_layers": 3,
+            "lr": 1e-4,
+            "cliprange": 0.1
+        }
     }
 }
