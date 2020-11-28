@@ -94,6 +94,19 @@ class MultiAgentEnvWrapper(Wrapper):
         Wrapper.__init__(self, env=env)
 
     def step(self, action):
+        # self.env.sharks is a set, so the careful reader might lament the lack
+        # of order in sets here. But this is fine. Sets still have an order,
+        # it's just non-intuitive for the user - it's simply the hash order.
+        # They are kept in that hash order in memory and they are returned in
+        # that order. Thus, since I don't care about which shark I'm using for
+        # training, as far as it's always the same one, it works out. For
+        # reference, I always use the first shark returned in the set. That
+        # first shark could be *any* shark from the set. But at least it's
+        # always the same shark.
+        # NOTE: If sharks are allowed to procreate, the assumptions do not hold
+        # any longer. Adding new sharks in the middle of an episode may change
+        # the order (e.g. new shark becomes the first shark in the internal hash
+        # table, suddenly the shark we train with has changed).
         sharks = list(self.env.sharks)
         if not sharks:
             # TODO .. yikes
