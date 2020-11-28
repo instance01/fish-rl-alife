@@ -187,6 +187,7 @@ class Experiment:
     def train(self):
         hostname = socket.gethostname()
         time_str = datetime.datetime.now().strftime('%y.%m.%d-%H:%M:%S')
+        model_fname = 'runs/' + cfg_id + '-' + hostname + '-' + time_str + '-model'
 
         self.tb_logger = Logger(self.cfg)
         logger.configure()
@@ -216,10 +217,11 @@ class Experiment:
             num_layers=self.cfg['ppo']['num_layers'],
             num_hidden=self.cfg['ppo']['num_hidden'],
             tb_logger=self.tb_logger,
-            evaluator=self.evaluate_and_log
+            evaluator=self.evaluate_and_log,
+            model_fname=model_fname
         )
 
-        model.save('runs/' + cfg_id + '-' + hostname + '-' + time_str + '-model')
+        model.save(model_fname + '-F')  # F stands for final.
 
         # import pdb; pdb.set_trace()  # noqa
         self.evaluate_and_log(model, int(total_timesteps / max_steps))
