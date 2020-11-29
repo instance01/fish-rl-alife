@@ -1,4 +1,4 @@
-import pickle
+import msgpack
 import threading
 import socket
 import random
@@ -23,7 +23,7 @@ class Logger:
         self.writer = tf.summary.create_file_writer(self.logdir)
         self.writer.set_as_default()
         self.custom_metrics = defaultdict(list)
-        self.custom_file = self.logdir + "/custom.pickle"
+        self.custom_file = self.logdir + "/custom.msgpack"
         tf.summary.text('Info/Params', str(cfg), 0)
 
     def log_summary(self, env, rewards, n_episode, prefix='Train'):
@@ -56,4 +56,6 @@ class Logger:
         with lock:
             self.custom_metrics[key].append(arr)
             with open(self.custom_file, 'wb+') as f:
-                pickle.dump(self.custom_metrics, f, protocol=3)
+                # pickle.dump(self.custom_metrics, f, protocol=3)
+                packed = msgpack.packb(self.custom_metrics)
+                f.write(packed)
