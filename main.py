@@ -295,6 +295,10 @@ class Experiment:
 
 
 if __name__ == '__main__':
+    # python3 main.py cfg_id  -> Train using cfg_id.
+    # python3 main.py cfg_id [extra_action]  -> Do an extra action using cfg_id.
+    #   - python3 main.py cfg_id det  -> Run deterministic shark algorithm.
+    #   - python3 main.py cfg_id load runs/model1  -> Watch learnt model.
     cfg_id = sys.argv[1]
     if len(sys.argv) > 2:
         extra_action = sys.argv[2]
@@ -305,4 +309,7 @@ if __name__ == '__main__':
         elif extra_action == 'load':
             Experiment(cfg_id, show_gui=True).load_eval(sys.argv[3])
     else:
-        Experiment(cfg_id).train()
+        # Just do 3 runs. I can cancel whenever I want.
+        # Use multi_scancel.sh to cancel multiple jobs in a range.
+        for _ in range(3):
+            Experiment(cfg_id).train()
