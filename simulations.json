@@ -274,7 +274,16 @@
     "dbg": {
         "base_cfg": "1",
         "ppo": {
-            "total_timesteps": 1000
+            "total_timesteps": 5000
+        }
+    },
+    "dbg_ma": {
+        "base_cfg": "1",
+        "aquarium": {
+            "shark_agents": 2
+        },
+        "ppo": {
+            "total_timesteps": 5000
         }
     },
     "13_3_noseed": {

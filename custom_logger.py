@@ -27,16 +27,21 @@ class Logger:
         tf.summary.text('Info/Params', str(cfg), 0)
 
     def log_summary(self, env, rewards, n_episode, prefix='Train'):
+        fish_pop = env.fish_population_counter
+        shark_pop = env.shark_population_counter
         tf.summary.scalar(prefix + '/Tot_Reward', sum(rewards), n_episode)
         tf.summary.scalar(prefix + '/Dead_Fishes', env.dead_fishes, n_episode)
         tf.summary.scalar(prefix + '/Dead_Sharks', env.dead_sharks, n_episode)
-        tf.summary.scalar(prefix + '/Last_Fish_Population', env.fish_population_counter[-1], n_episode)
-        tf.summary.scalar(prefix + '/Last_Shark_Population', env.env.shark_population_counter[-1], n_episode)
-        tf.summary.histogram(prefix + '/Last_Fish_Population_H', env.fish_population_counter, n_episode)
-        tf.summary.histogram(prefix + '/Last_Shark_Population_H', env.env.shark_population_counter, n_episode)
-        tf.summary.histogram(prefix + '/Shark_Speed_H', env.env.shark_speed_history, n_episode)
-        self.log_file(prefix + '/Fish_Population', env.fish_population_counter)
-        self.log_file(prefix + '/Shark_Population', env.shark_population_counter)
+        tf.summary.scalar(prefix + '/Last_Fish_Population', fish_pop[-1], n_episode)
+        tf.summary.scalar(prefix + '/Last_Shark_Population', shark_pop[-1], n_episode)
+        tf.summary.histogram(prefix + '/Last_Fish_Population_H', fish_pop, n_episode)
+        tf.summary.histogram(prefix + '/Last_Shark_Population_H', shark_pop, n_episode)
+        tf.summary.histogram(prefix + '/Shark_Speed_H', env.shark_speed_history, n_episode)
+        self.log_file(prefix + '/Fish_Population', fish_pop)
+        self.log_file(prefix + '/Shark_Population', shark_pop)
+        for i, (_, tot_reward) in enumerate(env.track_shark_reward.items()):
+            name = 'Sharks/Shark%d_Tot_Reward' % i
+            tf.summary.scalar(name, tot_reward, n_episode)
 
     def log_kv(self, k, v, step):
         # Used by the PPO algorithm internally to log things like policy
