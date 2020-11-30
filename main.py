@@ -3,6 +3,7 @@ import os
 import sys
 import json
 import socket
+import random
 import datetime
 
 import tensorflow as tf
@@ -200,7 +201,8 @@ class Experiment:
     def train(self):
         hostname = socket.gethostname()
         time_str = datetime.datetime.now().strftime('%y.%m.%d-%H:%M:%S')
-        model_fname = 'runs/' + cfg_id + '-' + hostname + '-' + time_str + '-model'
+        rand_str = str(int(random.random() * 10000))
+        model_fname = 'runs/' + cfg_id + '-' + hostname + '-' + time_str + '-' + rand_str + '-model'
 
         self.tb_logger = Logger(self.cfg)
         logger.configure()
@@ -295,7 +297,7 @@ class Experiment:
 
 
 if __name__ == '__main__':
-    # python3 main.py cfg_id  -> Train using cfg_id.
+    # python3 main.py cfg_id [single|multi]  -> Train using cfg_id.
     # python3 main.py cfg_id [extra_action]  -> Do an extra action using cfg_id.
     #   - python3 main.py cfg_id det  -> Run deterministic shark algorithm.
     #   - python3 main.py cfg_id load runs/model1  -> Watch learnt model.
@@ -308,6 +310,11 @@ if __name__ == '__main__':
             print('TOT REW', sum(experiment.evaluate(get_model(experiment.env), 0)))
         elif extra_action == 'load':
             Experiment(cfg_id, show_gui=True).load_eval(sys.argv[3])
+        elif extra_action == 'single':
+            Experiment(cfg_id).train()
+        elif extra_action == 'multi':
+            for _ in range(3):
+                Experiment(cfg_id).train()
     else:
         # Just do 3 runs. I can cancel whenever I want.
         # Use multi_scancel.sh to cancel multiple jobs in a range.

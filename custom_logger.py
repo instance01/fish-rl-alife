@@ -15,7 +15,7 @@ class Logger:
     def __init__(self, cfg):
         _id = "-".join([
             datetime.datetime.now().strftime("%y-%m-%d_%H:%M:%S"),
-            str(int(random.random() * 1000)),
+            str(int(random.random() * 10000)),
             socket.gethostname(),
             cfg['cfg_id']
         ])
