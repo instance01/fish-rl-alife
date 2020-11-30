@@ -2,6 +2,7 @@ import inspect
 import numpy as np
 import bisect
 import itertools as it
+from collections import defaultdict
 from copy import deepcopy
 
 from env.animal import Animal
@@ -114,6 +115,7 @@ class Aquarium:
         self.fish_population_counter = []
         self.shark_population_counter = []
         self.shark_speed_history = []
+        self.shark_tot_reward = defaultdict(int)
 
         # GUI
         self.show_gui = show_gui
@@ -173,6 +175,7 @@ class Aquarium:
         self.fish_population_counter = []
         self.shark_population_counter = []
         self.shark_speed_history = []
+        self.shark_tot_reward = defaultdict(int)
 
         # Initialize fishes at random positions.
         for f_type, amount in self.fish_types.items():
@@ -379,6 +382,7 @@ class Aquarium:
                         self.fishes.remove(fish)
                     if shark in self.track_shark_reward:
                         self.track_shark_reward[shark] += 10
+                        self.shark_tot_reward[shark] += 10
                         self.dead_fishes += 1
                         shark.eaten_fish += 1
                 else:
