@@ -37,8 +37,9 @@ class Logger:
         tf.summary.histogram(prefix + '/Last_Fish_Population_H', fish_pop, n_episode)
         tf.summary.histogram(prefix + '/Last_Shark_Population_H', shark_pop, n_episode)
         tf.summary.histogram(prefix + '/Shark_Speed_H', env.shark_speed_history, n_episode)
-        self.log_file(prefix + '/Fish_Population', fish_pop)
-        self.log_file(prefix + '/Shark_Population', shark_pop)
+        # msgpack is nice but whatever, let's disable this. We need speed.
+        # self.log_file(prefix + '/Fish_Population', fish_pop)
+        # self.log_file(prefix + '/Shark_Population', shark_pop)
         for i, (_, tot_reward) in enumerate(env.track_shark_reward.items()):
             name = 'Sharks/Shark%d_Tot_Reward' % i
             tf.summary.scalar(name, tot_reward, n_episode)
