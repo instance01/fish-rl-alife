@@ -231,6 +231,9 @@ class Experiment:
             save_interval=self.cfg['ppo']['save_interval'],
             num_layers=self.cfg['ppo']['num_layers'],
             num_hidden=self.cfg['ppo']['num_hidden'],
+            schedule_gamma=self.cfg['ppo']['schedule_gamma'],
+            schedule_gamma_after=self.cfg['ppo']['schedule_gamma_after'],
+            schedule_gamma_value=self.cfg['ppo']['schedule_gamma_value'],
             tb_logger=self.tb_logger,
             evaluator=self.evaluate_and_log,
             model_fname=model_fname
