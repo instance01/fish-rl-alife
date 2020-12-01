@@ -201,10 +201,10 @@ class Experiment:
     def train(self):
         hostname = socket.gethostname()
         time_str = datetime.datetime.now().strftime('%y.%m.%d-%H:%M:%S')
-        rand_str = str(int(random.random() * 10000))
+        rand_str = str(int(random.random() * 100000))
         model_fname = 'runs/' + cfg_id + '-' + hostname + '-' + time_str + '-' + rand_str + '-model'
 
-        self.tb_logger = Logger(self.cfg)
+        self.tb_logger = Logger(self.cfg, rand_str)
         logger.configure()
 
         total_timesteps = self.cfg['ppo']['total_timesteps']

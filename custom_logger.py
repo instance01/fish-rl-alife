@@ -12,10 +12,10 @@ lock = threading.Lock()
 
 
 class Logger:
-    def __init__(self, cfg):
+    def __init__(self, cfg, rand_str):
         _id = "-".join([
             datetime.datetime.now().strftime("%y-%m-%d_%H:%M:%S"),
-            str(int(random.random() * 10000)),
+            rand_str,
             socket.gethostname(),
             cfg['cfg_id']
         ])
