@@ -40,7 +40,7 @@ class Logger:
         # msgpack is nice but whatever, let's disable this. We need speed.
         # self.log_file(prefix + '/Fish_Population', fish_pop)
         # self.log_file(prefix + '/Shark_Population', shark_pop)
-        for i, (_, tot_reward) in enumerate(env.track_shark_reward.items()):
+        for i, (_, tot_reward) in enumerate(env.shark_tot_reward.items()):
             name = 'Sharks/Shark%d_Tot_Reward' % i
             tf.summary.scalar(name, tot_reward, n_episode)
 
