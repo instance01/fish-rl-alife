@@ -867,6 +867,23 @@
             "cliprange": 0.15
         }
     },
+    "ma3_15fish": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 2000,
+            "shark_agents": 2,
+            "fish_procreate_after_n_steps": 600,
+            "max_fish": 15,
+            "turn_away_fish": 15
+        },
+        "ppo": {
+            "total_timesteps": 16e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 1e-4,
+            "cliprange": 0.15
+        }
+    },
     "ma5_gamma_lam_lr_timestep_1": {
         "base_cfg": "1",
         "aquarium": {

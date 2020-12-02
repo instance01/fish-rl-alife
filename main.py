@@ -146,7 +146,8 @@ class Experiment:
         if show_gui is not None:
             self.show_gui = show_gui
 
-        if self.cfg['aquarium']['use_fish_pop_curriculum']:
+        self.use_fish_pop_curriculum = self.cfg['aquarium']['use_fish_pop_curriculum']
+        if self.use_fish_pop_curriculum:
             self.fish_pop_curriculum = dict(
                 (k, v) for k, v in self.cfg['aquarium']['fish_pop_curriculum']
             )
@@ -208,12 +209,13 @@ class Experiment:
         # This assumes that the env is not 'reset' to its old cfg in any way.
         # No deepcopies, no nothing. The env was created once in the init and
         # never touched again. That's the assumption. Something to keep in mind.
-        new_fish_pop = self.fish_pop_curriculum.get(epoch, None)
-        if new_fish_pop is not None:
-            self.env.env.max_fish = new_fish_pop
-            # TODO: I know. This is hardcoded for now. If I ever need it, I'll
-            # of course add support for other fish types.
-            self.env.select_fish_types(0, new_fish_pop, 0)
+        if self.use_fish_pop_curriculum:
+            new_fish_pop = self.fish_pop_curriculum.get(epoch, None)
+            if new_fish_pop is not None:
+                self.env.env.max_fish = new_fish_pop
+                # TODO: I know. This is hardcoded for now. If I ever need it, I'll
+                # of course add support for other fish types.
+                self.env.select_fish_types(0, new_fish_pop, 0)
 
     def train(self):
         hostname = socket.gethostname()
