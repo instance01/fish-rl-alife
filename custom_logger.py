@@ -43,6 +43,7 @@ class Logger:
         for i, (_, tot_reward) in enumerate(env.shark_tot_reward.items()):
             name = 'Sharks/Shark%d_Tot_Reward' % i
             tf.summary.scalar(name, tot_reward, n_episode)
+        tf.summary.histogram(prefix + '/Shark_To_Shark_Dist', env.shark_to_shark_dist, n_episode)
 
     def log_kv(self, k, v, step):
         # Used by the PPO algorithm internally to log things like policy

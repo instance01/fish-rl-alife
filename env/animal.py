@@ -16,7 +16,7 @@ class Animal(ABC):
         max_orientation_change: float,
         color: (int, int, int)
     ):
-        self.__identifier = identifier
+        self._identifier = identifier
         self.position = position
 
         self.radius = radius
@@ -110,11 +110,11 @@ class Animal(ABC):
         pass
 
     def __hash__(self):
-        return hash(self.__identifier)
+        return hash(self._identifier)
 
     def __eq__(self, other):
         if isinstance(other, Animal):
-            return other.__identifier == self.__identifier \
+            return other._identifier == self._identifier \
                    and np.array_equal(other.position, self.position) \
                    and np.array_equal(other.velocity, self.velocity)
         else:

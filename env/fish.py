@@ -44,7 +44,7 @@ class Fish(Animal, ABC):
         self.survived_steps = 0
 
     def name(self):
-        return 'Fish.' + str(self.__identifier)
+        return 'Fish.' + str(self._identifier)
 
     def is_ready_to_procreate(self) -> bool:
         return self.survived_n_steps - (self.children * self.PROCREATE_AFTER_N_STEPS) > self.PROCREATE_AFTER_N_STEPS
@@ -75,28 +75,28 @@ class RandomFish(ControllerFish):
     CONTROLLER = RandomFishController
 
     def name(self):
-        return 'RandomFish.' + str(self.__identifier)
+        return 'RandomFish.' + str(self._identifier)
 
 
 class DemoFish(ControllerFish):
     CONTROLLER = DemoFishController
 
     def name(self):
-        return 'DemoFish.' + str(self.__identifier)
+        return 'DemoFish.' + str(self._identifier)
 
 
 class TurnAwayFish(ControllerFish):
     CONTROLLER = TurnAwayFishController
 
     def name(self):
-        return 'TurnAwayFish.' + str(self.__identifier)
+        return 'TurnAwayFish.' + str(self._identifier)
 
 
 class BoidFish(ControllerFish):
     CONTROLLER = BoidFishController
 
     def name(self):
-        return 'BoidFish.' + str(self.__identifier)
+        return 'BoidFish.' + str(self._identifier)
 
 
 class FishAgent(Fish):

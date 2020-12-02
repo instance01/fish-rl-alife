@@ -62,7 +62,7 @@ class Shark(Animal, ABC):
 
     # Override
     def name(self):
-        return 'Shark.' + str(self.__identifier)
+        return 'Shark.' + str(self._identifier)
 
     def get_action(self, **observation):
         return self.controller.get_action(**observation)
