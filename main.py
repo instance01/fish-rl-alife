@@ -146,6 +146,11 @@ class Experiment:
         if show_gui is not None:
             self.show_gui = show_gui
 
+        if self.cfg['aquarium']['use_fish_pop_curriculum']:
+            self.fish_pop_curriculum = dict(
+                (k, v) for k, v in self.cfg['aquarium']['fish_pop_curriculum']
+            )
+
         # High values increase acceleration, maximum speed and turning circle.
         Shark.FRICTION = self.cfg["aquarium"]["shark_friction"]
         # High values increase acceleration, maximum speed and turning circle.
@@ -198,6 +203,18 @@ class Experiment:
         else:
             self.env = EnvWrapper(self.env)
 
+    def after_epoch_cb(self, epoch):
+        # Ok, the way the sausage is made here is quite fragile.
+        # This assumes that the env is not 'reset' to its old cfg in any way.
+        # No deepcopies, no nothing. The env was created once in the init and
+        # never touched again. That's the assumption. Something to keep in mind.
+        new_fish_pop = self.fish_pop_curriculum.get(epoch, None)
+        if new_fish_pop is not None:
+            self.env.env.max_fish = new_fish_pop
+            # TODO: I know. This is hardcoded for now. If I ever need it, I'll
+            # of course add support for other fish types.
+            self.env.select_fish_types(0, new_fish_pop, 0)
+
     def train(self):
         hostname = socket.gethostname()
         time_str = datetime.datetime.now().strftime('%y.%m.%d-%H:%M:%S')
@@ -236,7 +253,8 @@ class Experiment:
             schedule_gamma_value=self.cfg['ppo']['schedule_gamma_value'],
             tb_logger=self.tb_logger,
             evaluator=self.evaluate_and_log,
-            model_fname=model_fname
+            model_fname=model_fname,
+            after_epoch_cb=self.after_epoch_cb
         )
 
         model.save(model_fname + '-F')  # F stands for final.
@@ -321,5 +339,6 @@ if __name__ == '__main__':
     else:
         # Just do 3 runs. I can cancel whenever I want.
         # Use multi_scancel.sh to cancel multiple jobs in a range.
+        print('DEPRECATED! USE SINGLE OR MULTI KEYWORD!')
         for _ in range(3):
             Experiment(cfg_id).train()
