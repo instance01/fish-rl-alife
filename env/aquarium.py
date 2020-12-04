@@ -117,7 +117,8 @@ class Aquarium:
         self.shark_speed_history = []
         self.shark_tot_reward = defaultdict(int)
         # k: (shark1, shark2), v: dist
-        self.shark_to_shark_dist = {}
+        self.shark_to_shark_dist = defaultdict(list)
+        self.shark_to_shark_dist_at_kill = defaultdict(list)
 
         # GUI
         self.show_gui = show_gui
@@ -178,7 +179,8 @@ class Aquarium:
         self.shark_population_counter = []
         self.shark_speed_history = []
         self.shark_tot_reward = defaultdict(int)
-        self.shark_to_shark_dist = {}
+        self.shark_to_shark_dist = defaultdict(list)
+        self.shark_to_shark_dist_at_kill = defaultdict(list)
 
         # Initialize fishes at random positions.
         for f_type, amount in self.fish_types.items():
@@ -204,7 +206,7 @@ class Aquarium:
         self.shark_population_counter.append(len(self.sharks))
         for (s1, s2) in it.combinations(list(self.track_shark_reward.keys()), 2):
             observation = self.observe_animal(s1, s2)
-            self.shark_to_shark_dist[(s1.name(), s2.name())] = observation[0]
+            self.shark_to_shark_dist[(s1.name(), s2.name())].append(observation[0])
 
         return self.create_named_shark_observation()
 
@@ -290,10 +292,13 @@ class Aquarium:
 
         self.fish_population_counter.append(len(self.fishes))
         self.shark_population_counter.append(len(self.sharks))
-        # TODO: This is copy paste from reset() (~l.205)
+        # TODO: This is roughly copy paste from reset() (~l.205)
         for (s1, s2) in it.combinations(list(self.track_shark_reward.keys()), 2):
+            key = (s1.name(), s2.name())
             observation = self.observe_animal(s1, s2)
-            self.shark_to_shark_dist[(s1.name(), s2.name())] = observation[0]
+            self.shark_to_shark_dist[key].append(observation[0])
+            if self.track_shark_reward[s1] > 0 or self.track_shark_reward[s2] > 0:
+                self.shark_to_shark_dist_at_kill[key].append(observation[0])
 
         return self.create_named_shark_observation(), shark_reward, shark_done
 
