@@ -1010,5 +1010,154 @@
         "ppo": {
             "total_timesteps": 100000
         }
+    },
+    "ma3_fish_curriculum_1": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 2000,
+            "shark_agents": 2,
+            "fish_procreate_after_n_steps": 600,
+            "use_fish_pop_curriculum": true,
+            "fish_pop_curriculum": [[0, 10], [4000, 6], [5000, 4], [6000, 2]]
+        },
+        "ppo": {
+            "total_timesteps": 22e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 7e-5,
+            "cliprange": 0.15
+        }
+    },
+    "ma3_fish_curriculum_gamma_schedule_1": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 2000,
+            "shark_agents": 2,
+            "fish_procreate_after_n_steps": 600,
+            "use_fish_pop_curriculum": true,
+            "fish_pop_curriculum": [[0, 10], [4000, 6], [5000, 4], [6000, 2]]
+        },
+        "ppo": {
+            "total_timesteps": 22e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 6e-5,
+            "cliprange": 0.1,
+            "schedule_gamma": true,
+            "schedule_gamma_after": 5000,
+            "schedule_gamma_value": 0.994
+        }
+    },
+    "ma3_fish_curriculum_gamma_schedule_2": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 2000,
+            "shark_agents": 2,
+            "fish_procreate_after_n_steps": 600,
+            "use_fish_pop_curriculum": true,
+            "fish_pop_curriculum": [[0, 10], [4000, 6], [5000, 4], [6000, 2]]
+        },
+        "ppo": {
+            "total_timesteps": 22e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 6e-5,
+            "cliprange": 0.1,
+            "gamma": 0.992,
+            "schedule_gamma": true,
+            "schedule_gamma_after": 6000,
+            "schedule_gamma_value": 0.995
+        }
+    },
+    "ma3_20M": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 2000,
+            "shark_agents": 2,
+            "fish_procreate_after_n_steps": 600
+        },
+        "ppo": {
+            "total_timesteps": 20e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 6e-5,
+            "cliprange": 0.15
+        }
+    },
+    "ma3_schedule_gamma_3_24M": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 2000,
+            "shark_agents": 2,
+            "fish_procreate_after_n_steps": 600
+        },
+        "ppo": {
+            "total_timesteps": 24e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 1e-4,
+            "cliprange": 0.1,
+            "nminibatches": 1,
+            "noptepochs": 3,
+
+            "schedule_gamma": true,
+            "schedule_gamma_after": 4000,
+            "schedule_gamma_value": 0.995
+        }
+    },
+    "ma3_schedule_gamma_3_24M_1": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 2000,
+            "shark_agents": 2,
+            "fish_procreate_after_n_steps": 600
+        },
+        "ppo": {
+            "total_timesteps": 24e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 9e-5,
+            "cliprange": 0.1,
+            "nminibatches": 1,
+            "noptepochs": 3,
+
+            "schedule_gamma": true,
+            "schedule_gamma_after": 5000,
+            "schedule_gamma_value": 0.994
+        }
+    },
+    "ma3_5noptepochs": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 2000,
+            "shark_agents": 2,
+            "fish_procreate_after_n_steps": 600
+        },
+        "ppo": {
+            "total_timesteps": 18e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 1e-4,
+            "cliprange": 0.15,
+
+            "noptepochs": 5
+        }
+    },
+    "ma3_10noptepochs": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 2000,
+            "shark_agents": 2,
+            "fish_procreate_after_n_steps": 600
+        },
+        "ppo": {
+            "total_timesteps": 18e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 1e-4,
+            "cliprange": 0.15,
+
+            "noptepochs": 10
+        }
     }
 }
