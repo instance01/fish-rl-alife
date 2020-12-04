@@ -43,7 +43,6 @@ class Logger:
         for i, (_, tot_reward) in enumerate(env.shark_tot_reward.items()):
             name = 'Sharks/Shark%d_Tot_Reward' % i
             tf.summary.scalar(name, tot_reward, n_episode)
-        import pdb; pdb.set_trace()
         for (s1, s2) in combinations(list(env.shark_tot_reward.keys()), 2):
             key = (s1.name(), s2.name())
             name_dist = 'Sharks/Shark-%s-%s_Dist_To_Dist' % key
