@@ -5,8 +5,8 @@ import json
 import socket
 import random
 import datetime
-import multiprocessing
 
+from pathos import multiprocessing as multiprocessing
 import tensorflow as tf
 import numpy as np
 from gym.core import Wrapper
@@ -292,9 +292,19 @@ class Experiment:
         # TODO: Honestly the `load` function further below sucks.
         # This one I like more.
         self.env.model = tf.saved_model.load(model_filename)
+        # TODO: Oh boy. Fucking yikes 'trainable_variables_bak'
+        self.env.model.train_model.trainable_variables = self.env.model.trainable_variables_bak
         return self.env.model
 
-    def load(self, model_filename):
+    # TODO Remove this.
+    # def load_full(self, model_filename):
+    #     loaded_model = tf.saved_model.load(model_filename)
+    #     model = self.create_model_obj()
+    #     model.train_model.trainable_variables = loaded_model.train_model.trainable_variables
+    #     # import pdb; pdb.set_trace()
+    #     return self.env.model
+
+    def create_model_obj(self):
         network = self.cfg['ppo']['network']
         ent_coef = self.cfg['ppo']['ent_coef']
         vf_coef = self.cfg['ppo']['vf_coef']
@@ -316,6 +326,10 @@ class Experiment:
             vf_coef=vf_coef,
             max_grad_norm=max_grad_norm
         )
+        return model
+
+    def load(self, model_filename):
+        model = self.create_model_obj()
         model.load(model_filename)
         self.env.model = model
         return model
@@ -351,13 +365,20 @@ class Experiment:
         self.tb_logger.log_summary(self.env, rewards, n_episode, prefix='Eval')
 
     def perturb_weights(self):
-        vars = self.env.model.train_model.trainable_variables
+        # vars = self.env.model.train_model.trainable_variables
+        vars = []
+        vars.extend(self.env.model.train_model.trainable_variables)
         for var in vars:
             noise = np.random.normal(scale=.001, size=var.shape)
             var.assign_add(noise)
 
 
-def worker(experiment):
+def worker(cfg_id, do_load=False, initial_model_fname='', do_perturb=False):
+    experiment = Experiment(cfg_id)
+    if do_load:
+        experiment.load_full(initial_model_fname)
+    if do_perturb:
+        experiment.perturb_weights()
     return experiment.train()
 
 
@@ -371,35 +392,28 @@ def run_evolutionary_algorithm(cfg_id):
           an Experiment with weights + added noise (mutation)
         5. Go to 1.
     """
-    # n_population = 10  # TODO: Not configurable right now.
-    # n_top_sub_population = 5
-    n_population = 2  # TODO: Not configurable right now.
-    n_top_sub_population = 1
-    n_generations = 2
+    n_population = 8  # TODO: Not configurable right now.
+    n_top_sub_population = n_population // 2
+    n_generations = 4
 
-    next_experiments = [Experiment(cfg_id) for _ in range(n_population)]
+    next_args = [(cfg_id,) for _ in range(n_population)]
 
     for i in range(n_generations):
         print('GENERATION ', i + 1)
         pool = multiprocessing.Pool(processes=n_population)
 
         multiple_results = [
-            pool.apply_async(worker, (experiment,))
-            for experiment in next_experiments
+            pool.apply_async(worker, args)
+            for args in next_args
         ]
         models = ([res.get() for res in multiple_results])
         models.sort(key=lambda x: x[0], reverse=True)
         pool.close()
 
-        next_experiments = []
+        next_args = []
         for _, initial_model_fname in models[:n_top_sub_population]:
-            exp1 = Experiment(cfg_id)
-            exp2 = Experiment(cfg_id)
-            exp1.load_full(initial_model_fname)
-            exp2.load_full(initial_model_fname)
-            exp2.perturb_weights()
-            next_experiments.append(exp1)
-            next_experiments.append(exp2)
+            next_args.append((cfg_id, True, initial_model_fname, False))
+            next_args.append((cfg_id, True, initial_model_fname, True))
 
 
 if __name__ == '__main__':
@@ -410,6 +424,7 @@ if __name__ == '__main__':
     #   - python3 main.py cfg_id det  -> Run deterministic shark algorithm.
     #   - python3 main.py cfg_id load runs/model1  -> Watch learnt model.
     cfg_id = sys.argv[1]
+
     if len(sys.argv) > 2:
         extra_action = sys.argv[2]
         if extra_action == 'det':
