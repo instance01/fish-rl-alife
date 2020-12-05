@@ -106,8 +106,8 @@ class MultiAgentEnvWrapper(Wrapper):
         # always the same shark.
         # NOTE: If sharks are allowed to procreate, the assumptions do not hold
         # any longer. Adding new sharks in the middle of an episode may change
-        # the order (e.g. new shark becomes the first shark in the internal hash
-        # table, suddenly the shark we train with has changed).
+        # the order (e.g. new shark becomes the first shark in the internal
+        # hash table, suddenly the shark we train with has changed).
         sharks = list(self.env.sharks)
         if not sharks:
             # TODO .. yikes
@@ -146,8 +146,11 @@ class Experiment:
         if show_gui is not None:
             self.show_gui = show_gui
 
-        self.use_fish_pop_curriculum = self.cfg['aquarium']['use_fish_pop_curriculum']
-        if self.use_fish_pop_curriculum:
+        self.use_fish_pop_curriculum = \
+            self.cfg['aquarium']['use_fish_pop_curriculum']
+        self.use_random_fish_pop_curriculum = \
+            self.cfg['aquarium']['use_random_fish_pop_curriculum']
+        if self.use_fish_pop_curriculum or self.use_random_fish_pop_curriculum:
             self.fish_pop_curriculum = dict(
                 (k, v) for k, v in self.cfg['aquarium']['fish_pop_curriculum']
             )
@@ -161,9 +164,12 @@ class Experiment:
             self.cfg["aquarium"]["shark_max_orientation_change"]
         ))
         Shark.VIEW_DISTANCE = self.cfg["aquarium"]["shark_view_distance"]
-        Shark.PROLONGED_SURVIVAL_PER_EATEN_FISH = self.cfg["aquarium"]["shark_prolonged_survival_per_eaten_fish"]
-        Shark.INITIAL_SURVIVAL_TIME = self.cfg["aquarium"]["shark_initial_survival_time"]
-        Shark.PROCREATE_AFTER_N_EATEN_FISH = self.cfg["aquarium"]["shark_procreate_after_n_eaten_fish"]
+        Shark.PROLONGED_SURVIVAL_PER_EATEN_FISH = \
+            self.cfg["aquarium"]["shark_prolonged_survival_per_eaten_fish"]
+        Shark.INITIAL_SURVIVAL_TIME = \
+            self.cfg["aquarium"]["shark_initial_survival_time"]
+        Shark.PROCREATE_AFTER_N_EATEN_FISH = \
+            self.cfg["aquarium"]["shark_procreate_after_n_eaten_fish"]
 
         # High values decrease acceleration, maximum speed and turning circle.
         Fish.FRICTION = self.cfg["aquarium"]["fish_friction"]
@@ -174,7 +180,8 @@ class Experiment:
             self.cfg["aquarium"]["fish_max_orientation_change"]
         ))
         Fish.VIEW_DISTANCE = self.cfg["aquarium"]["fish_view_distance"]
-        Fish.PROCREATE_AFTER_N_STEPS = self.cfg["aquarium"]["fish_procreate_after_n_steps"]
+        Fish.PROCREATE_AFTER_N_STEPS = \
+            self.cfg["aquarium"]["fish_procreate_after_n_steps"]
 
         self.env = Aquarium(
             observable_sharks=self.cfg["aquarium"]["observable_sharks"],
@@ -208,20 +215,33 @@ class Experiment:
         # Ok, the way the sausage is made here is quite fragile.
         # This assumes that the env is not 'reset' to its old cfg in any way.
         # No deepcopies, no nothing. The env was created once in the init and
-        # never touched again. That's the assumption. Something to keep in mind.
+        # never touched again. That's the assumption. Something to keep in
+        # mind.
         if self.use_fish_pop_curriculum:
             new_fish_pop = self.fish_pop_curriculum.get(epoch, None)
             if new_fish_pop is not None:
                 self.env.env.max_fish = new_fish_pop
-                # TODO: I know. This is hardcoded for now. If I ever need it, I'll
-                # of course add support for other fish types.
+                # TODO: I know. This is hardcoded for now. If I ever need it,
+                # I'll of course add support for other fish types.
                 self.env.select_fish_types(0, new_fish_pop, 0)
+        if self.use_random_fish_pop_curriculum:
+            idx = np.random.randint(len(self.fish_pop_curriculum))
+            new_fish_pop = self.fish_pop_curriculum[idx]
+
+            self.env.env.max_fish = new_fish_pop
+            # TODO: See comment above regarding hardcoding fish type.
+            self.env.select_fish_types(0, new_fish_pop, 0)
 
     def train(self):
         hostname = socket.gethostname()
         time_str = datetime.datetime.now().strftime('%y.%m.%d-%H:%M:%S')
         rand_str = str(int(random.random() * 100000))
-        model_fname = 'runs/' + cfg_id + '-' + hostname + '-' + time_str + '-' + rand_str + '-model'
+        model_fname = 'runs/%s-%s-%s-%s-model' % (
+            cfg_id,
+            hostname,
+            time_str,
+            rand_str
+        )
 
         self.tb_logger = Logger(self.cfg, rand_str)
         logger.configure()
@@ -330,7 +350,8 @@ if __name__ == '__main__':
         if extra_action == 'det':
             from shark_baselines import get_model
             experiment = Experiment(cfg_id)
-            print('TOT REW', sum(experiment.evaluate(get_model(experiment.env), 0)))
+            tot_rew = sum(experiment.evaluate(get_model(experiment.env), 0))
+            print('TOT REW', tot_rew)
         elif extra_action == 'load':
             Experiment(cfg_id, show_gui=True).load_eval(sys.argv[3])
         elif extra_action == 'single':
