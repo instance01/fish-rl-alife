@@ -123,7 +123,7 @@ class Aquarium:
         # GUI
         self.show_gui = show_gui
         self.close = lock_screen
-        self.screen_height = self.screen_width = 700
+        self.screen_height = self.screen_width = 600
         if self.show_gui:
             self.view = View(
                 self.screen_width,

@@ -5,6 +5,7 @@ import json
 import socket
 import random
 import datetime
+import multiprocessing
 
 import tensorflow as tf
 import numpy as np
@@ -237,7 +238,7 @@ class Experiment:
         time_str = datetime.datetime.now().strftime('%y.%m.%d-%H:%M:%S')
         rand_str = str(int(random.random() * 100000))
         model_fname = 'runs/%s-%s-%s-%s-model' % (
-            cfg_id,
+            self.cfg_id,
             hostname,
             time_str,
             rand_str
@@ -284,10 +285,16 @@ class Experiment:
         # import pdb; pdb.set_trace()  # noqa
         self.evaluate_and_log(model, int(total_timesteps / max_steps))
 
-    def load_eval(self, model_filename):
-        self.show_gui = True
-        self.env.env.max_steps = 10000
+        tot_rew_queue = self.tb_logger.tot_rew_queue
+        return sum(tot_rew_queue) / len(tot_rew_queue), model_fname + '-0'
 
+    def load_full(self, model_filename):
+        # TODO: Honestly the `load` function further below sucks.
+        # This one I like more.
+        self.env.model = tf.saved_model.load(model_filename)
+        return self.env.model
+
+    def load(self, model_filename):
         network = self.cfg['ppo']['network']
         ent_coef = self.cfg['ppo']['ent_coef']
         vf_coef = self.cfg['ppo']['vf_coef']
@@ -311,7 +318,12 @@ class Experiment:
         )
         model.load(model_filename)
         self.env.model = model
+        return model
 
+    def load_eval(self, model_filename):
+        self.show_gui = True
+        self.env.env.max_steps = 10000
+        model = self.load(model_filename)
         self.evaluate(model, 0)
 
     def evaluate(self, model, n_episode):
@@ -338,9 +350,62 @@ class Experiment:
         rewards = self.evaluate(model, n_episode)
         self.tb_logger.log_summary(self.env, rewards, n_episode, prefix='Eval')
 
+    def perturb_weights(self):
+        vars = self.env.model.train_model.trainable_variables
+        for var in vars:
+            noise = np.random.normal(scale=.001, size=var.shape)
+            var.assign_add(noise)
+
+
+def worker(experiment):
+    return experiment.train()
+
+
+def run_evolutionary_algorithm(cfg_id):
+    """Run a simple evolutionary algorithm to find excellent models.
+        1. Start Experiments in 10 processes
+        2. Join them
+        3. Get the 5 best experiments based on running avg tot rew over 20
+        4. Get the weights of the 5 best, and for each of them gen
+          an Experiment with same weights
+          an Experiment with weights + added noise (mutation)
+        5. Go to 1.
+    """
+    # n_population = 10  # TODO: Not configurable right now.
+    # n_top_sub_population = 5
+    n_population = 2  # TODO: Not configurable right now.
+    n_top_sub_population = 1
+    n_generations = 2
+
+    next_experiments = [Experiment(cfg_id) for _ in range(n_population)]
+
+    for i in range(n_generations):
+        print('GENERATION ', i + 1)
+        pool = multiprocessing.Pool(processes=n_population)
+
+        multiple_results = [
+            pool.apply_async(worker, (experiment,))
+            for experiment in next_experiments
+        ]
+        models = ([res.get() for res in multiple_results])
+        models.sort(key=lambda x: x[0], reverse=True)
+        pool.close()
+
+        next_experiments = []
+        for _, initial_model_fname in models[:n_top_sub_population]:
+            exp1 = Experiment(cfg_id)
+            exp2 = Experiment(cfg_id)
+            exp1.load_full(initial_model_fname)
+            exp2.load_full(initial_model_fname)
+            exp2.perturb_weights()
+            next_experiments.append(exp1)
+            next_experiments.append(exp2)
+
 
 if __name__ == '__main__':
-    # python3 main.py cfg_id [single|multi]  -> Train using cfg_id.
+    # python3 main.py cfg_id single  -> Train single run using cfg_id.
+    # python3 main.py cfg_id multi  -> Train multiple runs using cfg_id.
+    # python3 main.py cfg_id evolution  -> Train using cfg_id and evolutionary algorithm.
     # python3 main.py cfg_id [extra_action]  -> Do an extra action using cfg_id.
     #   - python3 main.py cfg_id det  -> Run deterministic shark algorithm.
     #   - python3 main.py cfg_id load runs/model1  -> Watch learnt model.
@@ -356,6 +421,8 @@ if __name__ == '__main__':
             Experiment(cfg_id, show_gui=True).load_eval(sys.argv[3])
         elif extra_action == 'single':
             Experiment(cfg_id).train()
+        elif extra_action == 'evolution':
+            run_evolutionary_algorithm(cfg_id)
         elif extra_action == 'multi':
             for _ in range(3):
                 Experiment(cfg_id).train()

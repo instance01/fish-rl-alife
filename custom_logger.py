@@ -26,10 +26,16 @@ class Logger:
         self.custom_file = self.logdir + "/custom.msgpack"
         tf.summary.text('Info/Params', str(cfg), 0)
 
+        self.tot_rew_queue = []  # TODO Make it an actual queue?
+
     def log_summary(self, env, rewards, n_episode, prefix='Train'):
         fish_pop = env.fish_population_counter
         shark_pop = env.shark_population_counter
-        tf.summary.scalar(prefix + '/Tot_Reward', sum(rewards), n_episode)
+        tot_rew = sum(rewards)
+        self.tot_rew_queue.append(tot_rew)
+        if len(self.tot_rew_queue) > 20:
+            self.tot_rew_queue.remove(0)
+        tf.summary.scalar(prefix + '/Tot_Reward', tot_rew, n_episode)
         tf.summary.scalar(prefix + '/Dead_Fishes', env.dead_fishes, n_episode)
         tf.summary.scalar(prefix + '/Dead_Sharks', env.dead_sharks, n_episode)
         tf.summary.scalar(prefix + '/Last_Fish_Population', fish_pop[-1], n_episode)
