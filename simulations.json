@@ -294,12 +294,12 @@
     "dbg_ma": {
         "base_cfg": "1",
         "aquarium": {
-            "max_steps": 2000,
+            "max_steps": 200,
             "shark_agents": 2,
-            "fish_procreate_after_n_steps": 600
+            "fish_procreate_after_n_steps": 100
         },
         "ppo": {
-            "total_timesteps": 10000
+            "total_timesteps": 400
         }
     },
     "13_3_noseed": {
@@ -1408,6 +1408,38 @@
             "network": "mlp_batchnorm",
             "num_layers": 3,
             "lr": 8e-5,
+            "cliprange": 0.15
+        }
+    },
+    "ma3_20M_1": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 2000,
+            "shark_agents": 2,
+            "fish_procreate_after_n_steps": 600
+        },
+        "ppo": {
+            "total_timesteps": 20e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 1e-4,
+            "cliprange": 0.15
+        }
+    },
+    "ma3_15fish_1": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 2000,
+            "shark_agents": 2,
+            "fish_procreate_after_n_steps": 600,
+            "max_fish": 15,
+            "turn_away_fish": 15
+        },
+        "ppo": {
+            "total_timesteps": 18e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 1e-4,
             "cliprange": 0.15
         }
     }

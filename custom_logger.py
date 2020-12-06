@@ -33,8 +33,8 @@ class Logger:
         shark_pop = env.shark_population_counter
         tot_rew = sum(rewards)
         self.tot_rew_queue.append(tot_rew)
-        if len(self.tot_rew_queue) > 20:
-            self.tot_rew_queue.remove(0)
+        if len(self.tot_rew_queue) > 100:
+            self.tot_rew_queue.pop(0)
         tf.summary.scalar(prefix + '/Tot_Reward', tot_rew, n_episode)
         tf.summary.scalar(prefix + '/Dead_Fishes', env.dead_fishes, n_episode)
         tf.summary.scalar(prefix + '/Dead_Sharks', env.dead_sharks, n_episode)
