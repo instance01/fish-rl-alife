@@ -151,10 +151,12 @@ class Experiment:
             self.cfg['aquarium']['use_fish_pop_curriculum']
         self.use_random_fish_pop_curriculum = \
             self.cfg['aquarium']['use_random_fish_pop_curriculum']
-        if self.use_fish_pop_curriculum or self.use_random_fish_pop_curriculum:
+        if self.use_fish_pop_curriculum:
             self.fish_pop_curriculum = dict(
                 (k, v) for k, v in self.cfg['aquarium']['fish_pop_curriculum']
             )
+        if self.use_random_fish_pop_curriculum:
+            self.fish_pop_curriculum = [x[1] for x in self.cfg['aquarium']['fish_pop_curriculum']]
 
         # High values increase acceleration, maximum speed and turning circle.
         Shark.FRICTION = self.cfg["aquarium"]["shark_friction"]
@@ -237,7 +239,7 @@ class Experiment:
         hostname = socket.gethostname()
         time_str = datetime.datetime.now().strftime('%y.%m.%d-%H:%M:%S')
         rand_str = str(int(random.random() * 100000))
-        model_fname = 'runs/%s-%s-%s-%s-model' % (
+        model_fname = 'models/%s-%s-%s-%s-model' % (
             self.cfg_id,
             hostname,
             time_str,
@@ -292,12 +294,12 @@ class Experiment:
         # TODO: Honestly the `load` function further below sucks.
         # This one I like more.
         self.env.model = tf.saved_model.load(model_filename)
-        # TODO: Oh boy. Fucking yikes 'trainable_variables_bak'
         self.env.model.train_model.trainable_variables = self.env.model.trainable_variables_bak
         return self.env.model
 
-    # TODO Remove this.
     # def load_full(self, model_filename):
+    #     # TODO: Honestly the `load` function further below sucks.
+    #     # This one I like more.
     #     loaded_model = tf.saved_model.load(model_filename)
     #     model = self.create_model_obj()
     #     model.train_model.trainable_variables = loaded_model.train_model.trainable_variables
