@@ -13,6 +13,7 @@ from gym.core import Wrapper
 from gym import spaces
 from baselines import logger
 from baselines.ppo2 import ppo2
+from baselines.ppo2 import ppo2_ma
 from baselines.ppo2.model import Model
 from baselines.common.models import get_network_builder
 
@@ -53,7 +54,7 @@ class EnvWrapper(Wrapper):
         self.env.num_envs = 1
         Wrapper.__init__(self, env=env)
 
-    def step(self, action):
+    def step(self, action, **kwargs):
         sharks = list(self.env.sharks)
         if not sharks:
             # TODO .. yikes
@@ -69,7 +70,7 @@ class EnvWrapper(Wrapper):
             {}
         )
 
-    def reset(self):
+    def reset(self, **kwargs):
         obs = self.env.reset()
         shark = next(iter(obs.keys()))
         return obs[shark]
@@ -95,7 +96,7 @@ class MultiAgentEnvWrapper(Wrapper):
 
         Wrapper.__init__(self, env=env)
 
-    def step(self, action):
+    def step(self, action, **kwargs):
         # self.env.sharks is a set, so the careful reader might lament the lack
         # of order in sets here. But this is fine. Sets still have an order,
         # it's just non-intuitive for the user - it's simply the hash order.
@@ -131,7 +132,71 @@ class MultiAgentEnvWrapper(Wrapper):
             {}
         )
 
-    def reset(self):
+    def reset(self, **kwargs):
+        obs = self.env.reset()
+        shark = next(iter(obs.keys()))
+        self.last_obs = obs
+        return obs[shark]
+
+
+class MultiAgentEnvWrapperTwoNets(Wrapper):
+    """TODO: A major limitation of this: Only supports two sharks."""
+    def __init__(self, env):
+        self.env = env
+        self.env.action_space = spaces.Box(low=-1.0, high=1.0, shape=(2,))
+        self.n = 2 + self.env.observable_sharks * 3 +\
+            self.env.observable_fishes * 3 +\
+            self.env.observable_walls * 2
+        self.env.observation_space = spaces.Box(
+            low=-1.0, high=1.0, shape=(self.n,)
+        )
+        self.env.reward_range = (-float('inf'), float('inf'))
+        self.env.spec = None
+        self.env.metadata = {'render.modes': ['human']}
+        self.env.num_envs = 1
+
+        self.last_obs = None
+        self.model1 = None  # Needs to be set.
+        self.model2 = None  # Needs to be set.
+
+        Wrapper.__init__(self, env=env)
+
+    def step(self, action, model_id=None):
+        sharks = list(self.env.sharks)
+        if not sharks:
+            # TODO .. yikes
+            return ([0.] * self.n, 0, True, {})
+
+        if model_id == 'm1':
+            # model1 has given us its action.
+            action1 = (action[0][0], action[0][1], False)
+            action2 = model_inference(self.model2, self.last_obs[sharks[1].name])
+            action2 = (action2[0][0], action2[0][1], False)
+        if model_id == 'm2':
+            # model2 has given us its action.
+            action1 = model_inference(self.model1, self.last_obs[sharks[0].name])
+            action1 = (action1[0][0], action1[0][1], False)
+            action2 = (action[0][0], action[0][1], False)
+
+        joint_action = {}
+        joint_action[sharks[0].name] = action1
+        joint_action[sharks[1].name] = action2
+
+        obs, reward, done = self.env.step(joint_action)
+        self.last_obs = obs
+
+        shark = sharks[0] if model_id == 'm1' else sharks[1]
+        shark = shark.name
+        return (
+            obs.get(shark, np.array([0.] * self.n)),
+            reward[shark],
+            done[shark],
+            {}
+        )
+
+    def reset(self, model_id=None):
+        # TODO HERE WE ALSO NEED TO DIFFERENTIATE BETWEEN MODELS!
+        # Add support to ppo2.py
         obs = self.env.reset()
         shark = next(iter(obs.keys()))
         self.last_obs = obs
@@ -209,10 +274,14 @@ class Experiment:
             self.cfg["aquarium"]["shark_agents"]
         )
 
-        if self.cfg["aquarium"]["shark_agents"] > 1:
-            self.env = MultiAgentEnvWrapper(self.env)
+        self.two_nets = self.cfg["ppo"]["two_nets"]
+        if self.two_nets:
+            self.env = MultiAgentEnvWrapperTwoNets(self.env)
         else:
-            self.env = EnvWrapper(self.env)
+            if self.cfg["aquarium"]["shark_agents"] > 1:
+                self.env = MultiAgentEnvWrapper(self.env)
+            else:
+                self.env = EnvWrapper(self.env)
 
     def after_epoch_cb(self, epoch):
         # Ok, the way the sausage is made here is quite fragile.
@@ -252,41 +321,46 @@ class Experiment:
         total_timesteps = self.cfg['ppo']['total_timesteps']
         max_steps = self.cfg['aquarium']['max_steps']
 
-        model = ppo2.learn(
-            env=self.env,
-            network=self.cfg['ppo']['network'],
-            total_timesteps=total_timesteps,
+        kwargs = {
+            "env": self.env,
+            "network": self.cfg['ppo']['network'],
+            "total_timesteps": total_timesteps,
             # TODO Seed..
-            # seed=self.cfg['ppo']['seed'],
+            # seed": self.cfg['ppo']['seed'],
             # TODO: For now for consistency we use Aquarium max_steps as nsteps
-            nsteps=max_steps,
-            ent_coef=self.cfg['ppo']['ent_coef'],
-            lr=self.cfg['ppo']['lr'],
-            vf_coef=self.cfg['ppo']['vf_coef'],
-            max_grad_norm=self.cfg['ppo']['max_grad_norm'],
-            gamma=self.cfg['ppo']['gamma'],
-            lam=self.cfg['ppo']['lam'],
-            log_interval=self.cfg['ppo']['log_interval'],
-            nminibatches=self.cfg['ppo']['nminibatches'],
-            noptepochs=self.cfg['ppo']['noptepochs'],
-            cliprange=self.cfg['ppo']['cliprange'],
-            save_interval=self.cfg['ppo']['save_interval'],
-            num_layers=self.cfg['ppo']['num_layers'],
-            num_hidden=self.cfg['ppo']['num_hidden'],
-            schedule_gamma=self.cfg['ppo']['schedule_gamma'],
-            schedule_gamma_after=self.cfg['ppo']['schedule_gamma_after'],
-            schedule_gamma_value=self.cfg['ppo']['schedule_gamma_value'],
-            tb_logger=self.tb_logger,
-            evaluator=self.evaluate_and_log,
-            model_fname=model_fname,
-            after_epoch_cb=self.after_epoch_cb
-        )
+            "nsteps": max_steps,
+            "ent_coef": self.cfg['ppo']['ent_coef'],
+            "lr": self.cfg['ppo']['lr'],
+            "vf_coef": self.cfg['ppo']['vf_coef'],
+            "max_grad_norm": self.cfg['ppo']['max_grad_norm'],
+            "gamma": self.cfg['ppo']['gamma'],
+            "lam": self.cfg['ppo']['lam'],
+            "log_interval": self.cfg['ppo']['log_interval'],
+            "nminibatches": self.cfg['ppo']['nminibatches'],
+            "noptepochs": self.cfg['ppo']['noptepochs'],
+            "cliprange": self.cfg['ppo']['cliprange'],
+            "save_interval": self.cfg['ppo']['save_interval'],
+            "num_layers": self.cfg['ppo']['num_layers'],
+            "num_hidden": self.cfg['ppo']['num_hidden'],
+            "schedule_gamma": self.cfg['ppo']['schedule_gamma'],
+            "schedule_gamma_after": self.cfg['ppo']['schedule_gamma_after'],
+            "schedule_gamma_value": self.cfg['ppo']['schedule_gamma_value'],
+            "tb_logger": self.tb_logger,
+            "evaluator": self.evaluate_and_log,
+            "model_fname": model_fname,
+            "after_epoch_cb": self.after_epoch_cb
+        }
 
-        model.save(model_fname + '-F')  # F stands for final.
+        if self.two_nets:
+            model1, model2 = ppo2_ma.learn(**kwargs)
+            model1.save(model_fname + '-F-m1')  # F stands for final.
+            model2.save(model_fname + '-F-m2')  # F stands for final.
+        else:
+            model = ppo2.learn(**kwargs)
+            model.save(model_fname + '-F')  # F stands for final.
+            self.evaluate_and_log(model, int(total_timesteps / max_steps))
 
-        # import pdb; pdb.set_trace()  # noqa
-        self.evaluate_and_log(model, int(total_timesteps / max_steps))
-
+        # This is used for the evolutionary algorithm.
         tot_rew_queue = self.tb_logger.tot_rew_queue
         return sum(tot_rew_queue) / len(tot_rew_queue), model_fname + '-0'
 
@@ -337,10 +411,19 @@ class Experiment:
         return model
 
     def load_eval(self, model_filename):
+        if self.two_nets:
+            return self._load_eval_two_nets(model_filename)
         self.show_gui = True
         self.env.env.max_steps = 10000
         model = self.load(model_filename)
         self.evaluate(model, 0)
+
+    def _load_eval_two_nets(self, model_filename):
+        self.show_gui = True
+        self.env.env.max_steps = 10000
+        self.env.model1 = self.load(model_filename + '-m1')
+        self.env.model2 = self.load(model_filename + '-m2')
+        self.evaluate(self.env.model1, 0)
 
     def evaluate(self, model, n_episode):
         """Run an evaluation game."""
@@ -351,7 +434,7 @@ class Experiment:
         while not self.env.env.is_finished:
             i += 1
             action = model_inference(model, obs)
-            obs, reward, done, info = self.env.step(action)
+            obs, reward, done, info = self.env.step(action, 'm1')
             if self.show_gui:
                 self.env.env.render()
             rewards.append(reward)
