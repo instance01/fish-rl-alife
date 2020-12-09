@@ -75,7 +75,7 @@ class EnvWrapper(Wrapper):
         self.env.num_envs = 1
         Wrapper.__init__(self, env=env)
 
-    def step(self, action, **kwargs):
+    def step(self, action, *args, **kwargs):
         sharks = list(self.env.sharks)
         if not sharks:
             # TODO .. yikes
@@ -91,7 +91,7 @@ class EnvWrapper(Wrapper):
             {}
         )
 
-    def reset(self, **kwargs):
+    def reset(self, *args, **kwargs):
         obs = self.env.reset()
         shark = next(iter(obs.keys()))
         return obs[shark]
@@ -117,7 +117,7 @@ class MultiAgentEnvWrapper(Wrapper):
 
         Wrapper.__init__(self, env=env)
 
-    def step(self, action, **kwargs):
+    def step(self, action, *args, **kwargs):
         # self.env.sharks is a set, so the careful reader might lament the lack
         # of order in sets here. But this is fine. Sets still have an order,
         # it's just non-intuitive for the user - it's simply the hash order.
@@ -153,7 +153,7 @@ class MultiAgentEnvWrapper(Wrapper):
             {}
         )
 
-    def reset(self, **kwargs):
+    def reset(self, *args, **kwargs):
         obs = self.env.reset()
         shark = next(iter(obs.keys()))
         self.last_obs = obs
@@ -325,7 +325,7 @@ class Experiment:
             # TODO: See comment above regarding hardcoding fish type.
             self.env.select_fish_types(0, new_fish_pop, 0)
 
-    def train(self):
+    def train(self, load_path=None):
         hostname = socket.gethostname()
         time_str = datetime.datetime.now().strftime('%y.%m.%d-%H:%M:%S')
         rand_str = str(int(random.random() * 100000))
@@ -369,7 +369,8 @@ class Experiment:
             "tb_logger": self.tb_logger,
             "evaluator": self.evaluate_and_log,
             "model_fname": model_fname,
-            "after_epoch_cb": self.after_epoch_cb
+            "after_epoch_cb": self.after_epoch_cb,
+            "load_path": load_path
         }
 
         if self.two_nets:
@@ -390,6 +391,7 @@ class Experiment:
         # This one I like more.
         self.env.model = tf.saved_model.load(model_filename)
         self.env.model.train_model.trainable_variables = self.env.model.trainable_variables_bak
+        self.env.model.train_model.initial_state = self.env.model.initial_state_bak
         return self.env.model
 
     # def load_full(self, model_filename):
@@ -529,6 +531,7 @@ if __name__ == '__main__':
     # python3 main.py cfg_id [extra_action]  -> Do an extra action using cfg_id.
     #   - python3 main.py cfg_id det  -> Run deterministic shark algorithm.
     #   - python3 main.py cfg_id load runs/model1  -> Watch learnt model.
+    #   - python3 main.py cfg_id continue runs/model1  -> Continue using pretrained model.
     cfg_id = sys.argv[1]
 
     if len(sys.argv) > 2:
@@ -540,6 +543,8 @@ if __name__ == '__main__':
             print('TOT REW', tot_rew)
         elif extra_action == 'load':
             Experiment(cfg_id, show_gui=True).load_eval(sys.argv[3])
+        elif extra_action == 'continue':
+            Experiment(cfg_id).train(sys.argv[3])
         elif extra_action == 'single':
             Experiment(cfg_id).train()
         elif extra_action == 'evolution':
