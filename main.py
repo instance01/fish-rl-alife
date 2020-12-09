@@ -1,4 +1,25 @@
 #!/usr/bin/env python3
+"""This file is structures as follows.
+First, a set of environment wrappers to make them work with baselines PPO.
+This is especially needed since we get dicts from the aquarium environment, but
+we would like to work with vectors.
+Specifically, at first there is a standard EnvWrapper for the single shark use
+case. Not used much any longer, this is what I've started with. Next, the
+MultiAgentEnvWrapper for two or more sharks. This one supports an optional
+evolutionary algorithm (`run_evolutionary_algorithm`) to find models in which
+the sharks cooperate. Lastly, there is the MultiAgentEnvWrapperTwoNets class in
+which two models are learnt in parallel, i.e. each shark has its own net.
+
+Next, you find the Experiment class, which loads the given configuration,
+trains a model and optionally evaluates it (with a GUI). Plotting is not done
+here - the baselines PPO that I've forked uses the custom tensorboard logger
+in `custom_logger.py` and afterwards auxiliary scripts can be used to create
+plots based on the files logged.
+
+Configuration is done using `simulations.json`. There are hundreds of
+configurations available, but the main one I've used was `ma3` (and
+derivatives).
+"""
 import os
 import sys
 import json
