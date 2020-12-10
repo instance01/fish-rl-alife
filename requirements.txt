@@ -1,5 +1,4 @@
 tensorflow
 gym
 pygame
-pathos
 git+git://github.com/Instance-contrib/baselines@tf2-instance#egg=baselines
