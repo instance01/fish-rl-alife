@@ -340,7 +340,7 @@ class Experiment:
         if self.evolution:
             model_fname += '-evolution'
 
-        self.tb_logger = Logger(self.cfg, rand_str)
+        self.tb_logger = Logger(self.cfg, rand_str, self.evolution)
         logger.configure()
 
         total_timesteps = self.cfg['ppo']['total_timesteps']
@@ -516,9 +516,9 @@ def run_evolutionary_algorithm(cfg_id):
         5. Go to 1.
     """
     logger = EvolutionLogger(cfg_id)
-    n_population = 2  # TODO: Not configurable right now.
+    n_population = 10  # TODO: Not configurable right now.
     n_top_sub_population = n_population // 2
-    n_generations = 3
+    n_generations = 5
 
     next_args = [(cfg_id,) for _ in range(n_population)]
 
