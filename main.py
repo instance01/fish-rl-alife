@@ -27,7 +27,7 @@ import socket
 import random
 import datetime
 
-from pathos import multiprocessing as multiprocessing
+import multiprocessing
 import tensorflow as tf
 import numpy as np
 from gym.core import Wrapper
@@ -44,6 +44,7 @@ from env.aquarium import Aquarium
 from env.shark import Shark
 from env.fish import Fish
 from custom_logger import Logger
+from custom_logger import EvolutionLogger
 from config import Config
 
 
@@ -225,13 +226,14 @@ class MultiAgentEnvWrapperTwoNets(Wrapper):
 
 
 class Experiment:
-    def __init__(self, cfg_id, show_gui=None):
+    def __init__(self, cfg_id, show_gui=None, evolution=False):
         self.cfg_id = cfg_id
         self.cfg = Config().get_cfg(cfg_id)
         print(json.dumps(self.cfg, indent=4))
         self.show_gui = self.cfg["aquarium"]["show_gui"]
         if show_gui is not None:
             self.show_gui = show_gui
+        self.evolution = evolution
 
         self.use_fish_pop_curriculum = \
             self.cfg['aquarium']['use_fish_pop_curriculum']
@@ -335,6 +337,8 @@ class Experiment:
             time_str,
             rand_str
         )
+        if self.evolution:
+            model_fname += '-evolution'
 
         self.tb_logger = Logger(self.cfg, rand_str)
         logger.configure()
@@ -373,13 +377,14 @@ class Experiment:
             "load_path": load_path
         }
 
+        # Below F stands for final.
         if self.two_nets:
             model1, model2 = ppo2_ma.learn(**kwargs)
-            model1.save(model_fname + '-F-m1')  # F stands for final.
-            model2.save(model_fname + '-F-m2')  # F stands for final.
+            model1.save(model_fname + '-F-m1')
+            model2.save(model_fname + '-F-m2')
         else:
             model = ppo2.learn(**kwargs)
-            model.save(model_fname + '-F')  # F stands for final.
+            model.save(model_fname + '-F')
             self.evaluate_and_log(model, int(total_timesteps / max_steps))
 
         # This is used for the evolutionary algorithm.
@@ -390,8 +395,18 @@ class Experiment:
         # TODO: Honestly the `load` function further below sucks.
         # This one I like more.
         self.env.model = tf.saved_model.load(model_filename)
-        self.env.model.train_model.trainable_variables = self.env.model.trainable_variables_bak
-        self.env.model.train_model.initial_state = self.env.model.initial_state_bak
+
+        if hasattr(self.env.model, 'trainable_variables_bak'):
+            self.env.model.train_model.trainable_variables = self.env.model.trainable_variables_bak
+        else:
+            self.env.model.train_model.trainable_variables = None
+        if hasattr(self.env.model, 'initial_state_bak'):
+            self.env.model.train_model.initial_state = self.env.model.initial_state_bak
+            self.env.model.initial_state = self.env.model.initial_state_bak
+        else:
+            self.env.model.train_model.initial_state = None
+            self.env.model.initial_state = None
+
         return self.env.model
 
     # def load_full(self, model_filename):
@@ -482,7 +497,7 @@ class Experiment:
 
 
 def worker(cfg_id, do_load=False, initial_model_fname='', do_perturb=False):
-    experiment = Experiment(cfg_id)
+    experiment = Experiment(cfg_id, evolution=True)
     if do_load:
         experiment.load_full(initial_model_fname)
     if do_perturb:
@@ -500,9 +515,10 @@ def run_evolutionary_algorithm(cfg_id):
           an Experiment with weights + added noise (mutation)
         5. Go to 1.
     """
-    n_population = 8  # TODO: Not configurable right now.
+    logger = EvolutionLogger(cfg_id)
+    n_population = 2  # TODO: Not configurable right now.
     n_top_sub_population = n_population // 2
-    n_generations = 4
+    n_generations = 3
 
     next_args = [(cfg_id,) for _ in range(n_population)]
 
@@ -517,6 +533,9 @@ def run_evolutionary_algorithm(cfg_id):
         models = ([res.get() for res in multiple_results])
         models.sort(key=lambda x: x[0], reverse=True)
         pool.close()
+
+        logger.log(models, i)
+        print(models)
 
         next_args = []
         for _, initial_model_fname in models[:n_top_sub_population]:
