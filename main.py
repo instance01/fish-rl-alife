@@ -29,6 +29,7 @@ import datetime
 
 import multiprocessing
 import tensorflow as tf
+import tensorflow.python.ops.summary_ops_v2
 import numpy as np
 from gym.core import Wrapper
 from gym import spaces
@@ -497,6 +498,17 @@ class Experiment:
 
 
 def worker(cfg_id, do_load=False, initial_model_fname='', do_perturb=False):
+    # Multiprocessing and threading.local don't work well together.
+    # Experiment class below creates a tb logger (from our custom_logger.py)
+    # which in turn creates a tf file writer which in turns uses threading.local
+    # to keep track of the current default writer.
+    # Since in our parent process (note: process, not thread) we also create
+    # a tf file writer and in the multiprocessing pool all data is copied, since
+    # we're using the Linux fork which just copies all the shit (unlike in
+    # threads which share lots of stuff except for things like threading.local),
+    # I suspect something doesn't work out here.
+    tensorflow.python.ops.summary_ops_v2._summary_state.writer = None
+
     experiment = Experiment(cfg_id, evolution=True)
     if do_load:
         experiment.load_full(initial_model_fname)
