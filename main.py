@@ -190,25 +190,32 @@ class MultiAgentEnvWrapperTwoNets(Wrapper):
             # TODO .. yikes
             return ([0.] * self.n, 0, True, {})
 
-        if model_id == 'm1':
-            # model1 has given us its action.
-            action1 = (action[0][0], action[0][1], False)
-            action2 = model_inference(self.model2, self.last_obs[sharks[1].name])
-            action2 = (action2[0][0], action2[0][1], False)
-        if model_id == 'm2':
-            # model2 has given us its action.
-            action1 = model_inference(self.model1, self.last_obs[sharks[0].name])
-            action1 = (action1[0][0], action1[0][1], False)
-            action2 = (action[0][0], action[0][1], False)
-
         joint_action = {}
-        joint_action[sharks[0].name] = action1
-        joint_action[sharks[1].name] = action2
+        if len(sharks) > 1:
+            if model_id == 'm1':
+                # model1 has given us its action.
+                action1 = (action[0][0], action[0][1], False)
+                action2 = model_inference(self.model2, self.last_obs[sharks[1].name])
+                action2 = (action2[0][0], action2[0][1], False)
+            if model_id == 'm2':
+                # model2 has given us its action.
+                action1 = model_inference(self.model1, self.last_obs[sharks[0].name])
+                action1 = (action1[0][0], action1[0][1], False)
+                action2 = (action[0][0], action[0][1], False)
+
+            joint_action[sharks[0].name] = action1
+            joint_action[sharks[1].name] = action2
+        else:
+            action = (action[0][0], action[0][1], False)
+            joint_action[sharks[0].name] = action
 
         obs, reward, done = self.env.step(joint_action)
         self.last_obs = obs
 
-        shark = sharks[0] if model_id == 'm1' else sharks[1]
+        if len(sharks) > 1:
+            shark = sharks[0] if model_id == 'm1' else sharks[1]
+        else:
+            shark = sharks[0]
         shark = shark.name
         return (
             obs.get(shark, np.array([0.] * self.n)),
