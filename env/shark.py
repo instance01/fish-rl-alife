@@ -60,6 +60,10 @@ class Shark(Animal, ABC):
         max_survival_time = self.INITIAL_SURVIVAL_TIME + self.eaten_fish * self.PROLONGED_SURVIVAL_PER_EATEN_FISH
         return (self.survived_n_steps / max_survival_time) >= 1
 
+    def starving_indicator(self):
+        max_survival_time = self.INITIAL_SURVIVAL_TIME + self.eaten_fish * self.PROLONGED_SURVIVAL_PER_EATEN_FISH
+        return self.survived_n_steps / max_survival_time
+
     # Override
     def name(self):
         return 'Shark.' + str(self._identifier)

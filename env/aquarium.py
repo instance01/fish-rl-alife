@@ -396,6 +396,16 @@ class Aquarium:
                     if fish in self.fishes:
                         self.fishes.remove(fish)
                     if shark in self.track_shark_reward:
+                        # This was to check whether we have real cooperation or
+                        # herding.
+                        # Well, we have herding.
+                        #
+                        # for shark_ in self.sharks:
+                        #     if shark_ == shark:
+                        #         print('s', shark_.starving_indicator())
+                        #     else:
+                        #         print('o', shark_.starving_indicator())
+                        # print('')
                         self.track_shark_reward[shark] += 10
                         self.shark_tot_reward[shark] += 10
                         self.dead_fishes += 1

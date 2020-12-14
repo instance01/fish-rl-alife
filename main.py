@@ -456,13 +456,14 @@ class Experiment:
         self.env.model = model
         return model
 
-    def load_eval(self, model_filename):
+    def load_eval(self, model_filename, steps=10000):
         if self.two_nets:
             return self._load_eval_two_nets(model_filename)
         self.show_gui = True
-        self.env.env.max_steps = 10000
+        self.env.env.max_steps = steps
         model = self.load(model_filename)
         self.evaluate(model, 0)
+        return self.env.fish_population_counter
 
     def _load_eval_two_nets(self, model_filename):
         self.show_gui = True
@@ -594,5 +595,5 @@ if __name__ == '__main__':
         # Just do 3 runs. I can cancel whenever I want.
         # Use multi_scancel.sh to cancel multiple jobs in a range.
         print('DEPRECATED! USE SINGLE OR MULTI KEYWORD!')
-        for _ in range(3):
+        for _ in range(2):
             Experiment(cfg_id).train()
