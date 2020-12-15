@@ -23,3 +23,5 @@ guide/guide.aux
 __pycache__
 .swp
 plottex/*
+
+paper/example
