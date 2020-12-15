@@ -3,7 +3,7 @@ MARL on Aquarium environment --- can sharks learn to cooperate? Or is the traged
 
 Using PPO.
 
-![PPO](plot.png)
+![PPO](plots/plot.png)
 
 
 ## Debugging
