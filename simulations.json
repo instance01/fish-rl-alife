@@ -3516,5 +3516,150 @@
 
             "two_nets": true
         }
+    },
+    "ma3_obs_starve_maxsteps_t1500_p150_5fish_two_net_killzone": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 3000,
+            "shark_agents": 2,
+            "fish_procreate_after_n_steps": 600,
+            "observable_fishes": 5,
+            "shark_prolonged_survival_per_eaten_fish": 150,
+            "shark_initial_survival_time": 1500,
+            "max_fish": 5,
+            "turn_away_fish": 5,
+
+            "shared_kill_zone": true
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 9e-5,
+            "cliprange": 0.1,
+
+            "two_nets": true
+        }
+    },
+    "ma3_obs_starve_maxsteps_t1500_p150_two_net_killzone": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 3000,
+            "shark_agents": 2,
+            "fish_procreate_after_n_steps": 600,
+            "observable_fishes": 5,
+            "shark_prolonged_survival_per_eaten_fish": 150,
+            "shark_initial_survival_time": 1500,
+            "max_fish": 10,
+            "turn_away_fish": 10,
+
+            "shared_kill_zone": true
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 9e-5,
+            "cliprange": 0.1,
+
+            "two_nets": true
+        }
+    },
+    "ma3_obs_starve_maxsteps_t1500_p150_two_net_global_rew": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 3000,
+            "shark_agents": 2,
+            "fish_procreate_after_n_steps": 600,
+            "observable_fishes": 5,
+            "shark_prolonged_survival_per_eaten_fish": 150,
+            "shark_initial_survival_time": 1500,
+            "max_fish": 10,
+            "turn_away_fish": 10,
+
+            "use_global_reward": true
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 9e-5,
+            "cliprange": 0.1,
+
+            "two_nets": true
+        }
+    },
+    "ma3_obs_starve_maxsteps_t1500_p150_two_net_global_rew_stop": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 3000,
+            "shark_agents": 2,
+            "fish_procreate_after_n_steps": 600,
+            "observable_fishes": 5,
+            "shark_prolonged_survival_per_eaten_fish": 150,
+            "shark_initial_survival_time": 1500,
+            "max_fish": 10,
+            "turn_away_fish": 10,
+
+            "use_global_reward": true,
+            "stop_globally_on_first_shark_death": true
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 9e-5,
+            "cliprange": 0.1,
+
+            "two_nets": true
+        }
+    },
+    "ma3_obs_starve_maxsteps_t800_p150_two_net_global_rew_stop": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 3000,
+            "shark_agents": 2,
+            "fish_procreate_after_n_steps": 600,
+            "observable_fishes": 5,
+            "shark_prolonged_survival_per_eaten_fish": 150,
+            "shark_initial_survival_time": 800,
+            "max_fish": 10,
+            "turn_away_fish": 10,
+
+            "use_global_reward": true,
+            "stop_globally_on_first_shark_death": true
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 9e-5,
+            "cliprange": 0.1,
+
+            "two_nets": true
+        }
+    },
+    "ma3_obs_starve_maxsteps_t800_p150_global_rew_stop": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 3000,
+            "shark_agents": 2,
+            "fish_procreate_after_n_steps": 600,
+            "observable_fishes": 5,
+            "shark_prolonged_survival_per_eaten_fish": 150,
+            "shark_initial_survival_time": 800,
+            "max_fish": 10,
+            "turn_away_fish": 10,
+
+            "use_global_reward": true,
+            "stop_globally_on_first_shark_death": true
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 9e-5,
+            "cliprange": 0.1
+        }
     }
 }
