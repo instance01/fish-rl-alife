@@ -16,3 +16,5 @@ python3 -m pdb -c continue main.py
 Best so far: 13\_3 and ma3 (20-11-27\_07:56:47-99-inn.cip.ifi.lmu.de-ma3)
 
 Of course ma3 had the sharks not die. So they cooperated because they can't die and cooperating increases reward.
+
+![Sterberisiko vs Herding rate](plots/ALIFE sterberisiko vs herding rate.png)
