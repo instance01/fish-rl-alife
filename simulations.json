@@ -37,7 +37,9 @@
             "fish_pop_curriculum": [[0, 10], [4000, 5], [5000, 2]],
 
             "shared_kill_zone": false,
-            "kill_zone_radius": 10.0
+            "kill_zone_radius": 10.0,
+            "use_global_reward": false,
+            "stop_globally_on_first_shark_death": false
         },
         "ppo": {
             "network": "mlp",

@@ -296,7 +296,9 @@ class Experiment:
             seed=self.cfg["aquarium"]["seed"],
             show_gui=self.show_gui,
             shared_kill_zone=self.cfg["aquarium"]["shared_kill_zone"],
-            kill_zone_radius=self.cfg["aquarium"]["kill_zone_radius"]
+            kill_zone_radius=self.cfg["aquarium"]["kill_zone_radius"],
+            use_global_reward=self.cfg["aquarium"]["use_global_reward"],
+            stop_globally_on_first_shark_death=self.cfg["aquarium"]["stop_globally_on_first_shark_death"]
         )
         self.env.select_fish_types(
             self.cfg["aquarium"]["random_fish"],

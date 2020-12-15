@@ -40,7 +40,9 @@ class Aquarium:
         seed=42,
         show_gui=False,
         shared_kill_zone=False,
-        kill_zone_radius=10.
+        kill_zone_radius=10.,
+        use_global_reward=False,
+        stop_globally_on_first_shark_death=False
     ):
         # if seed is None or seed == 'none':
         #     seed = int(1000000000 * np.random.random())
@@ -66,6 +68,8 @@ class Aquarium:
             self.height
         )
         self.water_friction = water_friction
+        self.use_global_reward = use_global_reward
+        self.stop_globally_on_first_shark_death = stop_globally_on_first_shark_death
 
         # Observation and action space.
         self.observable_walls: int = observable_walls
@@ -399,6 +403,14 @@ class Aquarium:
             else:
                 self.track_shark_reward[shark] += 10
                 self.shark_tot_reward[shark] += 10
+
+                if self.use_global_reward:
+                    for shark_ in self.sharks:
+                        if shark_ == shark:
+                            continue
+                        self.track_shark_reward[shark_] += 10
+                        self.shark_tot_reward[shark_] += 10
+
             self.dead_fishes += 1
             shark.eaten_fish += 1
 
@@ -463,6 +475,9 @@ class Aquarium:
             for a1, a2 in combinations:
                 if self.collision_space.check_collision(a1, a2):
                     self.collision_space.perform_collision(a1, a2)
+
+        if self.stop_globally_on_first_shark_death and len(starved_sharks) > 0:
+            self.sharks = set()
 
     def create_named_shark_observation(self) -> np.array:
         """Creates a dict map the name of each shark to his corresponding
