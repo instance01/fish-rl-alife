@@ -26,19 +26,21 @@ ACTION_MAX = 1.0
 class Aquarium:
     def __init__(
         self,
-        size: int = 40,
-        observable_sharks: int = 2,
-        observable_fishes: int = 3,
-        observable_walls: int = 2,
-        max_steps: int = 500,
-        max_fish: int = 30,
-        max_sharks: int = 5,
-        water_friction: float = 0.08,
-        torus: bool = False,
-        fish_collision: bool = True,
-        lock_screen: bool = False,
+        size=40,
+        observable_sharks=2,
+        observable_fishes=3,
+        observable_walls=2,
+        max_steps=500,
+        max_fish=30,
+        max_sharks=5,
+        water_friction=0.08,
+        torus=False,
+        fish_collision=True,
+        lock_screen=False,
         seed=42,
-        show_gui=False
+        show_gui=False,
+        shared_kill_zone=False,
+        kill_zone_radius=10.
     ):
         # if seed is None or seed == 'none':
         #     seed = int(1000000000 * np.random.random())
@@ -119,6 +121,10 @@ class Aquarium:
         # k: (shark1, shark2), v: dist
         self.shark_to_shark_dist = defaultdict(list)
         self.shark_to_shark_dist_at_kill = defaultdict(list)
+
+        # Kill zone
+        self.shared_kill_zone = shared_kill_zone
+        self.kill_zone_radius = kill_zone_radius
 
         # GUI
         self.show_gui = show_gui
@@ -342,6 +348,60 @@ class Aquarium:
                 if self.collision_space.check_collision(a1, a2):
                     self.collision_space.perform_collision(a1, a2)
 
+    def _on_shark_fish_collision(self, shark, fish):
+        if fish in self.fishes:
+            self.fishes.remove(fish)
+        if shark in self.track_shark_reward:
+            # This was to check whether we have real cooperation or
+            # herding.
+            # Well, we have herding.
+            #
+            # for shark_ in self.sharks:
+            #     if shark_ == shark:
+            #         print('s', shark_.starving_indicator())
+            #     else:
+            #         print('o', shark_.starving_indicator())
+            # print('')
+
+            if self.shared_kill_zone:
+                for shark_ in self.sharks:
+                    if shark_ == shark:
+                        continue
+                    observation = self.observe_animal(shark_, fish)
+                    dist = observation[0]
+
+                    # TODO This is hacky.
+                    min_dist = shark_.radius + fish.radius
+                    max_dist = min(shark_.view_distance, self.max_animal_view_distance)
+                    radius_dist = util.scale(self.kill_zone_radius, min_dist, max_dist, 0, OBSERVATION_MAX)
+
+                    print(dist, radius_dist)
+                    if dist > radius_dist:
+                        continue
+                    # Seems like another shark participated in the kill.
+                    # They now have to share the reward based on the distance of
+                    # the other shark.
+                    # TODO: Support multiple sharks at some point.
+
+                    ratio = 1. - dist / radius_dist
+                    print(ratio)
+                    # TODO: To simplify, could consider integer only rewards.
+                    # E.g.: round(ratio * 5)
+                    # Right now it's floats.
+                    reward_curr_shark = ratio * 5
+                    reward_main_shark = 10 - reward_curr_shark
+
+                    self.track_shark_reward[shark_] += reward_curr_shark
+                    self.shark_tot_reward[shark_] += reward_curr_shark
+
+                    self.track_shark_reward[shark] += reward_main_shark
+                    self.shark_tot_reward[shark] += reward_main_shark
+            else:
+                self.track_shark_reward[shark] += 10
+                self.shark_tot_reward[shark] += 10
+            self.dead_fishes += 1
+            shark.eaten_fish += 1
+
     def move_sharks(self, joint_shark_action):
         """Move all sharks according to joint_shark_action.
 
@@ -393,23 +453,7 @@ class Aquarium:
             combinations = it.product(self.sharks, self.fishes)
             for shark, fish in combinations:
                 if self.collision_space.check_collision(shark, fish):
-                    if fish in self.fishes:
-                        self.fishes.remove(fish)
-                    if shark in self.track_shark_reward:
-                        # This was to check whether we have real cooperation or
-                        # herding.
-                        # Well, we have herding.
-                        #
-                        # for shark_ in self.sharks:
-                        #     if shark_ == shark:
-                        #         print('s', shark_.starving_indicator())
-                        #     else:
-                        #         print('o', shark_.starving_indicator())
-                        # print('')
-                        self.track_shark_reward[shark] += 10
-                        self.shark_tot_reward[shark] += 10
-                        self.dead_fishes += 1
-                        shark.eaten_fish += 1
+                    self._on_shark_fish_collision(shark, fish)
                 else:
                     fish.survived_n_steps += 1
 

@@ -294,7 +294,9 @@ class Experiment:
             fish_collision=self.cfg["aquarium"]["fish_collision"],
             lock_screen=self.cfg["aquarium"]["lock_screen"],
             seed=self.cfg["aquarium"]["seed"],
-            show_gui=self.show_gui
+            show_gui=self.show_gui,
+            shared_kill_zone=self.cfg["aquarium"]["shared_kill_zone"],
+            kill_zone_radius=self.cfg["aquarium"]["kill_zone_radius"]
         )
         self.env.select_fish_types(
             self.cfg["aquarium"]["random_fish"],
