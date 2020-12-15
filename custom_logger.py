@@ -44,6 +44,7 @@ class Logger:
             tf.summary.scalar(prefix + '/Dead_Sharks', env.dead_sharks, n_episode)
             tf.summary.scalar(prefix + '/Last_Fish_Population', fish_pop[-1], n_episode)
             tf.summary.scalar(prefix + '/Last_Shark_Population', shark_pop[-1], n_episode)
+            tf.summary.scalar(prefix + '/Coop_Kills', env.coop_kills, n_episode)
             tf.summary.histogram(prefix + '/Last_Fish_Population_H', fish_pop, n_episode)
             tf.summary.histogram(prefix + '/Last_Shark_Population_H', shark_pop, n_episode)
             tf.summary.histogram(prefix + '/Shark_Speed_H', env.shark_speed_history, n_episode)

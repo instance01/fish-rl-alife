@@ -125,6 +125,7 @@ class Aquarium:
         # k: (shark1, shark2), v: dist
         self.shark_to_shark_dist = defaultdict(list)
         self.shark_to_shark_dist_at_kill = defaultdict(list)
+        self.coop_kills = 0
 
         # Kill zone
         self.shared_kill_zone = shared_kill_zone
@@ -191,6 +192,7 @@ class Aquarium:
         self.shark_tot_reward = defaultdict(int)
         self.shark_to_shark_dist = defaultdict(list)
         self.shark_to_shark_dist_at_kill = defaultdict(list)
+        self.coop_kills = 0
 
         # Initialize fishes at random positions.
         for f_type, amount in self.fish_types.items():
@@ -386,6 +388,8 @@ class Aquarium:
                     # They now have to share the reward based on the distance of
                     # the other shark.
                     # TODO: Support multiple sharks at some point.
+
+                    self.coop_kills += 1
 
                     ratio = 1. - dist / radius_dist
                     print(ratio)
