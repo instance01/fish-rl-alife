@@ -94,7 +94,7 @@ class Logger:
 
 class EvolutionLogger:
     def __init__(self, cfg_id):
-        rand_str = str(int(random.random() * 100000))
+        rand_str = str(int(random.random() * 100e6))
         _id = "-".join([
             datetime.datetime.now().strftime("%y-%m-%d_%H:%M:%S"),
             rand_str,

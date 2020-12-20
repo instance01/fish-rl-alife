@@ -22,6 +22,7 @@ derivatives).
 """
 import os
 import sys
+import glob
 import json
 import socket
 import random
@@ -346,7 +347,7 @@ class Experiment:
     def train(self, load_path=None):
         hostname = socket.gethostname()
         time_str = datetime.datetime.now().strftime('%y.%m.%d-%H:%M:%S')
-        rand_str = str(int(random.random() * 100000))
+        rand_str = str(int(random.random() * 100e6))
         model_fname = 'models/%s-%s-%s-%s-model' % (
             self.cfg_id,
             hostname,
@@ -465,17 +466,29 @@ class Experiment:
         return model
 
     def load_eval(self, model_filename, steps=10000):
-        if self.two_nets:
-            return self._load_eval_two_nets(model_filename)
+        if len(model_filename) <= 10:
+            # We got an id, not a full filename.
+            base_path = 'models/'
+            filenames = glob.glob(base_path + '*%s*-F*' % model_filename)
+            if not filenames:
+                raise Exception('Id %s not found' % model_filename)
+            model_filename = filenames[0]
+            if 'two_net' in model_filename:
+                model_filename = model_filename[:-3]
+
+            print('Derived filname from id: %s' % model_filename)
+
         self.show_gui = True
         self.env.env.max_steps = steps
+
+        if self.two_nets:
+            return self._load_eval_two_nets(model_filename)
+
         model = self.load(model_filename)
         self.evaluate(model, 0)
         return self.env.fish_population_counter
 
     def _load_eval_two_nets(self, model_filename):
-        self.show_gui = True
-        self.env.env.max_steps = 10000
         self.env.model1 = self.load(model_filename + '-m1')
         self.env.model2 = self.load(model_filename + '-m2')
         self.evaluate(self.env.model1, 0)
