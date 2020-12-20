@@ -27,7 +27,7 @@ def load(id_, cfg_id, return_dict):
         print(fname)
         from main import Experiment
         for _ in range(3):
-            fish_pop_hist = Experiment(base_cfg_id, show_gui=False).load_eval(fname, steps=5000)
+            fish_pop_hist = Experiment(base_cfg_id, show_gui=False, dump_cfg=False).load_eval(fname, steps=5000)
             if fish_pop_hist[-1] > 0 and fish_pop_hist[-1] < 10:
                 counter_coop += 1
             if fish_pop_hist[-1] == 0:
@@ -146,8 +146,6 @@ def main(id_):
     # data = OrderedDict()  # tXXX -> coop percent
     # for k, percent_coop_and_total in result_kv_tuples.items():
     for k in kv:
-        if two_net:
-            k += '_two_net'
         names.append(k)
         values.append(result_kv_tuples[k])
 

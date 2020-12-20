@@ -4139,5 +4139,25 @@
             "cliprange": 0.1,
             "two_nets": true
         }
+    },
+    "ma3_obs_two_net_stun_5fish": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_steps": 5000,
+            "shark_agents": 2,
+            "fish_procreate_after_n_steps": 200,
+            "observable_fishes": 5,
+            "allow_stun_move": true,
+            "max_fish": 5,
+            "turn_away_fish": 5
+        },
+        "ppo": {
+            "total_timesteps": 12e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 1e-4,
+            "cliprange": 0.1,
+            "two_nets": true
+        }
     }
 }
