@@ -50,6 +50,7 @@ class Logger:
             else:
                 coop_kills_ratio = 0
             tf.summary.scalar(prefix + '/Coop_Kills_Ratio', coop_kills_ratio, n_episode)
+            tf.summary.scalar(prefix + '/Stuns', env.n_stuns, n_episode)
             tf.summary.histogram(prefix + '/Last_Fish_Population_H', fish_pop, n_episode)
             tf.summary.histogram(prefix + '/Last_Shark_Population_H', shark_pop, n_episode)
             tf.summary.histogram(prefix + '/Shark_Speed_H', env.shark_speed_history, n_episode)

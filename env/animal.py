@@ -39,6 +39,8 @@ class Animal(ABC):
 
         self.survived_n_steps = 0
 
+        self.stun_steps = 0
+
     @property
     def max_speed(self):
         return self.max_speed_change / self.friction

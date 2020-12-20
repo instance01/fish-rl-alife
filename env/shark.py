@@ -7,6 +7,7 @@ from env.animal_controller import RandomSharkController, DefaultSharkController
 
 class Shark(Animal, ABC):
     COLOR = (255, 140, 0)  # orange
+    STUN_COLOR = (110, 55, 89)  # purple
     RADIUS = 1.0
     # high values decrease acceleration, maximum speed and turning circle
     FRICTION = 0.10
@@ -41,7 +42,6 @@ class Shark(Animal, ABC):
         self.controller = self.CONTROLLER
         self.children = 0
         self.eaten_fish = 0
-        self.stun_steps = 0
 
     # Override
     def is_ready_to_procreate(self) -> bool:

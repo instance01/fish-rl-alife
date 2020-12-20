@@ -46,7 +46,8 @@ class Aquarium:
         stop_globally_on_first_shark_death=False,
         allow_stun_move=False,
         stun_duration_steps=100,
-        stun_max_angle_diff=.4
+        stun_max_angle_diff=.4,
+        stun_extend_obs=False
     ):
         # if seed is None or seed == 'none':
         #     seed = int(1000000000 * np.random.random())
@@ -56,14 +57,14 @@ class Aquarium:
 
         self.fishes: [Fish] = set()
         self.sharks: [Shark] = set()
-        self.next_fish_id: int = 0
-        self.next_shark_id: int = 0
+        self.next_fish_id = 0
+        self.next_shark_id = 0
 
         # Environment parameters.
-        self.size: int = size
+        self.size = size
         self.height = self.width = size
-        self.torus: bool = torus
-        self.fish_collision: bool = fish_collision
+        self.torus = torus
+        self.fish_collision = fish_collision
         self.collision_space = CollisionSpace(
             self.torus,
             0,
@@ -77,26 +78,31 @@ class Aquarium:
         self.allow_stun_move = allow_stun_move
         self.stun_duration_steps = stun_duration_steps
         self.stun_max_angle_diff = stun_max_angle_diff
+        self.stun_extend_obs = stun_extend_obs
 
         # Observation and action space.
-        self.observable_walls: int = observable_walls
-        self.observable_fishes: int = observable_fishes
-        self.observable_sharks: int = observable_sharks
+        self.observable_walls = observable_walls
+        self.observable_fishes = observable_fishes
+        self.observable_sharks = observable_sharks
         # Diagonal line | only valid for width = height.
-        self.max_animal_view_distance: float = np.sqrt(2) * self.width
+        self.max_animal_view_distance = np.sqrt(2) * self.width
 
         # Distance, angle to wall.
-        self.observations_per_wall: int = 2
+        self.observations_per_wall = 2
         # Distance, angle to animal and orientation of animal.
-        self.observations_per_animal: int = 3
+        self.observations_per_animal = 3
+        if self.stun_extend_obs:
+            self.observations_per_animal += 1
 
         # TODO Why square of observable_walls? Shouldn't it be
         # observations_per_wall?
         # own_orientation, ready_to_procreate
-        self.observation_length: int = 2 \
+        self.observation_length = 2 \
             + (self.observable_walls * self.observable_walls) \
             + (self.observable_fishes + self.observable_sharks) \
             * self.observations_per_animal
+        if self.stun_extend_obs:
+            self.observation_length += 1
 
         # Environment limits.
         self.max_fish: int = max_fish
@@ -133,6 +139,7 @@ class Aquarium:
         self.shark_to_shark_dist = defaultdict(list)
         self.shark_to_shark_dist_at_kill = defaultdict(list)
         self.coop_kills = 0
+        self.n_stuns = 0
 
         # Kill zone
         self.shared_kill_zone = shared_kill_zone
@@ -435,12 +442,16 @@ class Aquarium:
             shark.eaten_fish += 1
 
     def _handle_stun_move(self, a1, a2):
-        # TODO Make the purple color a constant.
+        """Make a shark unable to move for a certain number of steps and turn it
+        purple, if another shark hits it at a certain angle."""
+        # TODO Maybe make sure the hitting shark has to have a certain velocity.
+        # Else sometimes they may just touch randomly and stun themselves.
         dx, dy = a2.position - a1.position
         _, direction = util.cartesian_to_polar(dx, dy)
         if abs(direction - a1.orientation) < self.stun_max_angle_diff:
-            a2.color = (110, 55, 89)
+            a2.color = Shark.STUN_COLOR
             a2.stun_steps = self.stun_duration_steps
+            self.n_stuns += 1
 
     def move_sharks(self, joint_shark_action):
         """Move all sharks according to joint_shark_action.
@@ -635,6 +646,8 @@ class Aquarium:
         )
         observer_read_to_procreate = observer.is_ready_to_procreate()
         observer_data = [observer_orientation, observer_read_to_procreate]
+        if self.stun_extend_obs:
+            observer_data.append(int(observer.stun_steps != 0))
 
         # Append the closest aquarium borders to observation with the closest
         # border in front of the observation;
@@ -751,6 +764,8 @@ class Aquarium:
             observation[0] = util.scale(distance, min_distance, max_distance, 0, OBSERVATION_MAX)
             observation[1] = util.scale(direction, -np.pi, np.pi, OBSERVATION_MIN, OBSERVATION_MAX)
             observation[2] = util.scale(animal.orientation, -np.pi, np.pi, OBSERVATION_MIN, OBSERVATION_MAX)
+            if self.stun_extend_obs:
+                observation[3] = int(animal.stun_steps != 0)
         return observation
 
     @property
