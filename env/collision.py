@@ -1,9 +1,9 @@
 """
-sources:
-    speed and angle calculation:
+Sources:
+    Speed and angle calculation:
         https://ericleong.me/research/circle-circle/#static-circle-circle-collision-response
         https://stackoverflow.com/questions/30497287/elastic-2d-ball-collision-using-angles
-    overlap correction ("sticky problem"):
+    Overlap correction ("sticky problem"):
         http://www.petercollingridge.co.uk/tutorials/pygame-physics-simulation/collisions/
 """
 import numpy as np
