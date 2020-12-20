@@ -45,6 +45,11 @@ class Logger:
             tf.summary.scalar(prefix + '/Last_Fish_Population', fish_pop[-1], n_episode)
             tf.summary.scalar(prefix + '/Last_Shark_Population', shark_pop[-1], n_episode)
             tf.summary.scalar(prefix + '/Coop_Kills', env.coop_kills, n_episode)
+            if env.dead_fishes > 0:
+                coop_kills_ratio = env.coop_kills / env.dead_fishes
+            else:
+                coop_kills_ratio = 0
+            tf.summary.scalar(prefix + '/Coop_Kills_Ratio', coop_kills_ratio, n_episode)
             tf.summary.histogram(prefix + '/Last_Fish_Population_H', fish_pop, n_episode)
             tf.summary.histogram(prefix + '/Last_Shark_Population_H', shark_pop, n_episode)
             tf.summary.histogram(prefix + '/Shark_Speed_H', env.shark_speed_history, n_episode)
@@ -52,18 +57,21 @@ class Logger:
             # self.log_file(prefix + '/Fish_Population', fish_pop)
             # self.log_file(prefix + '/Shark_Population', shark_pop)
             for i, (_, tot_reward) in enumerate(env.shark_tot_reward.items()):
-                name = 'Sharks/Shark%d_Tot_Reward' % i
+                name = prefix + '/Sharks/Shark%d_Tot_Reward' % i
                 tf.summary.scalar(name, tot_reward, n_episode)
-            for (s1, s2) in combinations(list(env.shark_tot_reward.keys()), 2):
-                key = (s1.name(), s2.name())
-                name_dist = 'Sharks/Shark-%s-%s_Dist_To_Dist' % key
-                name_dist_at_kill = 'Sharks/Shark-%s-%s_Dist_To_Dist_At_Kill' % key
-                tf.summary.histogram(
-                    name_dist, env.shark_to_shark_dist[key], n_episode
-                )
-                tf.summary.histogram(
-                    name_dist_at_kill, env.shark_to_shark_dist_at_kill[key], n_episode
-                )
+
+            # Let's not keep distances at evaluation phase..
+            if prefix != 'Eval':
+                for (s1, s2) in combinations(list(env.shark_tot_reward.keys()), 2):
+                    key = (s1.name(), s2.name())
+                    name_dist = 'Sharks/Shark-%s-%s_Dist_To_Dist' % key
+                    name_dist_at_kill = 'Sharks/Shark-%s-%s_Dist_To_Dist_At_Kill' % key
+                    tf.summary.histogram(
+                        name_dist, env.shark_to_shark_dist[key], n_episode
+                    )
+                    tf.summary.histogram(
+                        name_dist_at_kill, env.shark_to_shark_dist_at_kill[key], n_episode
+                    )
 
     def log_kv(self, k, v, step):
         # Used by the PPO algorithm internally to log things like policy
