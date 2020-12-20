@@ -475,10 +475,10 @@ class Aquarium:
                 speed = util.scale(speed, -1.0, 1.0, -shark.max_speed, shark.max_speed)
                 angle = util.scale(angle, -1.0, 1.0, -np.pi, np.pi)
                 # TODO: Hacky.
-                # Decrease speed by 97% when swimming backwards.
+                # Decrease speed by 99% when swimming backwards.
                 if speed < 0:
-                    speed *= .03
-                    angle *= .03
+                    speed *= .01
+                    angle *= .01
 
                 if shark.stun_steps > 0:
                     shark.stun_steps -= 1

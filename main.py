@@ -473,7 +473,7 @@ class Experiment:
             filenames = glob.glob(base_path + '*%s*-F*' % model_filename)
             if not filenames:
                 raise Exception('Id %s not found' % model_filename)
-            model_filename = filenames[0]
+            model_filename = filenames[-1]
             if 'two_net' in model_filename:
                 model_filename = model_filename[:-3]
 
