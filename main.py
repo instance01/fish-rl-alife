@@ -235,10 +235,11 @@ class MultiAgentEnvWrapperTwoNets(Wrapper):
 
 
 class Experiment:
-    def __init__(self, cfg_id, show_gui=None, evolution=False):
+    def __init__(self, cfg_id, show_gui=None, evolution=False, dump_cfg=True):
         self.cfg_id = cfg_id
         self.cfg = Config().get_cfg(cfg_id)
-        print(json.dumps(self.cfg, indent=4))
+        if dump_cfg:
+            print(json.dumps(self.cfg, indent=4))
         self.show_gui = self.cfg["aquarium"]["show_gui"]
         if show_gui is not None:
             self.show_gui = show_gui
