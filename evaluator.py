@@ -8,12 +8,21 @@ from collections import OrderedDict
 
 def load(id_, cfg_id, return_dict):
     base_cfg_id = 'ma3_obs'
-    res = list(glob.glob("models/%s-*-F" % cfg_id))
+    base_paths = ['models', 'modelsDec10-14']
+    res = []
+    two_net = 'two_net' in cfg_id
+    for base_path in base_paths:
+        id__ = base_path + "/%s-*-F"
+        if two_net:
+            id__ = base_path + "/%s-*-F-m1"
+        res.extend(list(glob.glob(id__ % cfg_id)))
     # print(res)
     counter_coop = 0.
     counter_fail = 0.
     counter_greedy = 0.
     for fname in res:
+        if two_net:
+            fname = fname[:-3]
         print('#############################')
         print(fname)
         from main import Experiment
@@ -95,6 +104,8 @@ def main(id_):
         't2000': 'ma3_obs_starve_maxsteps_t2000_p150_5fish'
     }
 
+    two_net = True
+
     kv = None
     if id_ == 'i10_p75':
         kv = cfg_ids_i10_p75
@@ -135,6 +146,8 @@ def main(id_):
     # data = OrderedDict()  # tXXX -> coop percent
     # for k, percent_coop_and_total in result_kv_tuples.items():
     for k in kv:
+        if two_net:
+            k += '_two_net'
         names.append(k)
         values.append(result_kv_tuples[k])
 
