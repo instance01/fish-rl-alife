@@ -33,7 +33,7 @@ class Aquarium:
         max_steps=500,
         max_fish=30,
         max_sharks=5,
-        water_friction=0.08,
+        water_friction=.08,
         torus=False,
         fish_collision=True,
         lock_screen=False,
@@ -41,8 +41,12 @@ class Aquarium:
         show_gui=False,
         shared_kill_zone=False,
         kill_zone_radius=10.,
+        simple_kill_zone_reward=False,
         use_global_reward=False,
-        stop_globally_on_first_shark_death=False
+        stop_globally_on_first_shark_death=False,
+        allow_stun_move=False,
+        stun_duration_steps=100,
+        stun_max_angle_diff=.4
     ):
         # if seed is None or seed == 'none':
         #     seed = int(1000000000 * np.random.random())
@@ -69,7 +73,10 @@ class Aquarium:
         )
         self.water_friction = water_friction
         self.use_global_reward = use_global_reward
-        self.stop_globally_on_first_shark_death = stop_globally_on_first_shark_death
+        self.stop_globally_on_first_shark_death = stop_globally_on_first_shark_death  # noqa
+        self.allow_stun_move = allow_stun_move
+        self.stun_duration_steps = stun_duration_steps
+        self.stun_max_angle_diff = stun_max_angle_diff
 
         # Observation and action space.
         self.observable_walls: int = observable_walls
@@ -130,6 +137,7 @@ class Aquarium:
         # Kill zone
         self.shared_kill_zone = shared_kill_zone
         self.kill_zone_radius = kill_zone_radius
+        self.simple_kill_zone_reward = simple_kill_zone_reward
 
         # GUI
         self.show_gui = show_gui
@@ -370,6 +378,11 @@ class Aquarium:
             # print('')
 
             if self.shared_kill_zone:
+                # This may look like it works for multiple sharks, but no.
+                # Only works for two sharks.
+                # TODO: Support multiple sharks at some point.
+                reward_main_shark = 10.
+
                 for shark_ in self.sharks:
                     if shark_ == shark:
                         continue
@@ -387,23 +400,26 @@ class Aquarium:
                     # Seems like another shark participated in the kill.
                     # They now have to share the reward based on the distance of
                     # the other shark.
-                    # TODO: Support multiple sharks at some point.
 
                     self.coop_kills += 1
 
-                    ratio = 1. - dist / radius_dist
-                    print(ratio)
-                    # TODO: To simplify, could consider integer only rewards.
-                    # E.g.: round(ratio * 5)
-                    # Right now it's floats.
-                    reward_curr_shark = ratio * 5
-                    reward_main_shark = 10 - reward_curr_shark
+                    if self.simple_kill_zone_reward:
+                        reward_curr_shark = 5.
+                        reward_main_shark = 5.
+                    else:
+                        ratio = 1. - dist / radius_dist
+                        print(ratio)
+                        # TODO: To simplify, could consider integer only rewards.
+                        # E.g.: round(ratio * 5)
+                        # Right now it's floats.
+                        reward_curr_shark = ratio * 5
+                        reward_main_shark = 10. - reward_curr_shark
 
                     self.track_shark_reward[shark_] += reward_curr_shark
                     self.shark_tot_reward[shark_] += reward_curr_shark
 
-                    self.track_shark_reward[shark] += reward_main_shark
-                    self.shark_tot_reward[shark] += reward_main_shark
+                self.track_shark_reward[shark] += reward_main_shark
+                self.shark_tot_reward[shark] += reward_main_shark
             else:
                 self.track_shark_reward[shark] += 10
                 self.shark_tot_reward[shark] += 10
@@ -417,6 +433,14 @@ class Aquarium:
 
             self.dead_fishes += 1
             shark.eaten_fish += 1
+
+    def _handle_stun_move(self, a1, a2):
+        # TODO Make the purple color a constant.
+        dx, dy = a2.position - a1.position
+        _, direction = util.cartesian_to_polar(dx, dy)
+        if abs(direction - a1.orientation) < self.stun_max_angle_diff:
+            a2.color = (110, 55, 89)
+            a2.stun_steps = self.stun_duration_steps
 
     def move_sharks(self, joint_shark_action):
         """Move all sharks according to joint_shark_action.
@@ -450,6 +474,18 @@ class Aquarium:
                 # Move current shark according to action values.
                 speed = util.scale(speed, -1.0, 1.0, -shark.max_speed, shark.max_speed)
                 angle = util.scale(angle, -1.0, 1.0, -np.pi, np.pi)
+                # TODO: Hacky.
+                # Decrease speed by 97% when swimming backwards.
+                if speed < 0:
+                    speed *= .03
+                    angle *= .03
+
+                if shark.stun_steps > 0:
+                    shark.stun_steps -= 1
+                    speed = 0
+                    angle = 0
+                    if shark.stun_steps == 0:
+                        shark.color = Shark.COLOR
                 shark.act(speed, angle)
                 shark.survived_n_steps += 1
 
@@ -478,6 +514,9 @@ class Aquarium:
             combinations = it.combinations(self.sharks, 2)
             for a1, a2 in combinations:
                 if self.collision_space.check_collision(a1, a2):
+                    if self.allow_stun_move:
+                        self._handle_stun_move(a1, a2)
+                        self._handle_stun_move(a2, a1)
                     self.collision_space.perform_collision(a1, a2)
 
         if self.stop_globally_on_first_shark_death and len(starved_sharks) > 0:

@@ -297,8 +297,12 @@ class Experiment:
             show_gui=self.show_gui,
             shared_kill_zone=self.cfg["aquarium"]["shared_kill_zone"],
             kill_zone_radius=self.cfg["aquarium"]["kill_zone_radius"],
+            simple_kill_zone_reward=self.cfg["aquarium"]["simple_kill_zone_reward"],
             use_global_reward=self.cfg["aquarium"]["use_global_reward"],
-            stop_globally_on_first_shark_death=self.cfg["aquarium"]["stop_globally_on_first_shark_death"]
+            stop_globally_on_first_shark_death=self.cfg["aquarium"]["stop_globally_on_first_shark_death"],
+            allow_stun_move=self.cfg["aquarium"]["allow_stun_move"],
+            stun_duration_steps=self.cfg["aquarium"]["stun_duration_steps"],
+            stun_max_angle_diff=self.cfg["aquarium"]["stun_max_angle_diff"]
         )
         self.env.select_fish_types(
             self.cfg["aquarium"]["random_fish"],
@@ -497,6 +501,7 @@ class Experiment:
 
     def evaluate_and_log(self, model, n_episode):
         """Run an evaluation game and log to tensorboard."""
+        Shark.INITIAL_SURVIVAL_TIME = 5000  # TODO: Hacky.
         rewards = self.evaluate(model, n_episode)
         self.tb_logger.log_summary(self.env, rewards, n_episode, prefix='Eval')
 

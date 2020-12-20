@@ -41,6 +41,7 @@ class Shark(Animal, ABC):
         self.controller = self.CONTROLLER
         self.children = 0
         self.eaten_fish = 0
+        self.stun_steps = 0
 
     # Override
     def is_ready_to_procreate(self) -> bool:
