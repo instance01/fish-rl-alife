@@ -208,6 +208,7 @@ class Aquarium:
         self.shark_to_shark_dist = defaultdict(list)
         self.shark_to_shark_dist_at_kill = defaultdict(list)
         self.coop_kills = 0
+        self.n_stuns = 0
 
         # Initialize fishes at random positions.
         for f_type, amount in self.fish_types.items():
