@@ -21,3 +21,8 @@ class Config:
             cfg[k].update(self.cfg[cfg_id][k])
         cfg['cfg_id'] = cfg_id
         return cfg
+
+
+if __name__ == '__main__':
+    cfg = Config()
+    print('\n'.join(cfg.cfg.keys()))
