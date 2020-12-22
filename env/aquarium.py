@@ -441,6 +441,7 @@ class Aquarium:
 
             self.dead_fishes += 1
             shark.eaten_fish += 1
+            print('coop ratio', self.coop_kills / self.dead_fishes)
 
     def _handle_stun_move(self, a1, a2):
         """Make a shark unable to move for a certain number of steps and turn it

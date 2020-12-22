@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""This file is structures as follows.
+"""This file is structured as follows.
 First, a set of environment wrappers to make them work with baselines PPO.
 This is especially needed since we get dicts from the aquarium environment, but
 we would like to work with vectors.
@@ -37,6 +37,7 @@ from gym import spaces
 from baselines import logger
 from baselines.ppo2 import ppo2
 from baselines.ppo2 import ppo2_ma
+from baselines.ppo2 import ppo2_nma
 from baselines.ppo2.model import Model
 from baselines.common.models import get_network_builder
 
@@ -234,6 +235,77 @@ class MultiAgentEnvWrapperTwoNets(Wrapper):
         return obs[shark]
 
 
+class MultiAgentEnvWrapperNNets(Wrapper):
+    """This shall support N sharks."""
+    def __init__(self, env):
+        self.env = env
+        self.env.action_space = spaces.Box(low=-1.0, high=1.0, shape=(2,))
+        self.n = 2 + self.env.observable_sharks * 3 +\
+            self.env.observable_fishes * 3 +\
+            self.env.observable_walls * 2
+        self.env.observation_space = spaces.Box(
+            low=-1.0, high=1.0, shape=(self.n,)
+        )
+        self.env.reward_range = (-float('inf'), float('inf'))
+        self.env.spec = None
+        self.env.metadata = {'render.modes': ['human']}
+        self.env.num_envs = 1
+
+        self.last_obs = None
+        self.models = {}  # Needs to be filled by ppo2_nma.
+        self.shark_to_model_id = {}
+
+        Wrapper.__init__(self, env=env)
+
+    def step(self, model_action, model_id=None):
+        sharks = list(self.env.sharks)
+        if not sharks:
+            # TODO .. yikes
+            return ([0.] * self.n, 0, True, {})
+
+        joint_action = {}
+        for shark in sharks:
+            curr_model_id = self.shark_to_model_id[shark.name]
+            if curr_model_id != model_id:
+                action = model_inference(self.models[curr_model_id], self.last_obs[shark.name])
+            else:
+                action = model_action
+            action = (action[0][0], action[0][1], False)
+            joint_action[shark.name] = action
+
+        obs, reward, done = self.env.step(joint_action)
+        self.last_obs = obs
+
+        shark = sharks[0].name
+        for shark_ in sharks:
+            curr_model_id = self.shark_to_model_id[shark_.name]
+            if curr_model_id == model_id:
+                shark = shark_.name
+
+        return (
+            obs.get(shark, np.array([0.] * self.n)),
+            reward[shark],
+            done[shark],
+            {}
+        )
+
+    def reset(self, model_id=None):
+        # TODO HERE WE ALSO NEED TO DIFFERENTIATE BETWEEN MODELS!
+        # Add support to ppo2.py
+        obs = self.env.reset()
+        self.last_obs = obs
+
+        self.shark_to_model_id = {}
+        for i, shark in enumerate(self.env.sharks):
+            self.shark_to_model_id[shark.name] = 'm' + str(i + 1)
+
+        curr_shark = next(iter(obs.keys()))
+        for shark in self.env.sharks:
+            if model_id is not None and self.shark_to_model_id[shark.name] == model_id:
+                curr_shark = shark.name
+        return obs[curr_shark]
+
+
 class Experiment:
     def __init__(self, cfg_id, show_gui=None, evolution=False, dump_cfg=True):
         self.cfg_id = cfg_id
@@ -316,7 +388,14 @@ class Experiment:
         )
 
         self.two_nets = self.cfg["ppo"]["two_nets"]
-        if self.two_nets:
+        self.n_nets = self.cfg["ppo"]["n_nets"]
+        self.n_models = self.cfg["ppo"]["n_models"]
+        if self.two_nets and self.n_nets:
+            self.two_nets = False
+
+        if self.n_nets:
+            self.env = MultiAgentEnvWrapperNNets(self.env)
+        elif self.two_nets:
             self.env = MultiAgentEnvWrapperTwoNets(self.env)
         else:
             if self.cfg["aquarium"]["shark_agents"] > 1:
@@ -396,7 +475,13 @@ class Experiment:
         }
 
         # Below F stands for final.
-        if self.two_nets:
+        if self.n_nets:
+            kwargs['n_models'] = self.n_models
+            models = ppo2_nma.learn(**kwargs)
+            for i, model in enumerate(models):
+                j = str(i + 1)
+                model.save(model_fname + '-F-m' + j)
+        elif self.two_nets:
             model1, model2 = ppo2_ma.learn(**kwargs)
             model1.save(model_fname + '-F-m1')
             model2.save(model_fname + '-F-m2')
@@ -482,6 +567,9 @@ class Experiment:
         self.show_gui = True
         self.env.env.max_steps = steps
 
+        if self.n_nets:
+            return self._load_eval_n_nets(model_filename)
+
         if self.two_nets:
             return self._load_eval_two_nets(model_filename)
 
@@ -492,6 +580,13 @@ class Experiment:
     def _load_eval_two_nets(self, model_filename):
         self.env.model1 = self.load(model_filename + '-m1')
         self.env.model2 = self.load(model_filename + '-m2')
+        self.evaluate(self.env.model1, 0)
+
+    def _load_eval_n_nets(self, model_filename):
+        for i in range(self.n_models):
+            j = str(i + 1)
+            id_ = 'm' + j
+            self.env.models[id_] = self.load(model_filename + '-' + id_)
         self.evaluate(self.env.model1, 0)
 
     def evaluate(self, model, n_episode):

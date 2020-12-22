@@ -69,7 +69,9 @@
             "schedule_gamma_value": 0.999,
 
             "use_evolutionary_algorithm": false,
-            "two_nets": false
+            "two_nets": false,
+            "n_nets": false,
+            "n_models": 3
         },
         "ddpg": {
             "network": "mlp",
@@ -6500,6 +6502,21 @@
             "shark_initial_survival_time": 2000,
             "kill_zone_radius": 10.0,
             "shark_max_speed_change": 0.04
+        }
+    },
+
+
+    "ma9_t800_i5_p150_r4_s03_sp200_n_net": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "shark_agents": 3,
+            "shark_initial_survival_time": 800,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.03
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 3
         }
     }
 }
