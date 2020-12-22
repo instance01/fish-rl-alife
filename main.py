@@ -610,8 +610,10 @@ class Experiment:
 
     def evaluate_and_log(self, model, n_episode):
         """Run an evaluation game and log to tensorboard."""
+        surv_time_before = Shark.INITIAL_SURVIVAL_TIME
         Shark.INITIAL_SURVIVAL_TIME = 5000  # TODO: Hacky.
         rewards = self.evaluate(model, n_episode)
+        Shark.INITIAL_SURVIVAL_TIME = surv_time_before
         self.tb_logger.log_summary(self.env, rewards, n_episode, prefix='Eval')
 
     def perturb_weights(self):
