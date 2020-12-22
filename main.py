@@ -587,7 +587,7 @@ class Experiment:
             j = str(i + 1)
             id_ = 'm' + j
             self.env.models[id_] = self.load(model_filename + '-' + id_)
-        self.evaluate(self.env.model1, 0)
+        self.evaluate(self.env.models['m1'], 0)
 
     def evaluate(self, model, n_episode):
         """Run an evaluation game."""
