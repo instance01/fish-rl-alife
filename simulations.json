@@ -8615,6 +8615,39 @@
         }
     },
 
+    "ma9_t3000_i20_p150_r4_s035_sp200_n_net3_30x30": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 20,
+            "turn_away_fish": 20,
+            "size": 30,
+            "shark_agents": 3,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.035
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 3
+        }
+    },
+    "ma9_t3000_i10_p150_r4_s035_sp200_n_net3_50x50": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "size": 50,
+            "shark_agents": 3,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.035
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 3
+        }
+    },
+
     "-- s035 t3000 (but two sharks) --": {},
 
     "ma9_t3000_i5_p150_r4_s035_sp200": {
