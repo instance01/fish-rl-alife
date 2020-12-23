@@ -31,3 +31,7 @@ paper/example
 *.swp
 *.so
 *.html
+.egg-info
+build/
+models_tars/
+runs_tars/
