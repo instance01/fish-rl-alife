@@ -389,10 +389,7 @@ class Aquarium:
             # print('')
 
             if self.shared_kill_zone:
-                # This may look like it works for multiple sharks, but no.
-                # Only works for two sharks.
-                # TODO: Support multiple sharks at some point.
-                reward_main_shark = 10.
+                participating_sharks = []
 
                 for shark_ in self.sharks:
                     if shark_ == shark:
@@ -408,15 +405,22 @@ class Aquarium:
                     print(dist, radius_dist)
                     if dist > radius_dist:
                         continue
+
+                    participating_sharks.append((shark_, dist, radius_dist))
+
+                n_participating_sharks = len(participating_sharks)
+                if n_participating_sharks > 0:
+                    self.coop_kills += 1
+
+                reward_main_shark = 10. 
+                for shark_, dist, radius_dist in participating_sharks:
                     # Seems like another shark participated in the kill.
                     # They now have to share the reward based on the distance of
                     # the other shark.
-
-                    self.coop_kills += 1
-
                     if self.simple_kill_zone_reward:
-                        reward_curr_shark = 5.
-                        reward_main_shark = 5.
+                        split_rew = 10. / n_participating_sharks
+                        reward_curr_shark = split_rew
+                        reward_main_shark -= split_rew
                     else:
                         ratio = 1. - dist / radius_dist
                         print(ratio)
@@ -424,7 +428,7 @@ class Aquarium:
                         # E.g.: round(ratio * 5)
                         # Right now it's floats.
                         reward_curr_shark = ratio * 5
-                        reward_main_shark = 10. - reward_curr_shark
+                        reward_main_shark -= reward_curr_shark
 
                     self.track_shark_reward[shark_] += reward_curr_shark
                     self.shark_tot_reward[shark_] += reward_curr_shark
