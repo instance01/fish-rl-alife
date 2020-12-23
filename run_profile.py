@@ -2,7 +2,7 @@ import cProfile
 from main import Experiment
 
 
-PROFILE_FILE = '1.profile'
+PROFILE_FILE = '3.profile'
 
 
 def run():

@@ -1,3 +1,4 @@
+#cython: language_level=3, boundscheck=False
 import numpy as np
 from env.animal import Animal
 import env.util as util

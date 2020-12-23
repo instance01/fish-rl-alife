@@ -1,3 +1,4 @@
+#cython: language_level=3, boundscheck=False
 #!/usr/bin/env python3
 """This file is structured as follows.
 First, a set of environment wrappers to make them work with baselines PPO.

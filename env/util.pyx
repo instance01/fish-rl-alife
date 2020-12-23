@@ -1,3 +1,4 @@
+#cython: language_level=3, boundscheck=False
 import numpy as np
 import math as math
 

@@ -1,3 +1,4 @@
+#cython: language_level=3, boundscheck=False
 import random
 import threading
 import socket

@@ -26,3 +26,8 @@ plottex/*
 
 paper/example
 .DS_Store
+
+*.c
+*.swp
+*.so
+*.html

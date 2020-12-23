@@ -87,7 +87,7 @@ class Animal(ABC):
         )
         self.move()
 
-    @abstractmethod
+    # @abstractmethod
     def is_ready_to_procreate(self) -> bool:
         """
         States whether the animal is ready to procreate
@@ -95,7 +95,7 @@ class Animal(ABC):
         """
         pass
 
-    @abstractmethod
+    # @abstractmethod
     def procreate(self, identifier: int) -> object:
         """
         Creates a new Animal and returns it
@@ -103,7 +103,7 @@ class Animal(ABC):
         """
         pass
 
-    @abstractmethod
+    # @abstractmethod
     def name(self):
         """
         returns a unique name for each animal

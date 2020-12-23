@@ -1,3 +1,4 @@
+#cython: language_level=3, boundscheck=False
 import numpy as np
 import env.util as util
 from abc import ABC, abstractmethod
@@ -8,7 +9,7 @@ random_state = np.random.RandomState()
 
 class Controller(ABC):
     @staticmethod
-    @abstractmethod
+    # @abstractmethod
     def get_action(
             own_orientation: float,
             ready_to_procreate: float,
