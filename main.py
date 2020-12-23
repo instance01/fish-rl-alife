@@ -555,11 +555,12 @@ class Experiment:
         if len(model_filename) <= 10:
             # We got an id, not a full filename.
             base_path = 'models/'
-            filenames = glob.glob(base_path + '*%s*-F*' % model_filename)
+            # filenames = glob.glob(base_path + '*%s*-F*' % model_filename)
+            filenames = glob.glob(base_path + '*-%s-*' % model_filename)
             if not filenames:
                 raise Exception('Id %s not found' % model_filename)
             model_filename = filenames[-1]
-            if 'two_net' in model_filename:
+            if 'two_net' in model_filename or model_filename[-3:-1] == '-m':
                 model_filename = model_filename[:-3]
 
             print('Derived filname from id: %s' % model_filename)
