@@ -367,8 +367,10 @@ class Aquarium:
         if self.fish_collision and self.fishes:
             combinations = it.combinations(self.fishes, 2)
             for a1, a2 in combinations:
-                if self.collision_space.check_collision(a1, a2):
-                    self.collision_space.perform_collision(a1, a2)
+                # TODO: I got rid of the check_collision call because this is
+                # implicitly done in the perform_collision call.
+                # if self.collision_space.check_collision(a1, a2):
+                self.collision_space.perform_collision(a1, a2)
 
     def _on_shark_fish_collision(self, shark, fish):
         if fish in self.fishes:

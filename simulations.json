@@ -8763,7 +8763,7 @@
     },
 
     "dbg_n_net3_s035_i25_50x50": {
-        "base_cfg": "1",
+        "base_cfg": "ma9_base_sp200",
         "aquarium": {
             "size": 50,
             "max_fish": 25,
@@ -8772,7 +8772,7 @@
             "shark_max_speed_change": 0.035
         },
         "ppo": {
-            "total_timesteps": 100000,
+            "total_timesteps": 15000,
             "n_nets": true,
             "n_models": 3
         }
