@@ -8760,5 +8760,21 @@
             "kill_zone_radius": 10.0,
             "shark_max_speed_change": 0.04
         }
+    },
+
+    "dbg_n_net3_s035_i25_50x50": {
+        "base_cfg": "1",
+        "aquarium": {
+            "size": 50,
+            "max_fish": 25,
+            "turn_away_fish": 25,
+            "shark_agents": 3,
+            "shark_max_speed_change": 0.035
+        },
+        "ppo": {
+            "total_timesteps": 100000,
+            "n_nets": true,
+            "n_models": 3
+        }
     }
 }
