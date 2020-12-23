@@ -1,7 +1,7 @@
 import pstats
 
 
-name = '2.profile'
+name = '3.profile'
 out = pstats.Stats(name)
 
 print('sort by cumulatvie (the function itself plus all child functions called inside)')  # noqa

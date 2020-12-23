@@ -25,7 +25,7 @@ def load(id_, cfg_id, return_dict):
             fname = fname[:-3]
         print('#############################')
         print(fname)
-        from main import Experiment
+        from pipeline import Experiment
         for _ in range(3):
             fish_pop_hist = Experiment(base_cfg_id, show_gui=False, dump_cfg=False).load_eval(fname, steps=5000)
             if fish_pop_hist[-1] > 0 and fish_pop_hist[-1] < 10:

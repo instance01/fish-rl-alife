@@ -685,7 +685,7 @@ def run_evolutionary_algorithm(cfg_id):
             next_args.append((cfg_id, True, initial_model_fname, True))
 
 
-if __name__ == '__main__':
+def main():
     # python3 main.py cfg_id single  -> Train single run using cfg_id.
     # python3 main.py cfg_id multi  -> Train multiple runs using cfg_id.
     # python3 main.py cfg_id evolution  -> Train using cfg_id and evolutionary algorithm.
@@ -719,3 +719,7 @@ if __name__ == '__main__':
         print('DEPRECATED! USE SINGLE OR MULTI KEYWORD!')
         for _ in range(2):
             Experiment(cfg_id).train()
+
+
+if __name__ == '__main__':
+    main()

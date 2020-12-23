@@ -2,13 +2,13 @@ import os
 from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Distutils import build_ext
-from Cython.Build import cythonize
+
 
 os.environ["CC"] = "g++"
 os.environ["CXX"] = "g++"
 
 ext_modules = [
-    Extension("main",  ["main.pyx"]),
+    Extension("pipeline",  ["pipeline.pyx"]),
     Extension("custom_logger",  ["custom_logger.pyx"]),
     Extension("config",  ["config.pyx"]),
     # Extension("animal",  ["env/animal.py"]),  # Doesn't work due to ABC?
@@ -27,5 +27,5 @@ for e in ext_modules:
 setup(
     name='aquarium_experiments',
     cmdclass={'build_ext': build_ext},
-    ext_modules=cythonize(ext_modules)
+    ext_modules=ext_modules
 )

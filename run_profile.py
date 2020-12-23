@@ -1,5 +1,5 @@
 import cProfile
-from main import Experiment
+from pipeline import Experiment
 
 
 PROFILE_FILE = '3.profile'
