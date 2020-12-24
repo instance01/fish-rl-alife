@@ -8372,7 +8372,7 @@
 
 
 
-    "-- 3 sharks first tests (also all t3000) --": {},
+    "-- 3 sharks first tests (also all t3000, i5) --": {},
 
 
     "ma9_t3000_i5_p150_r4_s03_sp200_n_net3": {
@@ -8427,6 +8427,71 @@
             "n_models": 4
         }
     },
+
+    "ma9_t3000_i10_p150_r4_s03_sp200_n_net3": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "shark_agents": 3,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.03
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 3
+        }
+    },
+    "ma9_t3000_i10_p150_r4_s03_sp200_n_net4": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "shark_agents": 4,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.03
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 4
+        }
+    },
+    "ma9_t3000_i10_p150_r4_s035_sp200_n_net3": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "shark_agents": 3,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.035
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 3
+        }
+    },
+    "ma9_t3000_i10_p150_r4_s035_sp200_n_net4": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "shark_agents": 4,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.035
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 4
+        }
+    },
+
+
+    "-- 50x50 --": {},
+
 
     "ma9_t3000_i5_p150_r4_s03_sp200_n_net3_50x50": {
         "base_cfg": "ma9_base_sp200",
@@ -8550,6 +8615,71 @@
         }
     },
 
+    "ma9_t3000_i15_p150_r4_s03_sp200_n_net3_50x50": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 15,
+            "turn_away_fish": 15,
+            "size": 50,
+            "shark_agents": 3,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.03
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 3
+        }
+    },
+    "ma9_t3000_i15_p150_r4_s03_sp200_n_net4_50x50": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 15,
+            "turn_away_fish": 15,
+            "size": 50,
+            "shark_agents": 4,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.03
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 4
+        }
+    },
+    "ma9_t3000_i15_p150_r4_s035_sp200_n_net3_50x50": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 15,
+            "turn_away_fish": 15,
+            "size": 50,
+            "shark_agents": 3,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.035
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 3
+        }
+    },
+    "ma9_t3000_i15_p150_r4_s035_sp200_n_net4_50x50": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 15,
+            "turn_away_fish": 15,
+            "size": 50,
+            "shark_agents": 4,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.035
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 4
+        }
+    },
+
     "ma9_t3000_i10_p150_r4_s03_sp200_n_net3_50x50": {
         "base_cfg": "ma9_base_sp200",
         "aquarium": {
@@ -8614,6 +8744,266 @@
             "n_models": 4
         }
     },
+
+
+    "-- 40x40 --": {},
+
+
+    "ma9_t3000_i5_p150_r4_s03_sp200_n_net3_40x40": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "size": 40,
+            "shark_agents": 3,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.03
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 3
+        }
+    },
+    "ma9_t3000_i5_p150_r4_s03_sp200_n_net4_40x40": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "size": 40,
+            "shark_agents": 4,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.03
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 4
+        }
+    },
+    "ma9_t3000_i5_p150_r4_s035_sp200_n_net3_40x40": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "size": 40,
+            "shark_agents": 3,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.035
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 3
+        }
+    },
+    "ma9_t3000_i5_p150_r4_s035_sp200_n_net4_40x40": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "size": 40,
+            "shark_agents": 4,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.035
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 4
+        }
+    },
+
+    "ma9_t3000_i20_p150_r4_s03_sp200_n_net3_40x40": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 20,
+            "turn_away_fish": 20,
+            "size": 40,
+            "shark_agents": 3,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.03
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 3
+        }
+    },
+    "ma9_t3000_i20_p150_r4_s03_sp200_n_net4_40x40": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 20,
+            "turn_away_fish": 20,
+            "size": 40,
+            "shark_agents": 4,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.03
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 4
+        }
+    },
+    "ma9_t3000_i20_p150_r4_s035_sp200_n_net3_40x40": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 20,
+            "turn_away_fish": 20,
+            "size": 40,
+            "shark_agents": 3,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.035
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 3
+        }
+    },
+    "ma9_t3000_i20_p150_r4_s035_sp200_n_net4_40x40": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 20,
+            "turn_away_fish": 20,
+            "size": 40,
+            "shark_agents": 4,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.035
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 4
+        }
+    },
+
+    "ma9_t3000_i15_p150_r4_s03_sp200_n_net3_40x40": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 15,
+            "turn_away_fish": 15,
+            "size": 40,
+            "shark_agents": 3,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.03
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 3
+        }
+    },
+    "ma9_t3000_i15_p150_r4_s03_sp200_n_net4_40x40": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 15,
+            "turn_away_fish": 15,
+            "size": 40,
+            "shark_agents": 4,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.03
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 4
+        }
+    },
+    "ma9_t3000_i15_p150_r4_s035_sp200_n_net3_40x40": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 15,
+            "turn_away_fish": 15,
+            "size": 40,
+            "shark_agents": 3,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.035
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 3
+        }
+    },
+    "ma9_t3000_i15_p150_r4_s035_sp200_n_net4_40x40": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 15,
+            "turn_away_fish": 15,
+            "size": 40,
+            "shark_agents": 4,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.035
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 4
+        }
+    },
+
+    "ma9_t3000_i10_p150_r4_s03_sp200_n_net3_40x40": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "size": 40,
+            "shark_agents": 3,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.03
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 3
+        }
+    },
+    "ma9_t3000_i10_p150_r4_s03_sp200_n_net4_40x40": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "size": 40,
+            "shark_agents": 4,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.03
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 4
+        }
+    },
+    "ma9_t3000_i10_p150_r4_s035_sp200_n_net3_40x40": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "size": 40,
+            "shark_agents": 3,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.035
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 3
+        }
+    },
+    "ma9_t3000_i10_p150_r4_s035_sp200_n_net4_40x40": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "size": 40,
+            "shark_agents": 4,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.035
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 4
+        }
+    },
+
+
+    "-- idk --": {},
+
 
     "ma9_t3000_i20_p150_r4_s035_sp200_n_net3_30x30": {
         "base_cfg": "ma9_base_sp200",
@@ -8773,6 +9163,36 @@
         },
         "ppo": {
             "total_timesteps": 15000,
+            "n_nets": true,
+            "n_models": 3
+        }
+    },
+
+    "ma9_t400_i10_p150_r4_s04_sp200_net3_notorus_50x50": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "torus": false,
+            "size": 50,
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "shark_agents": 3,
+            "shark_max_speed_change": 0.04
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 3
+        }
+    },
+    "ma9_t400_i10_p150_r4_s04_sp200_net3": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "shark_initial_survival_time": 400,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.04
+        },
+        "ppo": {
             "n_nets": true,
             "n_models": 3
         }

@@ -390,7 +390,6 @@ class Aquarium:
 
             if self.shared_kill_zone:
                 participating_sharks = []
-
                 for shark_ in self.sharks:
                     if shark_ == shark:
                         continue
