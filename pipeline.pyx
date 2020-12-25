@@ -552,7 +552,7 @@ class Experiment:
         self.env.model = model
         return model
 
-    def load_eval(self, model_filename, steps=10000):
+    def load_eval(self, model_filename, steps=10000, initial_survival_time=None):
         if len(model_filename) <= 10:
             # We got an id, not a full filename.
             base_path = 'models/'
@@ -568,6 +568,9 @@ class Experiment:
 
         self.show_gui = True
         self.env.env.max_steps = steps
+
+        if initial_survival_time is not None:
+            Shark.INITIAL_SURVIVAL_TIME = initial_survival_time
 
         if self.n_nets:
             return self._load_eval_n_nets(model_filename)

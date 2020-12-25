@@ -153,7 +153,8 @@ def main(id_):
     print(values)
     if two_net:
         id_ += '_two_net'
-    with open(id_ + '.pickle', 'wb+') as f:
+    print('pickles/' + id_ + '_herding.pickle')
+    with open('pickles/' + id_ + '_herding.pickle', 'wb+') as f:
         pickle.dump((names, values), f)
 
 

@@ -2,8 +2,7 @@ import pickle
 import matplotlib.pyplot as plt
 
 
-#base_path = 'pickles_14Dec/'
-base_path = ''
+base_path = 'pickles/'
 
 with open(base_path + 'i10_p150_two_net.pickle', 'rb') as f:
     i10_p150 = pickle.load(f)
