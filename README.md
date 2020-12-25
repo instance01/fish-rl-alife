@@ -5,11 +5,11 @@ Using PPO.
 
 ![PPO](plots/plot.png)
 
+This is a Cython project, that's why there's `.pyx` files everywhere. They still work with normal Python when executed directly (e.g. `python3 config.pyx`), because I didn't go deep into cythonization due to time constraints. It was simply a basically free 40% performance boost.
 
 ## Debugging
 
 python3 -m pdb -c continue main.py
-
 
 ## Results
 
