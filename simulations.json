@@ -44,7 +44,8 @@
             "allow_stun_move": false,
             "stun_duration_steps": 100,
             "stun_max_angle_diff": 0.4,
-            "stun_extend_obs": false
+            "stun_extend_obs": false,
+            "rand_seed": false
         },
         "ppo": {
             "network": "mlp",
@@ -9538,6 +9539,25 @@
     "-- dqn --": {},
 
 
+    "3_obs_1fish": {
+        "base_cfg": "1",
+        "aquarium": {
+            "seed": 50,
+            "max_fish": 10,
+            "turn_away_fish": 1,
+            "max_steps": 2000,
+            "shark_agents": 1,
+            "observable_fishes": 5,
+            "fish_procreate_after_n_steps": 100
+        },
+        "ppo": {
+            "total_timesteps": 10e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 8e-5,
+            "cliprange": 0.1
+        }
+    },
     "3_obs": {
         "base_cfg": "1",
         "aquarium": {
@@ -9547,6 +9567,193 @@
         },
         "ppo": {
             "total_timesteps": 10e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 8e-5,
+            "cliprange": 0.1
+        }
+    },
+    "4_obs": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 5,
+            "turn_away_fish": 5,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "observable_fishes": 5,
+            "fish_procreate_after_n_steps": 600
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 8e-5,
+            "cliprange": 0.1
+        }
+    },
+    "5_obs": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 2,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "observable_fishes": 5,
+            "fish_procreate_after_n_steps": 500
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 8e-5,
+            "cliprange": 0.1
+        }
+    },
+    "6_obs": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 1,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "observable_fishes": 5,
+            "fish_procreate_after_n_steps": 500
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 8e-5,
+            "cliprange": 0.1
+        }
+    },
+    "6_obs_eval": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 1,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "observable_fishes": 5,
+            "fish_procreate_after_n_steps": 100
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 8e-5,
+            "cliprange": 0.1
+        }
+    },
+    "7_obs": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 1,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "observable_fishes": 5,
+            "fish_procreate_after_n_steps": 500,
+            "use_random_fish_pop_curriculum": true,
+            "fish_pop_curriculum": [[0, 10], [0, 5], [0, 2], [0, 1]]
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 8e-5,
+            "cliprange": 0.1
+        }
+    },
+    "7_obs_rand": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 1,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "observable_fishes": 5,
+            "fish_procreate_after_n_steps": 500,
+            "use_random_fish_pop_curriculum": true,
+            "fish_pop_curriculum": [[0, 10], [0, 5], [0, 2], [0, 1]],
+            "rand_seed": true
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 8e-5,
+            "cliprange": 0.1
+        }
+    },
+    "5_1_obs": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 2,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "observable_fishes": 5,
+            "fish_procreate_after_n_steps": 200
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 8e-5,
+            "cliprange": 0.1
+        }
+    },
+    "5_2_obs": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 2,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "observable_fishes": 5,
+            "fish_procreate_after_n_steps": 100
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 8e-5,
+            "cliprange": 0.1
+        }
+    },
+    "8_obs": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 1,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "observable_fishes": 5,
+            "fish_procreate_after_n_steps": 100
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 8e-5,
+            "cliprange": 0.1
+        }
+    },
+    "8_1_obs": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 1,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "observable_fishes": 5,
+            "fish_procreate_after_n_steps": 100,
+            "use_random_fish_pop_curriculum": true,
+            "fish_pop_curriculum": [[0, 10], [0, 1]]
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
             "network": "mlp_batchnorm",
             "num_layers": 3,
             "lr": 8e-5,
