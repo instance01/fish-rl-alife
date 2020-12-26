@@ -357,6 +357,9 @@ class Experiment:
         Fish.PROCREATE_AFTER_N_STEPS = \
             self.cfg["aquarium"]["fish_procreate_after_n_steps"]
 
+        seed = self.cfg["aquarium"]["seed"]
+        if self.cfg["aquarium"]["rand_seed"]:
+            seed = int(np.random.random() * 10000000)
         self.env = Aquarium(
             observable_sharks=self.cfg["aquarium"]["observable_sharks"],
             observable_fishes=self.cfg["aquarium"]["observable_fishes"],
@@ -368,7 +371,7 @@ class Experiment:
             torus=self.cfg["aquarium"]["torus"],
             fish_collision=self.cfg["aquarium"]["fish_collision"],
             lock_screen=self.cfg["aquarium"]["lock_screen"],
-            seed=self.cfg["aquarium"]["seed"],
+            seed=seed,
             show_gui=self.show_gui,
             shared_kill_zone=self.cfg["aquarium"]["shared_kill_zone"],
             kill_zone_radius=self.cfg["aquarium"]["kill_zone_radius"],
@@ -410,10 +413,11 @@ class Experiment:
         # No deepcopies, no nothing. The env was created once in the init and
         # never touched again. That's the assumption. Something to keep in
         # mind.
+        # TODO 26 Dec 15:40 : Commented out the max_fish things.
         if self.use_fish_pop_curriculum:
             new_fish_pop = self.fish_pop_curriculum.get(epoch, None)
             if new_fish_pop is not None:
-                self.env.env.max_fish = new_fish_pop
+                # self.env.env.max_fish = new_fish_pop
                 # TODO: I know. This is hardcoded for now. If I ever need it,
                 # I'll of course add support for other fish types.
                 self.env.select_fish_types(0, new_fish_pop, 0)
@@ -421,7 +425,7 @@ class Experiment:
             idx = np.random.randint(len(self.fish_pop_curriculum))
             new_fish_pop = self.fish_pop_curriculum[idx]
 
-            self.env.env.max_fish = new_fish_pop
+            # self.env.env.max_fish = new_fish_pop
             # TODO: See comment above regarding hardcoding fish type.
             self.env.select_fish_types(0, new_fish_pop, 0)
 
@@ -610,6 +614,8 @@ class Experiment:
             tot_rew += reward
             if done:
                 break
+            if i % 100 == 0:
+                print(i, tot_rew)
         print(i, tot_rew)
         return rewards
 
