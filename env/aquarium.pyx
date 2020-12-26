@@ -140,6 +140,7 @@ class Aquarium:
         self.shark_to_shark_dist = defaultdict(list)
         self.shark_to_shark_dist_at_kill = defaultdict(list)
         self.coop_kills = 0
+        self.full_coop_kills = 0
         self.n_stuns = 0
 
         # Kill zone
@@ -209,6 +210,7 @@ class Aquarium:
         self.shark_to_shark_dist = defaultdict(list)
         self.shark_to_shark_dist_at_kill = defaultdict(list)
         self.coop_kills = 0
+        self.full_coop_kills = 0
         self.n_stuns = 0
 
         # Initialize fishes at random positions.
@@ -410,6 +412,8 @@ class Aquarium:
                 n_participating_sharks = len(participating_sharks)
                 if n_participating_sharks > 0:
                     self.coop_kills += 1
+                if n_participating_sharks == len(self.sharks):
+                    self.full_coop_kills += 1
 
                 reward_main_shark = 10. 
                 for shark_, dist, radius_dist in participating_sharks:
@@ -447,7 +451,7 @@ class Aquarium:
 
             self.dead_fishes += 1
             shark.eaten_fish += 1
-            print('coop ratio', self.coop_kills / self.dead_fishes)
+            print('coop ratio', self.coop_kills / self.dead_fishes, 'full coop ratio', self.full_coop_kills / self.dead_fishes)
 
     def _handle_stun_move(self, a1, a2):
         """Make a shark unable to move for a certain number of steps and turn it
