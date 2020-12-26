@@ -8490,6 +8490,33 @@
         }
     },
 
+    "ma9_t3000_i5_p150_r4_s025_sp200_n_net3": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "shark_agents": 3,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.025
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 3
+        }
+    },
+    "ma9_t3000_i5_p150_r4_s02_sp200_n_net3": {
+        "base_cfg": "ma9_base_sp200",
+        "aquarium": {
+            "shark_agents": 3,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.02
+        },
+        "ppo": {
+            "n_nets": true,
+            "n_models": 3
+        }
+    },
+
 
     "-- 50x50 --": {},
 

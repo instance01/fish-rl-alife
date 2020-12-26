@@ -23,7 +23,8 @@ def smooth(y, box_pts):
 
 def aggregate(path):
     keys = [
-        'Train/Tot_Reward',
+        # 'Train/Tot_Reward',
+        'Train/Last_Fish_Population',
         # 'Eval/Length',
         # 'Eval/MCTS_Confidence',
         # 'Train/AvgLoss'
@@ -64,6 +65,12 @@ def aggregate(path):
             )
         agg_keys[key] = np.array(aggregated_)
 
+    # Lol. Used it for the fish population chart for the paper.
+    # import pickle
+    # a = [float(x) for x in agg_runs['Train/Last_Fish_Population']['Last_Fish_Population']]
+    # with open('a.pickle', 'wb+') as f:
+    #     pickle.dump(a, f)
+    # import pdb; pdb.set_trace()
     return agg_runs, agg_keys
 
 
