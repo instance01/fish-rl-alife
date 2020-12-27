@@ -403,7 +403,7 @@ class Aquarium:
                     max_dist = min(shark_.view_distance, self.max_animal_view_distance)
                     radius_dist = util.scale(self.kill_zone_radius, min_dist, max_dist, 0, OBSERVATION_MAX)
 
-                    print(dist, radius_dist)
+                    # print(dist, radius_dist)
                     if dist > radius_dist:
                         continue
 
@@ -426,7 +426,7 @@ class Aquarium:
                         reward_main_shark -= split_rew
                     else:
                         ratio = 1. - dist / radius_dist
-                        print(ratio)
+                        # print(ratio)
                         # TODO: To simplify, could consider integer only rewards.
                         # E.g.: round(ratio * 5)
                         # Right now it's floats.
@@ -451,7 +451,7 @@ class Aquarium:
 
             self.dead_fishes += 1
             shark.eaten_fish += 1
-            print('coop ratio', self.coop_kills / self.dead_fishes, 'full coop ratio', self.full_coop_kills / self.dead_fishes)
+            # print('coop ratio', self.coop_kills / self.dead_fishes, 'full coop ratio', self.full_coop_kills / self.dead_fishes)
 
     def _handle_stun_move(self, a1, a2):
         """Make a shark unable to move for a certain number of steps and turn it

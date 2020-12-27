@@ -119,6 +119,8 @@ class BoidFishController(Controller):
 
 
 class TurnAwayFishController(Controller):
+    USE_TWO_SHARKS = False
+
     @staticmethod
     def get_action(
             own_orientation: float,
@@ -133,6 +135,10 @@ class TurnAwayFishController(Controller):
 
         distance_to_shark = shark_observation[0]
         angle_to_shark = shark_observation[1]
+        # TODO: Added by instance01
+        if TurnAwayFishController.USE_TWO_SHARKS:
+            distance_to_shark2 = shark_observation[3]
+            angle_to_shark2 = shark_observation[4]
 
         distance_to_closest_fish = fish_observation[0]
         angle_to_closest_fish = fish_observation[1]
@@ -147,12 +153,16 @@ class TurnAwayFishController(Controller):
         current_vector = np.array(util.polar_to_cartesian(1.0, own_orientation))
         fish_force = calculate_repel_force(distance_to_closest_fish, angle_to_closest_fish)
         shark_force = calculate_repel_force(distance_to_shark, angle_to_shark)
+        if TurnAwayFishController.USE_TWO_SHARKS:
+            shark_force2 = calculate_repel_force(distance_to_shark2, angle_to_shark2)
         wall1_force = calculate_repel_force(distance_to_closest_wall, angle_to_closest_wall)
         wall2_force = calculate_repel_force(distance_to_second_closest_wall, angle_to_second_closest_wall)
         # TODO: Unused.
         # noise_force = np.array([random.uniform(-1, 1), random.uniform(-1, 1)])
 
         target_vector = current_vector + shark_force
+        if TurnAwayFishController.USE_TWO_SHARKS:
+            target_vector += shark_force2
         target_vector += 0.5 * fish_force
         target_vector += 0.5 * wall1_force + 0.3 * wall2_force
         angle = util.angle_of(target_vector)
