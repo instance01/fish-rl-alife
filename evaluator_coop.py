@@ -1,3 +1,5 @@
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import sys
 import glob
 import pickle
@@ -23,6 +25,7 @@ def load(id_, cfg_id, base_cfg_id, return_dict):
             print(id__ % cfg_id)
             res.extend(list(glob.glob(id__ % cfg_id)))
     print('####################')
+    print(id_)
     print(res)
 
     coop_ratios = []
@@ -40,9 +43,12 @@ def load(id_, cfg_id, base_cfg_id, return_dict):
                 print('####################')
             # TODO DUBIOUS! Should we maybe add a [0] if there's no dead fishes?
 
-    ci = st.t.interval(0.95, len(coop_ratios)-1, loc=np.mean(coop_ratios), scale=st.sem(coop_ratios))
-    print('avg_coop_ratio:%d' % np.mean(coop_ratios))
-    return_dict[id_] = (np.mean(coop_ratios), ci)
+    if coop_ratios:
+        ci = st.t.interval(0.95, len(coop_ratios)-1, loc=np.mean(coop_ratios), scale=st.sem(coop_ratios))
+        print('avg_coop_ratio:%d' % np.mean(coop_ratios))
+        return_dict[id_] = (np.mean(coop_ratios), ci)
+    else:
+        return_dict[id_] = (0, (0, 0))
 
 
 def main(id_):
@@ -82,11 +88,49 @@ def main(id_):
         'i10_r10_s05': ['ma9_t*_i10_p150_r10_s05', 'ma9_t2000_i10_p150_r10_s05_sp200']
     }
 
+    cfg_ids_i5_stun = {
+        'i5_r4_s03': ['ma9_t*_i5_p150_r4_s03_stun_ext', 'ma9_t2000_i5_p150_r4_s03_stun_ext_sp200'],
+        'i5_r4_s035': ['ma9_t*_i5_p150_r4_s035_stun_ext', 'ma9_t3000_i5_p150_r4_s035_stun_ext_sp200'],
+        'i5_r4_s04': ['ma9_t3000_i5_p150_r4_s04_stun_ext', 'ma9_t3000_i5_p150_r4_s04_stun_ext_sp200'],
+        'i5_r4_s05': ['ma9_t*_i5_p150_r4_s05_stun_ext', 'ma9_t2000_i5_p150_r4_s05_stun_ext_sp200'],
+
+        'i5_r6_s03': ['ma9_t*_i5_p150_r6_s03_stun_ext', 'ma9_t2000_i5_p150_r6_s03_stun_ext_sp200'],
+        'i5_r6_s035': ['ma9_t*_i5_p150_r6_s035_stun_ext', 'ma9_t3000_i5_p150_r6_s035_stun_ext_sp200'],
+        'i5_r6_s04': ['ma9_t3000_i5_p150_r6_s04_stun_ext', 'ma9_t3000_i5_p150_r6_s04_stun_ext_sp200'],
+        'i5_r6_s05': ['ma9_t*_i5_p150_r6_s05_stun_ext', 'ma9_t2000_i5_p150_r6_s05_stun_ext_sp200'],
+
+        'i5_r10_s03': ['ma9_t*_i5_p150_r10_s03_stun_ext', 'ma9_t2000_i5_p150_r10_s03_stun_ext_sp200'],
+        'i5_r10_s035': ['ma9_t*_i5_p150_r10_s035_stun_ext', 'ma9_t3000_i5_p150_r10_s035_stun_ext_sp200'],
+        'i5_r10_s04': ['ma9_t3000_i5_p150_r10_s04_stun_ext', 'ma9_t3000_i5_p150_r10_s04_stun_ext_sp200'],
+        'i5_r10_s05': ['ma9_t*_i5_p150_r10_s05_stun_ext', 'ma9_t2000_i5_p150_r10_s05_stun_ext_sp200']
+    }
+
+    cfg_ids_i10_stun = {
+        'i10_r4_s03': ['ma9_t*_i10_p150_r4_s03_stun_ext', 'ma9_t2000_i10_p150_r4_s03_stun_ext_sp200'],
+        'i10_r4_s035': ['ma9_t*_i10_p150_r4_s035_stun_ext', 'ma9_t3000_i10_p150_r4_s035_stun_ext_sp200'],
+        'i10_r4_s04': ['ma9_t3000_i10_p150_r4_s04_stun_ext', 'ma9_t3000_i10_p150_r4_s04_stun_ext_sp200'],
+        'i10_r4_s05': ['ma9_t*_i10_p150_r4_s05_stun_ext', 'ma9_t2000_i10_p150_r4_s05_stun_ext_sp200'],
+
+        'i10_r6_s03': ['ma9_t*_i10_p150_r6_s03_stun_ext', 'ma9_t2000_i10_p150_r6_s03_stun_ext_sp200'],
+        'i10_r6_s035': ['ma9_t*_i10_p150_r6_s035_stun_ext', 'ma9_t3000_i10_p150_r6_s035_stun_ext_sp200'],
+        'i10_r6_s04': ['ma9_t3000_i10_p150_r6_s04_stun_ext', 'ma9_t3000_i10_p150_r6_s04_stun_ext_sp200'],
+        'i10_r6_s05': ['ma9_t*_i10_p150_r6_s05_stun_ext', 'ma9_t2000_i10_p150_r6_s05_stun_ext_sp200'],
+
+        'i10_r10_s03': ['ma9_t*_i10_p150_r10_s03_stun_ext', 'ma9_t2000_i10_p150_r10_s03_stun_ext_sp200'],
+        'i10_r10_s035': ['ma9_t*_i10_p150_r10_s035_stun_ext', 'ma9_t3000_i10_p150_r10_s035_stun_ext_sp200'],
+        'i10_r10_s04': ['ma9_t3000_i10_p150_r10_s04_stun_ext', 'ma9_t3000_i10_p150_r10_s04_stun_ext_sp200'],
+        'i10_r10_s05': ['ma9_t*_i10_p150_r10_s05_stun_ext', 'ma9_t2000_i10_p150_r10_s05_stun_ext_sp200']
+    }
+
     kv = None
     if id_ == 'i5':
         kv = cfg_ids_i5
     elif id_ == 'i10':
         kv = cfg_ids_i10
+    elif id_ == 'i5_stun':
+        kv = cfg_ids_i5_stun
+    elif id_ == 'i10_stun':
+        kv = cfg_ids_i10_stun
 
     # What the fuck. Pool doesn't work.
     # Didn't have the time to investigate so I went for the hacky solution.
