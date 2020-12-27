@@ -44,6 +44,7 @@ from baselines.common.models import get_network_builder
 
 # Importing network models registers them.
 import network_models  # noqa
+import animal_controller
 from env.aquarium import Aquarium
 from env.shark import Shark
 from env.fish import Fish
@@ -328,6 +329,9 @@ class Experiment:
             )
         if self.use_random_fish_pop_curriculum:
             self.fish_pop_curriculum = [x[1] for x in self.cfg['aquarium']['fish_pop_curriculum']]
+
+        if self.cfg['aquarium']['turnaway_fish_use_two_sharks_for_repel']:
+            animal_controller.TurnAwayFishController.USE_TWO_SHARKS = True
 
         # High values increase acceleration, maximum speed and turning circle.
         Shark.FRICTION = self.cfg["aquarium"]["shark_friction"]
