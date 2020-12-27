@@ -6,7 +6,7 @@ from baselines.common.models import register
 
 def mlp_norm(norm, num_layers=2, num_hidden=64, activation=tf.tanh):
     def network_fn(input_shape):
-        print('input shape is {}'.format(input_shape))
+        # print('input shape is {}'.format(input_shape))
 
         x_input = tf.keras.Input(shape=input_shape)
         h = x_input
