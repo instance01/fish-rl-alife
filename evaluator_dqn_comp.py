@@ -1,11 +1,5 @@
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' 
-import sys
-import glob
-import pickle
-import multiprocessing
-from multiprocessing import Process
-from collections import OrderedDict
 import numpy as np
 import scipy.stats as st
 
@@ -13,16 +7,15 @@ import scipy.stats as st
 def load(fname):
     from pipeline import Experiment
 
-    tot_rewards = []
     scenarios = [1, 2, 5, 10]
     for scenario in scenarios:
+        tot_rewards = []
         print('Scenario', scenario)
         for _ in range(100):
             exp = Experiment('8_obs', show_gui=False, dump_cfg=False)
             exp.env.select_fish_types(0, scenario, 0)
-            exp.load_eval(fname, steps=500, initial_survival_time=3000)
-            # TODO !!!!!!!!! Thats wrong.
-            tot_rewards.append(10. * exp.env.dead_fishes)
+            _, rewards = exp.load_eval(fname, steps=500, initial_survival_time=3000)
+            tot_rewards.append(sum(rewards))
 
         ci = (0, 0)
         if len(tot_rewards) > 1:
