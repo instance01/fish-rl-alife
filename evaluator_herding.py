@@ -27,7 +27,7 @@ def load(id_, cfg_id, return_dict):
         print(fname)
         from pipeline import Experiment
         for _ in range(3):
-            fish_pop_hist = Experiment(base_cfg_id, show_gui=False, dump_cfg=False).load_eval(fname, steps=5000)
+            fish_pop_hist, _ = Experiment(base_cfg_id, show_gui=False, dump_cfg=False).load_eval(fname, steps=5000)
             if fish_pop_hist[-1] > 0 and fish_pop_hist[-1] < 10:
                 counter_coop += 1
             if fish_pop_hist[-1] == 0:

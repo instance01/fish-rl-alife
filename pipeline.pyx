@@ -587,8 +587,8 @@ class Experiment:
             return self._load_eval_two_nets(model_filename)
 
         model = self.load(model_filename)
-        self.evaluate(model, 0)
-        return self.env.fish_population_counter
+        rewards = self.evaluate(model, 0)
+        return self.env.fish_population_counter, rewards
 
     def _load_eval_two_nets(self, model_filename):
         self.env.model1 = self.load(model_filename + '-m1')
@@ -618,8 +618,8 @@ class Experiment:
             tot_rew += reward
             if done:
                 break
-            if i % 100 == 0:
-                print(i, tot_rew)
+            # if i % 100 == 0:
+            #     print(i, tot_rew)
         print(i, tot_rew)
         return rewards
 

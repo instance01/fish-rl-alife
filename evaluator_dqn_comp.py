@@ -1,5 +1,11 @@
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' 
+import sys
+import glob
+import pickle
+import multiprocessing
+from multiprocessing import Process
+from collections import OrderedDict
 import numpy as np
 import scipy.stats as st
 
@@ -15,13 +21,14 @@ def load(fname):
             exp = Experiment('8_obs', show_gui=False, dump_cfg=False)
             exp.env.select_fish_types(0, scenario, 0)
             exp.load_eval(fname, steps=500, initial_survival_time=3000)
+            # TODO !!!!!!!!! Thats wrong.
             tot_rewards.append(10. * exp.env.dead_fishes)
 
         ci = (0, 0)
         if len(tot_rewards) > 1:
             ci = st.t.interval(0.95, len(tot_rewards) - 1, loc=np.mean(tot_rewards), scale=st.sem(tot_rewards))
         m = np.mean(tot_rewards)
-        print('avg_tot_rewards: %d +- %d' % (m, m - ci[0]))
+        print('avg_tot_rewards: %f +- %f' % (round(m, 2), round(m - ci[0], 2)))
 
 
 def main():
