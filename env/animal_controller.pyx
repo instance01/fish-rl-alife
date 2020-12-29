@@ -120,6 +120,7 @@ class BoidFishController(Controller):
 
 class TurnAwayFishController(Controller):
     USE_TWO_SHARKS = False
+    FISH_VIEW_DIST_RATIO = 1.0
 
     @staticmethod
     def get_action(
@@ -177,7 +178,17 @@ class TurnAwayFishController(Controller):
         else:
             angle_change = 0.0
 
-        procreate = ready_to_procreate == 1.0 and not distance_to_shark
+        # TODO This is extremely hacky.
+        # We want to allow repelling from higher distances (such as 15 instead
+        # of 10), but at the same time allow procreation inside of the default
+        # distance of 10.
+        # E.g., we now use 15: Ratio is 10 / 15 = .66
+        # This means that procreation is allowed at distance .66 instead of
+        # 1.0 (or 0, since it's equal).
+        procreate = (not distance_to_shark) or distance_to_shark > TurnAwayFishController.FISH_VIEW_DIST_RATIO
+
+        procreate = ready_to_procreate == 1.0 and procreate
+        print(distance_to_shark)
         return 1.0, angle_change, procreate
 
 

@@ -333,6 +333,7 @@ class Experiment:
 
         if self.cfg['aquarium']['turnaway_fish_use_two_sharks_for_repel']:
             env.animal_controller.TurnAwayFishController.USE_TWO_SHARKS = True
+        env.animal_controller.TurnAwayFishController.FISH_VIEW_DIST_RATIO = 10. / self.cfg['aquarium']['fish_view_distance']
 
         # High values increase acceleration, maximum speed and turning circle.
         Shark.FRICTION = self.cfg["aquarium"]["shark_friction"]
