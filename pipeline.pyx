@@ -620,7 +620,7 @@ class Experiment:
                 break
             # if i % 100 == 0:
             #     print(i, tot_rew)
-        print(i, tot_rew)
+        # print(i, tot_rew)
         return rewards
 
     def evaluate_and_log(self, model, n_episode):

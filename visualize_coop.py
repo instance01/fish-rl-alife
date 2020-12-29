@@ -1,9 +1,13 @@
 import pickle
-
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
+import matplotlib as mpl
+
+
+mpl.font_manager._rebuild()
+plt.rc('font', family='Raleway')
 
 
 def truncate_colormap(cmapIn='jet', minval=0.0, maxval=1.0, n=100):
@@ -51,11 +55,17 @@ def _prep(data, prefix='i10'):
 
 
 base_path = 'pickles/'
-
-with open(base_path + 'i10_coop.pickle', 'rb') as f:
-    i10_data, i10_label_data = _prep(pickle.load(f))
-with open(base_path + 'i5_coop.pickle', 'rb') as f:
-    i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
+stuns = True
+if stuns:
+    with open(base_path + 'i10_stun_coop.pickle', 'rb') as f:
+        i10_data, i10_label_data = _prep(pickle.load(f))
+    with open(base_path + 'i5_stun_coop.pickle', 'rb') as f:
+        i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
+else:
+    with open(base_path + 'i10_coop.pickle', 'rb') as f:
+        i10_data, i10_label_data = _prep(pickle.load(f))
+    with open(base_path + 'i5_coop.pickle', 'rb') as f:
+        i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
 
 
 print(i10_data)
@@ -70,7 +80,8 @@ x_labels = ['.03', '.035', '.04', '.05']
 cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
 # fig, (ax, ax2) = plt.subplots(1, 2, figsize=(5,3.3))
 # fig, (ax, ax2) = plt.subplots(1, 2, figsize=(10, 6.5))
-fig, (ax, ax2) = plt.subplots(1, 2, figsize=(6, 2.2), constrained_layout=True)
+# fig, (ax, ax2) = plt.subplots(1, 2, figsize=(6, 2.2), constrained_layout=True)
+fig, (ax, ax2) = plt.subplots(1, 2, figsize=(6, 2.0), constrained_layout=True)
 im = ax.imshow(i10_data, cmap=cmap_mod)
 im2 = ax2.imshow(i5_data, cmap=cmap_mod)
 
@@ -97,7 +108,7 @@ for i in range(len(y_labels)):
         ax.text(j, i, i10_label_data[i][j], ha="center", va="center", color="w")
         ax2.text(j, i, i5_label_data[i][j], ha="center", va="center", color="w")
 
-ax.set_title("Fish population: 10")
-ax2.set_title("Fish population: 5")
+# ax.set_title("Fish population: 10")
+# ax2.set_title("Fish population: 5")
 # fig.tight_layout()
 plt.show()

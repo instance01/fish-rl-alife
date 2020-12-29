@@ -1,13 +1,12 @@
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import sys
 import glob
 import pickle
 import multiprocessing
 from multiprocessing import Process
-from collections import OrderedDict
 import numpy as np
 import scipy.stats as st
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
 def load(id_, cfg_id, base_cfg_id, return_dict):

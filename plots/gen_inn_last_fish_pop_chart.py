@@ -1,6 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pickle
+import matplotlib as mpl
+
+
+mpl.font_manager._rebuild()
+# plt.rc('font', family='Open Sans')
+plt.rc('font', family='Raleway')
 
 
 with open('inn_last_fish_pop.pickle', 'rb') as f:
