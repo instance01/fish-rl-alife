@@ -318,6 +318,7 @@ class Experiment:
         if show_gui is not None:
             self.show_gui = show_gui
         self.evolution = evolution
+        self.runs_folder = runs_folder
 
         self.use_fish_pop_curriculum = \
             self.cfg['aquarium']['use_fish_pop_curriculum']
@@ -446,7 +447,7 @@ class Experiment:
         if self.evolution:
             model_fname += '-evolution'
 
-        self.tb_logger = Logger(self.cfg, rand_str, self.evolution, runs_folder)
+        self.tb_logger = Logger(self.cfg, rand_str, self.evolution, self.runs_folder)
         logger.configure()
 
         total_timesteps = self.cfg['ppo']['total_timesteps']
@@ -709,8 +710,8 @@ def main():
     cfg_id = sys.argv[1]
 
     runs_folder = 'runs'
-    if len(sys.argv) > 4:
-        runs_folder = sys.argv[4]
+    if len(sys.argv) > 3:
+        runs_folder = sys.argv[3]
 
     if len(sys.argv) > 2:
         extra_action = sys.argv[2]
