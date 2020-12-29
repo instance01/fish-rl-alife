@@ -309,7 +309,7 @@ class MultiAgentEnvWrapperNNets(Wrapper):
 
 
 class Experiment:
-    def __init__(self, cfg_id, show_gui=None, evolution=False, dump_cfg=True):
+    def __init__(self, cfg_id, show_gui=None, evolution=False, dump_cfg=True, runs_folder='runs'):
         self.cfg_id = cfg_id
         self.cfg = Config().get_cfg(cfg_id)
         if dump_cfg:
@@ -446,7 +446,7 @@ class Experiment:
         if self.evolution:
             model_fname += '-evolution'
 
-        self.tb_logger = Logger(self.cfg, rand_str, self.evolution)
+        self.tb_logger = Logger(self.cfg, rand_str, self.evolution, runs_folder)
         logger.configure()
 
         total_timesteps = self.cfg['ppo']['total_timesteps']
@@ -708,6 +708,10 @@ def main():
     #   - python3 main.py cfg_id continue runs/model1  -> Continue using pretrained model.
     cfg_id = sys.argv[1]
 
+    runs_folder = 'runs'
+    if len(sys.argv) > 4:
+        runs_folder = sys.argv[4]
+
     if len(sys.argv) > 2:
         extra_action = sys.argv[2]
         if extra_action == 'det':
@@ -720,12 +724,12 @@ def main():
         elif extra_action == 'continue':
             Experiment(cfg_id).train(sys.argv[3])
         elif extra_action == 'single':
-            Experiment(cfg_id).train()
+            Experiment(cfg_id, runs_folder=runs_folder).train()
         elif extra_action == 'evolution':
             run_evolutionary_algorithm(cfg_id)
         elif extra_action == 'multi':
             for _ in range(3):
-                Experiment(cfg_id).train()
+                Experiment(cfg_id, runs_folder=runs_folder).train()
     else:
         # Just do 3 runs. I can cancel whenever I want.
         # Use multi_scancel.sh to cancel multiple jobs in a range.

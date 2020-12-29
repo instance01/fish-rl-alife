@@ -14,7 +14,7 @@ lock = threading.Lock()
 
 
 class Logger:
-    def __init__(self, cfg, rand_str, evolution=False):
+    def __init__(self, cfg, rand_str, evolution=False, runs_folder='runs'):
         _id = "-".join([
             datetime.datetime.now().strftime("%y-%m-%d_%H:%M:%S"),
             rand_str,
@@ -23,7 +23,7 @@ class Logger:
         ])
         if evolution:
             _id += '-evolution'
-        self.logdir = "runs/" + _id
+        self.logdir = runs_folder + "/" + _id
         self.writer = tf.summary.create_file_writer(self.logdir)
         self.custom_metrics = defaultdict(list)
         self.custom_file = self.logdir + "/custom.msgpack"
@@ -107,6 +107,7 @@ class EvolutionLogger:
             cfg_id,
             'evolution-meta'
         ])
+        # Here, the runs folder is hard coded. Since I don't use the EA anymore.
         self.logdir = "runs/" + _id
         self.writer = tf.summary.create_file_writer(self.logdir)
 
