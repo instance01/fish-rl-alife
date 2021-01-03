@@ -9684,6 +9684,25 @@
             "cliprange": 0.1
         }
     },
+    "6_obs_rand": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 1,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "observable_fishes": 5,
+            "fish_procreate_after_n_steps": 500,
+            "rand_seed": true
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 8e-5,
+            "cliprange": 0.1
+        }
+    },
     "6_obs_eval": {
         "base_cfg": "1",
         "aquarium": {
@@ -9797,6 +9816,63 @@
             "cliprange": 0.1
         }
     },
+    "8_obs_rand": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 1,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "observable_fishes": 5,
+            "fish_procreate_after_n_steps": 100,
+            "rand_seed": true
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 8e-5,
+            "cliprange": 0.1
+        }
+    },
+    "8_obs_rand_sp200": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 1,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "observable_fishes": 5,
+            "fish_procreate_after_n_steps": 200,
+            "rand_seed": true
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 8e-5,
+            "cliprange": 0.1
+        }
+    },
+    "8_obs_rand_sp300": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 1,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "observable_fishes": 5,
+            "fish_procreate_after_n_steps": 300,
+            "rand_seed": true
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 8e-5,
+            "cliprange": 0.1
+        }
+    },
     "8_1_obs": {
         "base_cfg": "1",
         "aquarium": {
@@ -9819,6 +9895,61 @@
     },
 
     "-- Sterberisiko vs Coop Rate --": {},
+
+    "ma9_t3000_i5_p150_r4_s04_stun_ext": {
+        "base_cfg": "ma9_base_stun_ext",
+        "aquarium": {
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.04
+        }
+    },
+    "ma9_t3000_i10_p150_r4_s04_stun_ext": {
+        "base_cfg": "ma9_base_stun_ext",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.04
+        }
+    },
+    "ma9_t3000_i5_p150_r6_s04_stun_ext": {
+        "base_cfg": "ma9_base_stun_ext",
+        "aquarium": {
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 6.0,
+            "shark_max_speed_change": 0.04
+        }
+    },
+    "ma9_t3000_i10_p150_r6_s04_stun_ext": {
+        "base_cfg": "ma9_base_stun_ext",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 6.0,
+            "shark_max_speed_change": 0.04
+        }
+    },
+    "ma9_t3000_i5_p150_r10_s04_stun_ext": {
+        "base_cfg": "ma9_base_stun_ext",
+        "aquarium": {
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 10.0,
+            "shark_max_speed_change": 0.04
+        }
+    },
+    "ma9_t3000_i10_p150_r10_s04_stun_ext": {
+        "base_cfg": "ma9_base_stun_ext",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 10.0,
+            "shark_max_speed_change": 0.04
+        }
+    },
 
     "ma9_t2000_i5_p150_r4_s04_stun_ext": {
         "base_cfg": "ma9_base_stun_ext",
@@ -9872,6 +10003,61 @@
             "shark_initial_survival_time": 2000,
             "kill_zone_radius": 10.0,
             "shark_max_speed_change": 0.04
+        }
+    },
+
+    "ma9_t3000_i5_p150_r4_s03_stun_ext": {
+        "base_cfg": "ma9_base_stun_ext",
+        "aquarium": {
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.03
+        }
+    },
+    "ma9_t3000_i10_p150_r4_s03_stun_ext": {
+        "base_cfg": "ma9_base_stun_ext",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0,
+            "shark_max_speed_change": 0.03
+        }
+    },
+    "ma9_t3000_i5_p150_r6_s03_stun_ext": {
+        "base_cfg": "ma9_base_stun_ext",
+        "aquarium": {
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 6.0,
+            "shark_max_speed_change": 0.03
+        }
+    },
+    "ma9_t3000_i10_p150_r6_s03_stun_ext": {
+        "base_cfg": "ma9_base_stun_ext",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 6.0,
+            "shark_max_speed_change": 0.03
+        }
+    },
+    "ma9_t3000_i5_p150_r10_s03_stun_ext": {
+        "base_cfg": "ma9_base_stun_ext",
+        "aquarium": {
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 10.0,
+            "shark_max_speed_change": 0.03
+        }
+    },
+    "ma9_t3000_i10_p150_r10_s03_stun_ext": {
+        "base_cfg": "ma9_base_stun_ext",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 10.0,
+            "shark_max_speed_change": 0.03
         }
     },
 
@@ -10338,6 +10524,55 @@
         }
     },
 
+
+    "ma9_t3000_i5_p150_r4_s05_stun_ext": {
+        "base_cfg": "ma9_base_stun_ext",
+        "aquarium": {
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0
+        }
+    },
+    "ma9_t3000_i5_p150_r6_s05_stun_ext": {
+        "base_cfg": "ma9_base_stun_ext",
+        "aquarium": {
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 6.0
+        }
+    },
+    "ma9_t3000_i5_p150_r10_s05_stun_ext": {
+        "base_cfg": "ma9_base_stun_ext",
+        "aquarium": {
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 10.0
+        }
+    },
+    "ma9_t3000_i10_p150_r4_s05_stun_ext": {
+        "base_cfg": "ma9_base_stun_ext",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 4.0
+        }
+    },
+    "ma9_t3000_i10_p150_r6_s05_stun_ext": {
+        "base_cfg": "ma9_base_stun_ext",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 6.0
+        }
+    },
+    "ma9_t3000_i10_p150_r10_s05_stun_ext": {
+        "base_cfg": "ma9_base_stun_ext",
+        "aquarium": {
+            "max_fish": 10,
+            "turn_away_fish": 10,
+            "shark_initial_survival_time": 3000,
+            "kill_zone_radius": 10.0
+        }
+    },
 
     "ma9_t3000_i5_p150_r6_s025_sp200_n_net3_swarm6": {
         "base_cfg": "ma9_base_sp200",
