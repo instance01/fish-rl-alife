@@ -53,35 +53,35 @@ def main(id_):
     multiprocessing.set_start_method('spawn')
 
     cfg_ids_i5 = {
-        't2000_i5_r4_s03': ['ma9_t2000_i5_p150_r4_s03_stun_ext', 'ma9_t3000_i5_p150_r4_s03_stun_ext'],
-        't2000_i5_r4_s04': ['ma9_t2000_i5_p150_r4_s04_stun_ext', 'ma9_t3000_i5_p150_r4_s04_stun_ext'],
-        't2000_i5_r4_s05': ['ma9_t2000_i5_p150_r4_s05_stun_ext', 'ma9_t3000_i5_p150_r4_s05_stun_ext'],
-        't2000_i5_r6_s03': ['ma9_t2000_i5_p150_r6_s03_stun_ext', 'ma9_t3000_i5_p150_r6_s03_stun_ext'],
-        't2000_i5_r6_s04': ['ma9_t2000_i5_p150_r6_s04_stun_ext', 'ma9_t3000_i5_p150_r6_s04_stun_ext'],
-        't2000_i5_r6_s05': ['ma9_t2000_i5_p150_r6_s05_stun_ext', 'ma9_t3000_i5_p150_r6_s05_stun_ext'],
-        't2000_i5_r10_s03': ['ma9_t2000_i5_p150_r10_s03_stun_ext', 'ma9_t3000_i5_p150_r10_s03_stun_ext'],
-        't2000_i5_r10_s04': ['ma9_t2000_i5_p150_r10_s04_stun_ext', 'ma9_t3000_i5_p150_r10_s04_stun_ext'],
-        't2000_i5_r10_s05': ['ma9_t2000_i5_p150_r10_s05_stun_ext', 'ma9_t3000_i5_p150_r10_s05_stun_ext'],
+        # 't2000_i5_r4_s03': ['ma9_t2000_i5_p150_r4_s03_stun_ext', 'ma9_t3000_i5_p150_r4_s03_stun_ext'],
+        # 't2000_i5_r4_s04': ['ma9_t2000_i5_p150_r4_s04_stun_ext', 'ma9_t3000_i5_p150_r4_s04_stun_ext'],
+        # 't2000_i5_r4_s05': ['ma9_t2000_i5_p150_r4_s05_stun_ext', 'ma9_t3000_i5_p150_r4_s05_stun_ext'],
+        # 't2000_i5_r6_s03': ['ma9_t2000_i5_p150_r6_s03_stun_ext', 'ma9_t3000_i5_p150_r6_s03_stun_ext'],
+        # 't2000_i5_r6_s04': ['ma9_t2000_i5_p150_r6_s04_stun_ext', 'ma9_t3000_i5_p150_r6_s04_stun_ext'],
+        # 't2000_i5_r6_s05': ['ma9_t2000_i5_p150_r6_s05_stun_ext', 'ma9_t3000_i5_p150_r6_s05_stun_ext'],
+        # 't2000_i5_r10_s03': ['ma9_t2000_i5_p150_r10_s03_stun_ext', 'ma9_t3000_i5_p150_r10_s03_stun_ext'],
+        # 't2000_i5_r10_s04': ['ma9_t2000_i5_p150_r10_s04_stun_ext', 'ma9_t3000_i5_p150_r10_s04_stun_ext'],
+        't2000_i5_r10_s05': ['ma9_t2000_i5_p150_r10_s05_stun_ext', 'ma9_t3000_i5_p150_r10_s05_stun_ext']
 
-        't1500_i5_r4_s03': ['ma9_t1500_i5_p150_r4_s03_stun_ext', 'ma9_t3000_i5_p150_r4_s03_stun_ext'],
-        't1500_i5_r4_s04': ['ma9_t1500_i5_p150_r4_s04_stun_ext', 'ma9_t3000_i5_p150_r4_s04_stun_ext'],
-        't1500_i5_r4_s05': ['ma9_t1500_i5_p150_r4_s05_stun_ext', 'ma9_t3000_i5_p150_r4_s05_stun_ext'],
-        't1500_i5_r6_s03': ['ma9_t1500_i5_p150_r6_s03_stun_ext', 'ma9_t3000_i5_p150_r6_s03_stun_ext'],
-        't1500_i5_r6_s04': ['ma9_t1500_i5_p150_r6_s04_stun_ext', 'ma9_t3000_i5_p150_r6_s04_stun_ext'],
-        't1500_i5_r6_s05': ['ma9_t1500_i5_p150_r6_s05_stun_ext', 'ma9_t3000_i5_p150_r6_s05_stun_ext'],
-        't1500_i5_r10_s03': ['ma9_t1500_i5_p150_r10_s03_stun_ext', 'ma9_t3000_i5_p150_r10_s03_stun_ext'],
-        't1500_i5_r10_s04': ['ma9_t1500_i5_p150_r10_s04_stun_ext', 'ma9_t3000_i5_p150_r10_s04_stun_ext'],
-        't1500_i5_r10_s05': ['ma9_t1500_i5_p150_r10_s05_stun_ext', 'ma9_t3000_i5_p150_r10_s05_stun_ext'],
+        # 't1500_i5_r4_s03': ['ma9_t1500_i5_p150_r4_s03_stun_ext', 'ma9_t3000_i5_p150_r4_s03_stun_ext'],
+        # 't1500_i5_r4_s04': ['ma9_t1500_i5_p150_r4_s04_stun_ext', 'ma9_t3000_i5_p150_r4_s04_stun_ext'],
+        # 't1500_i5_r4_s05': ['ma9_t1500_i5_p150_r4_s05_stun_ext', 'ma9_t3000_i5_p150_r4_s05_stun_ext'],
+        # 't1500_i5_r6_s03': ['ma9_t1500_i5_p150_r6_s03_stun_ext', 'ma9_t3000_i5_p150_r6_s03_stun_ext'],
+        # 't1500_i5_r6_s04': ['ma9_t1500_i5_p150_r6_s04_stun_ext', 'ma9_t3000_i5_p150_r6_s04_stun_ext'],
+        # 't1500_i5_r6_s05': ['ma9_t1500_i5_p150_r6_s05_stun_ext', 'ma9_t3000_i5_p150_r6_s05_stun_ext'],
+        # 't1500_i5_r10_s03': ['ma9_t1500_i5_p150_r10_s03_stun_ext', 'ma9_t3000_i5_p150_r10_s03_stun_ext'],
+        # 't1500_i5_r10_s04': ['ma9_t1500_i5_p150_r10_s04_stun_ext', 'ma9_t3000_i5_p150_r10_s04_stun_ext'],
+        # 't1500_i5_r10_s05': ['ma9_t1500_i5_p150_r10_s05_stun_ext', 'ma9_t3000_i5_p150_r10_s05_stun_ext'],
 
-        't1000_i5_r4_s03': ['ma9_t1000_i5_p150_r4_s03_stun_ext', 'ma9_t3000_i5_p150_r4_s03_stun_ext'],
-        't1000_i5_r4_s04': ['ma9_t1000_i5_p150_r4_s04_stun_ext', 'ma9_t3000_i5_p150_r4_s04_stun_ext'],
-        't1000_i5_r4_s05': ['ma9_t1000_i5_p150_r4_s05_stun_ext', 'ma9_t3000_i5_p150_r4_s05_stun_ext'],
-        't1000_i5_r6_s03': ['ma9_t1000_i5_p150_r6_s03_stun_ext', 'ma9_t3000_i5_p150_r6_s03_stun_ext'],
-        't1000_i5_r6_s04': ['ma9_t1000_i5_p150_r6_s04_stun_ext', 'ma9_t3000_i5_p150_r6_s04_stun_ext'],
-        't1000_i5_r6_s05': ['ma9_t1000_i5_p150_r6_s05_stun_ext', 'ma9_t3000_i5_p150_r6_s05_stun_ext'],
-        't1000_i5_r10_s03': ['ma9_t1000_i5_p150_r10_s03_stun_ext', 'ma9_t3000_i5_p150_r10_s03_stun_ext'],
-        't1000_i5_r10_s04': ['ma9_t1000_i5_p150_r10_s04_stun_ext', 'ma9_t3000_i5_p150_r10_s04_stun_ext'],
-        't1000_i5_r10_s05': ['ma9_t1000_i5_p150_r10_s05_stun_ext', 'ma9_t3000_i5_p150_r10_s05_stun_ext']
+        # 't1000_i5_r4_s03': ['ma9_t1000_i5_p150_r4_s03_stun_ext', 'ma9_t3000_i5_p150_r4_s03_stun_ext'],
+        # 't1000_i5_r4_s04': ['ma9_t1000_i5_p150_r4_s04_stun_ext', 'ma9_t3000_i5_p150_r4_s04_stun_ext'],
+        # 't1000_i5_r4_s05': ['ma9_t1000_i5_p150_r4_s05_stun_ext', 'ma9_t3000_i5_p150_r4_s05_stun_ext'],
+        # 't1000_i5_r6_s03': ['ma9_t1000_i5_p150_r6_s03_stun_ext', 'ma9_t3000_i5_p150_r6_s03_stun_ext'],
+        # 't1000_i5_r6_s04': ['ma9_t1000_i5_p150_r6_s04_stun_ext', 'ma9_t3000_i5_p150_r6_s04_stun_ext'],
+        # 't1000_i5_r6_s05': ['ma9_t1000_i5_p150_r6_s05_stun_ext', 'ma9_t3000_i5_p150_r6_s05_stun_ext'],
+        # 't1000_i5_r10_s03': ['ma9_t1000_i5_p150_r10_s03_stun_ext', 'ma9_t3000_i5_p150_r10_s03_stun_ext'],
+        # 't1000_i5_r10_s04': ['ma9_t1000_i5_p150_r10_s04_stun_ext', 'ma9_t3000_i5_p150_r10_s04_stun_ext'],
+        # 't1000_i5_r10_s05': ['ma9_t1000_i5_p150_r10_s05_stun_ext', 'ma9_t3000_i5_p150_r10_s05_stun_ext']
     }
 
     cfg_ids_i10 = {
@@ -142,7 +142,15 @@ def main(id_):
     values = []
     for k in kv:
         names.append(k)
-        values.append(result_kv_tuples[k])
+        if k not in result_kv_tuples:
+            print('ERR k not found!', k)
+            v = kv[k]
+            p = Process(target=load, args=(k, v[0], v[1], return_dict))
+            p.start()
+            p.join()
+            values.append(return_dict[k])
+        else:
+            values.append(result_kv_tuples[k])
 
     print(names)
     print(values)
