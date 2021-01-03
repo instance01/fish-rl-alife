@@ -4,13 +4,13 @@ import matplotlib.pyplot as plt
 
 base_path = 'pickles/'
 
-with open(base_path + 'i10_p150_two_net.pickle', 'rb') as f:
+with open(base_path + 'i10_p150_two_net_herding.pickle', 'rb') as f:
     i10_p150 = pickle.load(f)
-with open(base_path + 'i10_p75_two_net.pickle', 'rb') as f:
+with open(base_path + 'i10_p75_two_net_herding.pickle', 'rb') as f:
     i10_p75 = pickle.load(f)
-with open(base_path + 'i5_p150_two_net.pickle', 'rb') as f:
+with open(base_path + 'i5_p150_two_net_herding.pickle', 'rb') as f:
     i5_p150 = pickle.load(f)
-with open(base_path + 'i5_p75_two_net.pickle', 'rb') as f:
+with open(base_path + 'i5_p75_two_net_herding.pickle', 'rb') as f:
     i5_p75 = pickle.load(f)
 
 
