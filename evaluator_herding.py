@@ -8,7 +8,7 @@ from collections import OrderedDict
 
 def load(id_, cfg_id, return_dict):
     base_cfg_id = 'ma3_obs'
-    base_paths = ['models', 'modelsDec10-14']
+    base_paths = ['models', 'modelsDec10-14', 'modelsDec15-20']
     res = []
     two_net = 'two_net' in cfg_id
     for base_path in base_paths:
