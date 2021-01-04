@@ -35,3 +35,8 @@ paper/example
 build/
 models_tars/
 runs_tars/
+
+*.aux
+*.bbl
+*.blg
+*.log
