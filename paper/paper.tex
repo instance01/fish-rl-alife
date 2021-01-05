@@ -82,7 +82,7 @@ D.Ratke@campus.lmu.de} % email of corresponding author
 
 \section{Introduction}
 
-\blindtext[3]
+\blindtext[4]
 
 \begin{figure}%
     \centering
@@ -100,7 +100,7 @@ D.Ratke@campus.lmu.de} % email of corresponding author
 
 \subsection{Multi-Agent Reinforcement Learning}
 
-\blindtext[2]
+\blindtext[3]
 
 \subsection{Herding Behaviour}
 
@@ -112,11 +112,11 @@ D.Ratke@campus.lmu.de} % email of corresponding author
 
 \subsection{Related Work}
 
-\blindtext[3]
+\blindtext[5]
 
 \section{Aquarium Environment}
 
-\blindtext[4]
+\blindtext[5]
 
 \section{Experimental Setup}
 
@@ -126,8 +126,24 @@ D.Ratke@campus.lmu.de} % email of corresponding author
 
 \begin{figure}[t]
 \begin{center}
+\includegraphics[width=8cm]{figures/dqncomp1fish_2.png}
+\caption{Sustainability of static, static-wait, DQN Stage II and PPO with initial fish population of 1.}
+\label{fig:dqncomp1}
+\end{center}
+\end{figure}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[width=8cm]{figures/dqncomp2fish_2.png}
+\caption{Sustainability of static, static-wait, DQN Stage II and PPO with initial fish population of 2.}
+\label{fig:dqncomp2}
+\end{center}
+\end{figure}
+
+\begin{figure}[t]
+\begin{center}
 \includegraphics[width=8cm]{figures/fish_pop_chart3.png}
-\caption{Left-over fish population per learning episode over 12M steps}
+\caption{Left-over fish population per learning episode over 12M steps.}
 \label{fig:fish_pop}
 \end{center}
 \end{figure}
@@ -135,12 +151,45 @@ D.Ratke@campus.lmu.de} % email of corresponding author
 \begin{figure}[t]
 \begin{center}
 \includegraphics[width=6cm]{figures/shark_speeds.png}
-\caption{Distribution of shark speeds over time}
+\caption{Distribution of shark speeds over time.}
 \label{fig:shark_speeds}
 \end{center}
 \end{figure}
 
-\blindtext[8]
+\begin{figure}[t]
+\begin{center}
+\includegraphics[width=8cm]{figures/Sterberisiko_vs_Herding_Two_Net_2.png}
+\caption{TODO : Placeholder Chart (Idea: Three distributions with fish pop i10,i5,i2)}
+\label{fig:herding}
+\end{center}
+\end{figure}
+
+\begin{figure*}[t]
+\begin{center}
+\includegraphics[width=\textwidth]{figures/coop_movie_frames2.png}
+\caption{From left to right: Two sharks cooperatively catch a fish.}
+\label{fig:coop_movie}
+\end{center}
+\end{figure*}
+
+\begin{figure*}%
+    \centering
+    \subfloat[][\centering Cooperation rate with initial fish population of 10.]{\includegraphics[width=5.5cm]{figures/coop_chart_split1.png} }%
+    \subfloat[][\centering Cooperation rate with initial fish population of 5.]{\includegraphics[width=5.5cm]{figures/coop_chart_split2.png} }%
+    \subfloat[][\centering Cooperation rate with initial fish population of 5 and stuns.]{\includegraphics[width=6.5cm]{figures/coop_chart_stuns_split2.png} }%
+    \caption{Cooperation rate in different scenarios.}%
+    \label{fig:coop}%
+\end{figure*}
+
+\begin{figure*}[t]
+\begin{center}
+\includegraphics[width=14cm]{figures/coop_vs_sterberisiko_5fish.png}
+\caption{Cooperation rate vs starving pressure with initial fish population of 5.}
+\label{fig:coop_starve}
+\end{center}
+\end{figure*}
+
+\blindtext[14]
 
 \section{Conclusion}
 
