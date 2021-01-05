@@ -72,43 +72,74 @@ print(i10_data)
 print(i5_data)
 
 
-# y_labels = ['r4', 'r6', 'r10']
-# x_labels = ['s03', 's035', 's04', 's05']
-y_labels = ['4', '6', '10']
-x_labels = ['.03', '.035', '.04', '.05']
+def plot(data, label_data):
+    y_labels = ['4', '6', '10']
+    x_labels = ['.03', '.035', '.04', '.05']
 
-cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
-# fig, (ax, ax2) = plt.subplots(1, 2, figsize=(5,3.3))
-# fig, (ax, ax2) = plt.subplots(1, 2, figsize=(10, 6.5))
-# fig, (ax, ax2) = plt.subplots(1, 2, figsize=(6, 2.2), constrained_layout=True)
-fig, (ax, ax2) = plt.subplots(1, 2, figsize=(6, 2.0), constrained_layout=True)
-im = ax.imshow(i10_data, cmap=cmap_mod)
-im2 = ax2.imshow(i5_data, cmap=cmap_mod)
+    cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
+    fig, ax = plt.subplots(1, 1, figsize=(3.5, 2.0), constrained_layout=True)
+    im = ax.imshow(data, cmap=cmap_mod)
 
-# Colorbar
-cbar = ax.figure.colorbar(im, ax=[ax, ax2])
-cbar.ax.set_ylabel('Avg Coop Ratio', rotation=-90, va="bottom")
+    # Colorbar
+    cbar = ax.figure.colorbar(im, ax=ax)
+    cbar.ax.set_ylabel('Avg Coop Ratio', rotation=-90, va="bottom")
 
-# Ticks and labels
-ax.set_xticks(np.arange(len(x_labels)))
-ax.set_yticks(np.arange(len(y_labels)))
-ax.set_xticklabels(x_labels)
-ax.set_yticklabels(y_labels)
-ax2.set_xticks(np.arange(len(x_labels)))
-ax2.set_yticks(np.arange(len(y_labels)))
-ax2.set_xticklabels(x_labels)
-ax2.set_yticklabels(y_labels)
-ax.set_ylabel('Killzone Radius', rotation=90, va="bottom")
-ax.set_xlabel('Shark speed', rotation=0, va="top")
-ax2.set_xlabel('Shark speed', rotation=0, va="top")
+    # Ticks and labels
+    ax.set_xticks(np.arange(len(x_labels)))
+    ax.set_yticks(np.arange(len(y_labels)))
+    ax.set_xticklabels(x_labels)
+    ax.set_yticklabels(y_labels)
+    ax.set_ylabel('Killzone Radius', rotation=90, va="bottom")
+    ax.set_xlabel('Shark speed', rotation=0, va="top")
 
-# Text annotations
-for i in range(len(y_labels)):
-    for j in range(len(x_labels)):
-        ax.text(j, i, i10_label_data[i][j], ha="center", va="center", color="w")
-        ax2.text(j, i, i5_label_data[i][j], ha="center", va="center", color="w")
+    # Text annotations
+    for i in range(len(y_labels)):
+        for j in range(len(x_labels)):
+            ax.text(j, i, label_data[i][j], ha="center", va="center", color="w")
 
-# ax.set_title("Fish population: 10")
-# ax2.set_title("Fish population: 5")
-# fig.tight_layout()
-plt.show()
+    # ax.set_title("Fish population: 10")
+    # ax2.set_title("Fish population: 5")
+    plt.show()
+
+
+def plot_both():
+    # y_labels = ['r4', 'r6', 'r10']
+    # x_labels = ['s03', 's035', 's04', 's05']
+    y_labels = ['4', '6', '10']
+    x_labels = ['.03', '.035', '.04', '.05']
+
+    cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
+    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(6, 2.0), constrained_layout=True)
+    im = ax.imshow(i10_data, cmap=cmap_mod)
+    im2 = ax2.imshow(i5_data, cmap=cmap_mod)
+
+    # Colorbar
+    cbar = ax.figure.colorbar(im, ax=[ax, ax2])
+    cbar.ax.set_ylabel('Avg Coop Ratio', rotation=-90, va="bottom")
+
+    # Ticks and labels
+    ax.set_xticks(np.arange(len(x_labels)))
+    ax.set_yticks(np.arange(len(y_labels)))
+    ax.set_xticklabels(x_labels)
+    ax.set_yticklabels(y_labels)
+    ax2.set_xticks(np.arange(len(x_labels)))
+    ax2.set_yticks(np.arange(len(y_labels)))
+    ax2.set_xticklabels(x_labels)
+    ax2.set_yticklabels(y_labels)
+    ax.set_ylabel('Killzone Radius', rotation=90, va="bottom")
+    ax.set_xlabel('Shark speed', rotation=0, va="top")
+    ax2.set_xlabel('Shark speed', rotation=0, va="top")
+
+    # Text annotations
+    for i in range(len(y_labels)):
+        for j in range(len(x_labels)):
+            ax.text(j, i, i10_label_data[i][j], ha="center", va="center", color="w")
+            ax2.text(j, i, i5_label_data[i][j], ha="center", va="center", color="w")
+
+    # ax.set_title("Fish population: 10")
+    # ax2.set_title("Fish population: 5")
+    plt.show()
+
+
+plot(i5_data, i5_label_data)
+plot(i10_data, i10_label_data)
