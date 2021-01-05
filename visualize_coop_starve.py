@@ -71,13 +71,13 @@ def doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_da
     x_labels = ['.03', '.04', '.05']
 
     cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
-    fig, (ax, ax2, ax3) = plt.subplots(1, 3, figsize=(6, 2.0), constrained_layout=True)
+    fig, (ax, ax2, ax3) = plt.subplots(1, 3, figsize=(6.5, 2.0), constrained_layout=True)
     im = ax.imshow(i5_data, cmap=cmap_mod)
     im2 = ax2.imshow(i5_data2, cmap=cmap_mod)
     im3 = ax3.imshow(i5_data3, cmap=cmap_mod)
 
     # Colorbar
-    cbar = ax.figure.colorbar(im, ax=[ax, ax2, ax3])
+    cbar = ax.figure.colorbar(im, ax=[ax, ax2, ax3], aspect=40)
     cbar.ax.set_ylabel('Avg Coop Ratio', rotation=-90, va="bottom")
 
     # Ticks and labels

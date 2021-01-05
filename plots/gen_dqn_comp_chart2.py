@@ -95,7 +95,7 @@ def bar_plot(
 
 def plot(data, err_data, data2, err_data2):
     scenarios = [100, 200, 300]
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(4, 3.5))
     bar_plot(
         ax,
         data,
@@ -113,7 +113,7 @@ def plot(data, err_data, data2, err_data2):
     imagebox.image.axes = ax
     xy = [0.3, 22]
     ab = AnnotationBbox(imagebox, xy,
-                        xybox=(110., 10.),
+                        xybox=(50., 0.),
                         xycoords='data',
                         boxcoords="offset points",
                         pad=0.1,
@@ -133,7 +133,7 @@ def plot(data, err_data, data2, err_data2):
     imagebox.image.axes = ax
     xy = [0.3, 8]
     ab = AnnotationBbox(imagebox, xy,
-                        xybox=(110., 60.),
+                        xybox=(50., 50.),
                         xycoords='data',
                         boxcoords="offset points",
                         pad=0.1,
@@ -151,6 +151,7 @@ def plot(data, err_data, data2, err_data2):
     plt.xlabel('Time until reproduction possible')
     plt.ylabel('Sustainability')
     plt.xlim(-0.5, 2.5)
+    plt.tight_layout()
     plt.show()
 
 
