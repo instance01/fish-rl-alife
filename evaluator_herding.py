@@ -4,9 +4,12 @@ import pickle
 import multiprocessing
 from multiprocessing import Process
 from collections import OrderedDict
+from pipeline import Experiment
 
 
 def load(id_, cfg_id, return_dict):
+    # base_cfg_id = 'ma3_obs'  # for i10, i5 (sp600)
+    # base_cfg_id = 'ma3_obs_sp100'  # for i2
     base_cfg_id = 'ma3_obs'
     base_paths = ['models', 'modelsDec10-14', 'modelsDec15-20']
     res = []
@@ -25,15 +28,20 @@ def load(id_, cfg_id, return_dict):
             fname = fname[:-3]
         print('#############################')
         print(fname)
-        from pipeline import Experiment
         for _ in range(3):
-            fish_pop_hist, _ = Experiment(base_cfg_id, show_gui=False, dump_cfg=False).load_eval(fname, steps=5000)
+            exp = Experiment(base_cfg_id, show_gui=False, dump_cfg=False)
+            fish_pop_hist, _ = exp.load_eval(fname, steps=5000)
             if fish_pop_hist[-1] > 0 and fish_pop_hist[-1] < 10:
                 counter_coop += 1
             if fish_pop_hist[-1] == 0:
                 counter_greedy += 1
             if fish_pop_hist[-1] >= 10:
                 counter_fail += 1
+
+            # TODO: For i2 !
+            # if fish_pop_hist[-1] > 0 and exp.env.dead_fishes > 0:
+            #     counter_coop += 1
+            # print(exp.env.dead_fishes)
 
         total = counter_coop + counter_greedy + counter_fail
         print('c:%d' %counter_coop, 'f:%d' % counter_fail, 'g:%d' % counter_greedy, 't:%d' % total)
@@ -104,6 +112,20 @@ def main(id_):
         't2000': 'ma3_obs_starve_maxsteps_t2000_p150_5fish'
     }
 
+    cfg_ids_i2_p150 = {
+        't200': 'ma3_obs_starve_maxsteps_t200_i2_p150',
+        't300': 'ma3_obs_starve_maxsteps_t300_i2_p150',
+        't400': 'ma3_obs_starve_maxsteps_t400_i2_p150',
+        't500': 'ma3_obs_starve_maxsteps_t500_i2_p150',
+        't600': 'ma3_obs_starve_maxsteps_t600_i2_p150',
+        't700': 'ma3_obs_starve_maxsteps_t700_i2_p150',
+        't800': 'ma3_obs_starve_maxsteps_t800_i2_p150',
+        't1000': 'ma3_obs_starve_maxsteps_t1000_i2_p150',
+        't1200': 'ma3_obs_starve_maxsteps_t1200_i2_p150',
+        't1500': 'ma3_obs_starve_maxsteps_t1500_i2_p150',
+        't2000': 'ma3_obs_starve_maxsteps_t2000_i2_p150'
+    }
+
     two_net = True
 
     kv = None
@@ -115,6 +137,8 @@ def main(id_):
         kv = cfg_ids_i5_p75
     elif id_ == 'i5_p150':
         kv = cfg_ids_i5_p150
+    elif id_ == 'i2_p150':
+        kv = cfg_ids_i2_p150
 
     # What the fuck. Pool doesn't work.
     # Didn't have the time to investigate so I went for the hacky solution.
