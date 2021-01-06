@@ -46,6 +46,7 @@ class Logger:
             tf.summary.scalar(prefix + '/Last_Fish_Population', fish_pop[-1], n_episode)
             tf.summary.scalar(prefix + '/Last_Shark_Population', shark_pop[-1], n_episode)
             tf.summary.scalar(prefix + '/Coop_Kills', env.coop_kills, n_episode)
+            # print('fc', env.full_coop_kills)
             if env.dead_fishes > 0:
                 coop_kills_ratio = env.coop_kills / env.dead_fishes
                 full_coop_kills_ratio = env.full_coop_kills / env.dead_fishes

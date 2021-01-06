@@ -53,40 +53,40 @@ def main(id_):
     multiprocessing.set_start_method('spawn')
 
     cfg_ids_i5 = {
-        # 't2000_i5_r4_s03': ['ma9_t2000_i5_p150_r4_s03_stun_ext', 'ma9_t3000_i5_p150_r4_s03_stun_ext'],
-        # 't2000_i5_r4_s04': ['ma9_t2000_i5_p150_r4_s04_stun_ext', 'ma9_t3000_i5_p150_r4_s04_stun_ext'],
-        # 't2000_i5_r4_s05': ['ma9_t2000_i5_p150_r4_s05_stun_ext', 'ma9_t3000_i5_p150_r4_s05_stun_ext'],
-        # 't2000_i5_r6_s03': ['ma9_t2000_i5_p150_r6_s03_stun_ext', 'ma9_t3000_i5_p150_r6_s03_stun_ext'],
-        # 't2000_i5_r6_s04': ['ma9_t2000_i5_p150_r6_s04_stun_ext', 'ma9_t3000_i5_p150_r6_s04_stun_ext'],
-        # 't2000_i5_r6_s05': ['ma9_t2000_i5_p150_r6_s05_stun_ext', 'ma9_t3000_i5_p150_r6_s05_stun_ext'],
-        # 't2000_i5_r10_s03': ['ma9_t2000_i5_p150_r10_s03_stun_ext', 'ma9_t3000_i5_p150_r10_s03_stun_ext'],
-        # 't2000_i5_r10_s04': ['ma9_t2000_i5_p150_r10_s04_stun_ext', 'ma9_t3000_i5_p150_r10_s04_stun_ext'],
-        't2000_i5_r10_s05': ['ma9_t2000_i5_p150_r10_s05_stun_ext', 'ma9_t3000_i5_p150_r10_s05_stun_ext']
+        't2000_i5_r4_s03': ['ma9_t2000_i5_p150_r4_s03_stun_ext', 'ma9_t3000_i5_p150_r4_s03_stun_ext'],
+        't2000_i5_r4_s04': ['ma9_t2000_i5_p150_r4_s04_stun_ext', 'ma9_t3000_i5_p150_r4_s04_stun_ext'],
+        't2000_i5_r4_s05': ['ma9_t2000_i5_p150_r4_s05_stun_ext', 'ma9_t3000_i5_p150_r4_s05_stun_ext'],
+        't2000_i5_r6_s03': ['ma9_t2000_i5_p150_r6_s03_stun_ext', 'ma9_t3000_i5_p150_r6_s03_stun_ext'],
+        't2000_i5_r6_s04': ['ma9_t2000_i5_p150_r6_s04_stun_ext', 'ma9_t3000_i5_p150_r6_s04_stun_ext'],
+        't2000_i5_r6_s05': ['ma9_t2000_i5_p150_r6_s05_stun_ext', 'ma9_t3000_i5_p150_r6_s05_stun_ext'],
+        't2000_i5_r10_s03': ['ma9_t2000_i5_p150_r10_s03_stun_ext', 'ma9_t3000_i5_p150_r10_s03_stun_ext'],
+        't2000_i5_r10_s04': ['ma9_t2000_i5_p150_r10_s04_stun_ext', 'ma9_t3000_i5_p150_r10_s04_stun_ext'],
+        't2000_i5_r10_s05': ['ma9_t2000_i5_p150_r10_s05_stun_ext', 'ma9_t3000_i5_p150_r10_s05_stun_ext'],  # was failing
 
-        # 't1500_i5_r4_s03': ['ma9_t1500_i5_p150_r4_s03_stun_ext', 'ma9_t3000_i5_p150_r4_s03_stun_ext'],
-        # 't1500_i5_r4_s04': ['ma9_t1500_i5_p150_r4_s04_stun_ext', 'ma9_t3000_i5_p150_r4_s04_stun_ext'],
-        # 't1500_i5_r4_s05': ['ma9_t1500_i5_p150_r4_s05_stun_ext', 'ma9_t3000_i5_p150_r4_s05_stun_ext'],
-        # 't1500_i5_r6_s03': ['ma9_t1500_i5_p150_r6_s03_stun_ext', 'ma9_t3000_i5_p150_r6_s03_stun_ext'],
-        # 't1500_i5_r6_s04': ['ma9_t1500_i5_p150_r6_s04_stun_ext', 'ma9_t3000_i5_p150_r6_s04_stun_ext'],
-        # 't1500_i5_r6_s05': ['ma9_t1500_i5_p150_r6_s05_stun_ext', 'ma9_t3000_i5_p150_r6_s05_stun_ext'],
-        # 't1500_i5_r10_s03': ['ma9_t1500_i5_p150_r10_s03_stun_ext', 'ma9_t3000_i5_p150_r10_s03_stun_ext'],
-        # 't1500_i5_r10_s04': ['ma9_t1500_i5_p150_r10_s04_stun_ext', 'ma9_t3000_i5_p150_r10_s04_stun_ext'],
-        # 't1500_i5_r10_s05': ['ma9_t1500_i5_p150_r10_s05_stun_ext', 'ma9_t3000_i5_p150_r10_s05_stun_ext'],
+        't1500_i5_r4_s03': ['ma9_t1500_i5_p150_r4_s03_stun_ext', 'ma9_t3000_i5_p150_r4_s03_stun_ext'],
+        't1500_i5_r4_s04': ['ma9_t1500_i5_p150_r4_s04_stun_ext', 'ma9_t3000_i5_p150_r4_s04_stun_ext'],
+        't1500_i5_r4_s05': ['ma9_t1500_i5_p150_r4_s05_stun_ext', 'ma9_t3000_i5_p150_r4_s05_stun_ext'],
+        't1500_i5_r6_s03': ['ma9_t1500_i5_p150_r6_s03_stun_ext', 'ma9_t3000_i5_p150_r6_s03_stun_ext'],
+        't1500_i5_r6_s04': ['ma9_t1500_i5_p150_r6_s04_stun_ext', 'ma9_t3000_i5_p150_r6_s04_stun_ext'],
+        't1500_i5_r6_s05': ['ma9_t1500_i5_p150_r6_s05_stun_ext', 'ma9_t3000_i5_p150_r6_s05_stun_ext'],
+        't1500_i5_r10_s03': ['ma9_t1500_i5_p150_r10_s03_stun_ext', 'ma9_t3000_i5_p150_r10_s03_stun_ext'],
+        't1500_i5_r10_s04': ['ma9_t1500_i5_p150_r10_s04_stun_ext', 'ma9_t3000_i5_p150_r10_s04_stun_ext'],
+        't1500_i5_r10_s05': ['ma9_t1500_i5_p150_r10_s05_stun_ext', 'ma9_t3000_i5_p150_r10_s05_stun_ext'],
 
-        # 't1000_i5_r4_s03': ['ma9_t1000_i5_p150_r4_s03_stun_ext', 'ma9_t3000_i5_p150_r4_s03_stun_ext'],
-        # 't1000_i5_r4_s04': ['ma9_t1000_i5_p150_r4_s04_stun_ext', 'ma9_t3000_i5_p150_r4_s04_stun_ext'],
-        # 't1000_i5_r4_s05': ['ma9_t1000_i5_p150_r4_s05_stun_ext', 'ma9_t3000_i5_p150_r4_s05_stun_ext'],
-        # 't1000_i5_r6_s03': ['ma9_t1000_i5_p150_r6_s03_stun_ext', 'ma9_t3000_i5_p150_r6_s03_stun_ext'],
-        # 't1000_i5_r6_s04': ['ma9_t1000_i5_p150_r6_s04_stun_ext', 'ma9_t3000_i5_p150_r6_s04_stun_ext'],
-        # 't1000_i5_r6_s05': ['ma9_t1000_i5_p150_r6_s05_stun_ext', 'ma9_t3000_i5_p150_r6_s05_stun_ext'],
-        # 't1000_i5_r10_s03': ['ma9_t1000_i5_p150_r10_s03_stun_ext', 'ma9_t3000_i5_p150_r10_s03_stun_ext'],
-        # 't1000_i5_r10_s04': ['ma9_t1000_i5_p150_r10_s04_stun_ext', 'ma9_t3000_i5_p150_r10_s04_stun_ext'],
-        # 't1000_i5_r10_s05': ['ma9_t1000_i5_p150_r10_s05_stun_ext', 'ma9_t3000_i5_p150_r10_s05_stun_ext']
+        't1000_i5_r4_s03': ['ma9_t1000_i5_p150_r4_s03_stun_ext', 'ma9_t3000_i5_p150_r4_s03_stun_ext'],
+        't1000_i5_r4_s04': ['ma9_t1000_i5_p150_r4_s04_stun_ext', 'ma9_t3000_i5_p150_r4_s04_stun_ext'],
+        't1000_i5_r4_s05': ['ma9_t1000_i5_p150_r4_s05_stun_ext', 'ma9_t3000_i5_p150_r4_s05_stun_ext'],
+        't1000_i5_r6_s03': ['ma9_t1000_i5_p150_r6_s03_stun_ext', 'ma9_t3000_i5_p150_r6_s03_stun_ext'],
+        't1000_i5_r6_s04': ['ma9_t1000_i5_p150_r6_s04_stun_ext', 'ma9_t3000_i5_p150_r6_s04_stun_ext'],
+        't1000_i5_r6_s05': ['ma9_t1000_i5_p150_r6_s05_stun_ext', 'ma9_t3000_i5_p150_r6_s05_stun_ext'],
+        't1000_i5_r10_s03': ['ma9_t1000_i5_p150_r10_s03_stun_ext', 'ma9_t3000_i5_p150_r10_s03_stun_ext'],
+        't1000_i5_r10_s04': ['ma9_t1000_i5_p150_r10_s04_stun_ext', 'ma9_t3000_i5_p150_r10_s04_stun_ext'],
+        't1000_i5_r10_s05': ['ma9_t1000_i5_p150_r10_s05_stun_ext', 'ma9_t3000_i5_p150_r10_s05_stun_ext']
     }
 
     cfg_ids_i10 = {
         't2000_i10_r4_s03': ['ma9_t2000_i10_p150_r4_s03_stun_ext', 'ma9_t3000_i10_p150_r4_s03_stun_ext'],
-        't2000_i10_r4_s04': ['ma9_t2000_i10_p150_r4_s04_stun_ext', 'ma9_t3000_i10_p150_r4_s04_stun_ext'],
+        't2000_i10_r4_s04': ['ma9_t2000_i10_p150_r4_s04_stun_ext', 'ma9_t3000_i10_p150_r4_s04_stun_ext']  # ggg
         't2000_i10_r4_s05': ['ma9_t2000_i10_p150_r4_s05_stun_ext', 'ma9_t3000_i10_p150_r4_s05_stun_ext'],
         't2000_i10_r6_s03': ['ma9_t2000_i10_p150_r6_s03_stun_ext', 'ma9_t3000_i10_p150_r6_s03_stun_ext'],
         't2000_i10_r6_s04': ['ma9_t2000_i10_p150_r6_s04_stun_ext', 'ma9_t3000_i10_p150_r6_s04_stun_ext'],
@@ -97,7 +97,7 @@ def main(id_):
 
         't1500_i10_r4_s03': ['ma9_t1500_i10_p150_r4_s03_stun_ext', 'ma9_t3000_i10_p150_r4_s03_stun_ext'],
         't1500_i10_r4_s04': ['ma9_t1500_i10_p150_r4_s04_stun_ext', 'ma9_t3000_i10_p150_r4_s04_stun_ext'],
-        't1500_i10_r4_s05': ['ma9_t1500_i10_p150_r4_s05_stun_ext', 'ma9_t3000_i10_p150_r4_s05_stun_ext'],
+        't1500_i10_r4_s05': ['ma9_t1500_i10_p150_r4_s05_stun_ext', 'ma9_t3000_i10_p150_r4_s05_stun_ext']  # hhh
         't1500_i10_r6_s03': ['ma9_t1500_i10_p150_r6_s03_stun_ext', 'ma9_t3000_i10_p150_r6_s03_stun_ext'],
         't1500_i10_r6_s04': ['ma9_t1500_i10_p150_r6_s04_stun_ext', 'ma9_t3000_i10_p150_r6_s04_stun_ext'],
         't1500_i10_r6_s05': ['ma9_t1500_i10_p150_r6_s05_stun_ext', 'ma9_t3000_i10_p150_r6_s05_stun_ext'],

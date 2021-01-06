@@ -24,11 +24,11 @@ def smooth(y, box_pts):
 def aggregate(path):
     keys = [
         # 'Train/Tot_Reward',
-        'Train/Last_Fish_Population',
         # 'Eval/Length',
         # 'Eval/MCTS_Confidence',
         # 'Train/AvgLoss'
         # 'Eval/MCTS_Confidence'
+        'Train/Last_Fish_Population'
     ]
 
     agg_runs = defaultdict(lambda: defaultdict(list))
@@ -38,15 +38,31 @@ def aggregate(path):
     if not path:
         return None, None
     path = path[0]
+
+    data  =[]
     for event in my_summary_iterator(path):
         if not event.summary.value:
             continue
         tag = event.summary.value[0].tag
         for key in keys:
-            if tag.startswith(key):
-                run = tag[tag.rfind('/')+1:]
-                val = tf.make_ndarray(event.summary.value[0].tensor)
-                agg_runs[key][run].append(val)
+            # if tag.startswith(key):
+            #     run = tag[tag.rfind('/')+1:]
+            #     val = tf.make_ndarray(event.summary.value[0].tensor)
+            #     agg_runs[key][run].append(val)
+            if key == tag:
+                val = float(tf.make_ndarray(event.summary.value[0].tensor))
+                # print(val)
+                data.append(val)
+
+    # data = smooth(data, 20)[10:-9]
+    # import pickle
+    # print(data)
+    # print(len(data))
+    # with open('t800_5fish_last_fish_pop.pickle', 'wb+') as f:
+    #     pickle.dump(data, f)
+    # import matplotlib.pyplot as plt
+    # plt.plot(data)
+    # plt.show()
 
     for key in agg_runs:
         aggregated = []
@@ -65,12 +81,6 @@ def aggregate(path):
             )
         agg_keys[key] = np.array(aggregated_)
 
-    # Lol. Used it for the fish population chart for the paper.
-    # import pickle
-    # a = [float(x) for x in agg_runs['Train/Last_Fish_Population']['Last_Fish_Population']]
-    # with open('a.pickle', 'wb+') as f:
-    #     pickle.dump(a, f)
-    # import pdb; pdb.set_trace()
     return agg_runs, agg_keys
 
 
