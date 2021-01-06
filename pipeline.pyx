@@ -48,6 +48,7 @@ import env.animal_controller
 from env.aquarium import Aquarium
 from env.shark import Shark
 from env.fish import Fish
+from env.animal_controller import DefaultSharkController as DShark
 from custom_logger import Logger
 from custom_logger import EvolutionLogger
 from config import Config
@@ -623,6 +624,53 @@ class Experiment:
             # if i % 100 == 0:
             #     print(i, tot_rew)
         # print(i, tot_rew)
+        return rewards
+
+    def evaluate_static(self, steps=1000, initial_survival_time=3000):
+        self.env.env.max_steps = steps
+        Shark.INITIAL_SURVIVAL_TIME = initial_survival_time
+        self.env.env.seed = int(np.random.random() * 1e9)
+
+        """Run an evaluation game."""
+        obs = self.env.reset()
+        i = 0
+        rewards = []
+        tot_rew = 0
+        while not self.env.env.is_finished:
+            i += 1
+            action = DShark.get_action(**self.env.prepare_observation_for_controller(obs))
+            obs, reward, done, info = self.env.step([action], 'm1')
+            if self.show_gui:
+                self.env.env.render()
+            rewards.append(reward)
+            tot_rew += reward
+            if done:
+                break
+        return rewards
+
+    def evaluate_static_wait(self, steps=1000, initial_survival_time=3000):
+        self.env.env.max_steps = steps
+        Shark.INITIAL_SURVIVAL_TIME = initial_survival_time
+        self.env.env.seed = int(np.random.random() * 1e9)
+
+        """Run an evaluation game."""
+        obs = self.env.reset()
+        i = 0
+        rewards = []
+        tot_rew = 0
+        while not self.env.env.is_finished:
+            i += 1
+            if len(self.env.fishes) <= 1:
+                action = (0., 0., False)
+            else:
+                action = DShark.get_action(**self.env.prepare_observation_for_controller(obs))
+            obs, reward, done, info = self.env.step([action], 'm1')
+            if self.show_gui:
+                self.env.env.render()
+            rewards.append(reward)
+            tot_rew += reward
+            if done:
+                break
         return rewards
 
     def evaluate_and_log(self, model, n_episode):
