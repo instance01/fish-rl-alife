@@ -55,6 +55,8 @@ with open(base_path + 'i5_coop_starve.pickle', 'rb') as f:
     i5_data2, i5_label_data2 = _prep(pickle.load(f), prefix='t1500_i5')
 with open(base_path + 'i5_coop_starve.pickle', 'rb') as f:
     i5_data3, i5_label_data3 = _prep(pickle.load(f), prefix='t1000_i5')
+with open(base_path + 't500_i5_coop_starve.pickle', 'rb') as f:
+    i5_data4, i5_label_data4 = _prep(pickle.load(f), prefix='t500_i5')
 
 with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
     i10_data, i10_label_data = _prep(pickle.load(f), prefix='t2000_i10')
@@ -62,22 +64,25 @@ with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
     i10_data2, i10_label_data2 = _prep(pickle.load(f), prefix='t1500_i10')
 with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
     i10_data3, i10_label_data3 = _prep(pickle.load(f), prefix='t1000_i10')
+with open(base_path + 't500_i10_coop_starve.pickle', 'rb') as f:
+    i10_data4, i10_label_data4 = _prep(pickle.load(f), prefix='t500_i10')
 
 
-def doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3):
+def doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3, i5_data4, i5_label_data4):
     print(i5_data)
 
     y_labels = ['4', '6', '10']
     x_labels = ['.03', '.04', '.05']
 
     cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
-    fig, (ax, ax2, ax3) = plt.subplots(1, 3, figsize=(6.5, 2.0), constrained_layout=True)
-    im = ax.imshow(i5_data, cmap=cmap_mod)
-    im2 = ax2.imshow(i5_data2, cmap=cmap_mod)
-    im3 = ax3.imshow(i5_data3, cmap=cmap_mod)
+    fig, (ax, ax2, ax3, ax4) = plt.subplots(1, 4, figsize=(8.5, 2.0), constrained_layout=True)
+    im = ax.imshow(i5_data4, cmap=cmap_mod)
+    im2 = ax2.imshow(i5_data, cmap=cmap_mod)
+    im3 = ax3.imshow(i5_data2, cmap=cmap_mod)
+    im4 = ax4.imshow(i5_data3, cmap=cmap_mod)
 
     # Colorbar
-    cbar = ax.figure.colorbar(im, ax=[ax, ax2, ax3], aspect=40)
+    cbar = ax.figure.colorbar(im, ax=[ax, ax2, ax3, ax4], aspect=40)
     cbar.ax.set_ylabel('Avg Coop Ratio', rotation=-90, va="bottom")
 
     # Ticks and labels
@@ -93,21 +98,27 @@ def doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_da
     ax3.set_yticks(np.arange(len(y_labels)))
     ax3.set_xticklabels(x_labels)
     ax3.set_yticklabels(y_labels)
+    ax4.set_xticks(np.arange(len(x_labels)))
+    ax4.set_yticks(np.arange(len(y_labels)))
+    ax4.set_xticklabels(x_labels)
+    ax4.set_yticklabels(y_labels)
     ax.set_ylabel('Killzone Radius', rotation=90, va="bottom")
     ax.set_xlabel('Shark speed', rotation=0, va="top")
     ax2.set_xlabel('Shark speed', rotation=0, va="top")
     ax3.set_xlabel('Shark speed', rotation=0, va="top")
+    ax4.set_xlabel('Shark speed', rotation=0, va="top")
 
     # Text annotations
     for i in range(len(y_labels)):
         for j in range(len(x_labels)):
             # ax.text(j, i, i10_label_data[i][j], ha="center", va="center", color="w")
-            ax.text(j, i, i5_label_data[i][j], ha="center", va="center", color="w")
-            ax2.text(j, i, i5_label_data2[i][j], ha="center", va="center", color="w")
-            ax3.text(j, i, i5_label_data3[i][j], ha="center", va="center", color="w")
+            ax.text(j, i, i5_label_data4[i][j], ha="center", va="center", color="w")
+            ax2.text(j, i, i5_label_data[i][j], ha="center", va="center", color="w")
+            ax3.text(j, i, i5_label_data2[i][j], ha="center", va="center", color="w")
+            ax4.text(j, i, i5_label_data3[i][j], ha="center", va="center", color="w")
 
     plt.show()
 
 
-doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3)
-doit(i10_data, i10_label_data, i10_data2, i10_label_data2, i10_data3, i10_label_data3)
+doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3, i5_data4, i5_label_data4)
+doit(i10_data, i10_label_data, i10_data2, i10_label_data2, i10_data3, i10_label_data3, i10_data4, i10_label_data4)
