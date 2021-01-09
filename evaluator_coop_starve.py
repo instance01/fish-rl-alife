@@ -29,21 +29,22 @@ def load(id_, cfg_id, base_cfg_id, return_dict):
     coop_ratios = []
     for fname in res:
         fname = fname[:-3]
-        print(fname)
+        # print(fname)
         for _ in range(20):
             exp = Experiment(base_cfg_id, show_gui=False, dump_cfg=False)
             exp.load_eval(fname, steps=3000, initial_survival_time=3000)
             if exp.env.dead_fishes != 0:
+                print(exp.env.coop_kills, exp.env.dead_fishes)
                 coop_ratios.append(exp.env.coop_kills / exp.env.dead_fishes)
             else:
-                print('####################')
-                print('NO dead fishes!')
-                print('####################')
-            # TODO DUBIOUS! Should we maybe add a [0] if there's no dead fishes?
+                print('####### NO dead fishes! #######')
+                # TODO DUBIOUS! Should we maybe add a [0] if there's no dead fishes?
+                # lets try.
+                coop_ratios.append(0)
 
     if coop_ratios:
         ci = st.t.interval(0.95, len(coop_ratios)-1, loc=np.mean(coop_ratios), scale=st.sem(coop_ratios))
-        print('avg_coop_ratio:%d' % np.mean(coop_ratios))
+        print('avg_coop_ratio:%d' % np.mean(coop_ratios), coop_ratios)
         return_dict[id_] = (np.mean(coop_ratios), ci)
     else:
         return_dict[id_] = (0, (0, 0))
@@ -81,12 +82,22 @@ def main(id_):
         't1000_i5_r6_s05': ['ma9_t1000_i5_p150_r6_s05_stun_ext', 'ma9_t3000_i5_p150_r6_s05_stun_ext'],
         't1000_i5_r10_s03': ['ma9_t1000_i5_p150_r10_s03_stun_ext', 'ma9_t3000_i5_p150_r10_s03_stun_ext'],
         't1000_i5_r10_s04': ['ma9_t1000_i5_p150_r10_s04_stun_ext', 'ma9_t3000_i5_p150_r10_s04_stun_ext'],
-        't1000_i5_r10_s05': ['ma9_t1000_i5_p150_r10_s05_stun_ext', 'ma9_t3000_i5_p150_r10_s05_stun_ext']
+        't1000_i5_r10_s05': ['ma9_t1000_i5_p150_r10_s05_stun_ext', 'ma9_t3000_i5_p150_r10_s05_stun_ext'],
+
+        't500_i5_r4_s03': ['ma9_t500_i5_p150_r4_s03_stun_ext', 'ma9_t3000_i5_p150_r4_s03_stun_ext'],
+        't500_i5_r4_s04': ['ma9_t500_i5_p150_r4_s04_stun_ext', 'ma9_t3000_i5_p150_r4_s04_stun_ext'],
+        't500_i5_r4_s05': ['ma9_t500_i5_p150_r4_s05_stun_ext', 'ma9_t3000_i5_p150_r4_s05_stun_ext'],
+        't500_i5_r6_s03': ['ma9_t500_i5_p150_r6_s03_stun_ext', 'ma9_t3000_i5_p150_r6_s03_stun_ext'],
+        't500_i5_r6_s04': ['ma9_t500_i5_p150_r6_s04_stun_ext', 'ma9_t3000_i5_p150_r6_s04_stun_ext'],
+        't500_i5_r6_s05': ['ma9_t500_i5_p150_r6_s05_stun_ext', 'ma9_t3000_i5_p150_r6_s05_stun_ext'],
+        't500_i5_r10_s03': ['ma9_t500_i5_p150_r10_s03_stun_ext', 'ma9_t3000_i5_p150_r10_s03_stun_ext'],
+        't500_i5_r10_s04': ['ma9_t500_i5_p150_r10_s04_stun_ext', 'ma9_t3000_i5_p150_r10_s04_stun_ext'],
+        't500_i5_r10_s05': ['ma9_t500_i5_p150_r10_s05_stun_ext', 'ma9_t3000_i5_p150_r10_s05_stun_ext']
     }
 
     cfg_ids_i10 = {
         't2000_i10_r4_s03': ['ma9_t2000_i10_p150_r4_s03_stun_ext', 'ma9_t3000_i10_p150_r4_s03_stun_ext'],
-        't2000_i10_r4_s04': ['ma9_t2000_i10_p150_r4_s04_stun_ext', 'ma9_t3000_i10_p150_r4_s04_stun_ext']  # ggg
+        't2000_i10_r4_s04': ['ma9_t2000_i10_p150_r4_s04_stun_ext', 'ma9_t3000_i10_p150_r4_s04_stun_ext'],  # ggg
         't2000_i10_r4_s05': ['ma9_t2000_i10_p150_r4_s05_stun_ext', 'ma9_t3000_i10_p150_r4_s05_stun_ext'],
         't2000_i10_r6_s03': ['ma9_t2000_i10_p150_r6_s03_stun_ext', 'ma9_t3000_i10_p150_r6_s03_stun_ext'],
         't2000_i10_r6_s04': ['ma9_t2000_i10_p150_r6_s04_stun_ext', 'ma9_t3000_i10_p150_r6_s04_stun_ext'],
@@ -97,7 +108,7 @@ def main(id_):
 
         't1500_i10_r4_s03': ['ma9_t1500_i10_p150_r4_s03_stun_ext', 'ma9_t3000_i10_p150_r4_s03_stun_ext'],
         't1500_i10_r4_s04': ['ma9_t1500_i10_p150_r4_s04_stun_ext', 'ma9_t3000_i10_p150_r4_s04_stun_ext'],
-        't1500_i10_r4_s05': ['ma9_t1500_i10_p150_r4_s05_stun_ext', 'ma9_t3000_i10_p150_r4_s05_stun_ext']  # hhh
+        't1500_i10_r4_s05': ['ma9_t1500_i10_p150_r4_s05_stun_ext', 'ma9_t3000_i10_p150_r4_s05_stun_ext'],  # hhh
         't1500_i10_r6_s03': ['ma9_t1500_i10_p150_r6_s03_stun_ext', 'ma9_t3000_i10_p150_r6_s03_stun_ext'],
         't1500_i10_r6_s04': ['ma9_t1500_i10_p150_r6_s04_stun_ext', 'ma9_t3000_i10_p150_r6_s04_stun_ext'],
         't1500_i10_r6_s05': ['ma9_t1500_i10_p150_r6_s05_stun_ext', 'ma9_t3000_i10_p150_r6_s05_stun_ext'],
@@ -113,7 +124,17 @@ def main(id_):
         't1000_i10_r6_s05': ['ma9_t1000_i10_p150_r6_s05_stun_ext', 'ma9_t3000_i10_p150_r6_s05_stun_ext'],
         't1000_i10_r10_s03': ['ma9_t1000_i10_p150_r10_s03_stun_ext', 'ma9_t3000_i10_p150_r10_s03_stun_ext'],
         't1000_i10_r10_s04': ['ma9_t1000_i10_p150_r10_s04_stun_ext', 'ma9_t3000_i10_p150_r10_s04_stun_ext'],
-        't1000_i10_r10_s05': ['ma9_t1000_i10_p150_r10_s05_stun_ext', 'ma9_t3000_i10_p150_r10_s05_stun_ext']
+        't1000_i10_r10_s05': ['ma9_t1000_i10_p150_r10_s05_stun_ext', 'ma9_t3000_i10_p150_r10_s05_stun_ext'],
+
+        't500_i10_r4_s03': ['ma9_t500_i10_p150_r4_s03_stun_ext', 'ma9_t3000_i10_p150_r4_s03_stun_ext'],
+        't500_i10_r4_s04': ['ma9_t500_i10_p150_r4_s04_stun_ext', 'ma9_t3000_i10_p150_r4_s04_stun_ext'],
+        't500_i10_r4_s05': ['ma9_t500_i10_p150_r4_s05_stun_ext', 'ma9_t3000_i10_p150_r4_s05_stun_ext'],
+        't500_i10_r6_s03': ['ma9_t500_i10_p150_r6_s03_stun_ext', 'ma9_t3000_i10_p150_r6_s03_stun_ext'],
+        't500_i10_r6_s04': ['ma9_t500_i10_p150_r6_s04_stun_ext', 'ma9_t3000_i10_p150_r6_s04_stun_ext'],
+        't500_i10_r6_s05': ['ma9_t500_i10_p150_r6_s05_stun_ext', 'ma9_t3000_i10_p150_r6_s05_stun_ext'],
+        't500_i10_r10_s03': ['ma9_t500_i10_p150_r10_s03_stun_ext', 'ma9_t3000_i10_p150_r10_s03_stun_ext'],
+        't500_i10_r10_s04': ['ma9_t500_i10_p150_r10_s04_stun_ext', 'ma9_t3000_i10_p150_r10_s04_stun_ext'],
+        't500_i10_r10_s05': ['ma9_t500_i10_p150_r10_s05_stun_ext', 'ma9_t3000_i10_p150_r10_s05_stun_ext']
     }
 
     kv = None
