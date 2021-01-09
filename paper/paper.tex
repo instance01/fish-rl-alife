@@ -124,26 +124,20 @@ D.Ratke@campus.lmu.de} % email of corresponding author
 
 \section{Results}
 
-\begin{figure}[t]
-\begin{center}
-\includegraphics[width=8cm]{figures/dqncomp1fish_2.png}
-\caption{Sustainability of static, static-wait, DQN Stage II and PPO with initial fish population of 1.}
-\label{fig:dqncomp1}
-\end{center}
-\end{figure}
+TODO: Define sustainability
 
-\begin{figure}[t]
-\begin{center}
-\includegraphics[width=8cm]{figures/dqncomp2fish_2.png}
-\caption{Sustainability of static, static-wait, DQN Stage II and PPO with initial fish population of 2.}
-\label{fig:dqncomp2}
-\end{center}
-\end{figure}
+\begin{figure*}%
+    \centering
+    \subfloat[][\centering Sustainability with 1 initial fish.]{\includegraphics[width=7.5cm]{figures/dqncomp1fish_2.png} }%
+    \subfloat[][\centering Sustainability with 2 initial fishes.]{\includegraphics[width=7.5cm]{figures/dqncomp2fish_2.png} }%
+    \caption{Sustainability of static, static-wait, DQN Stage II and PPO. PPO consistently leads to the most sustainable behavior due to herding a rather large fish population, which results in a higher rate of fish procreations and thus more prey to be caught. 20 models were trained for each DQN Stage II and PPO for each scenario.}
+    \label{fig:dqncomp}%
+\end{figure*}
 
 \begin{figure}[t]
 \begin{center}
 \includegraphics[width=8cm]{figures/fish_pop_chart3.png}
-\caption{Left-over fish population per learning episode over 12M steps.}
+    \caption{Left-over fish population per learning episode over 12M steps. In this setting there is at maximum 6 fishes in the population. When sharks learn to herd fishes, they go through 3 stages. Stage $a$, in which they cannot hunt effectively yet and thus leave the full population intact at the end of the episode. Stage $b$, in which they effectively hunt and overhunt, leaving no fishes at the end of the epsiode. Lastly, stage $c$, in which they learn to keep a herd of 2 fishes around, up until the end of the epsiode.}
 \label{fig:fish_pop}
 \end{center}
 \end{figure}
@@ -151,22 +145,24 @@ D.Ratke@campus.lmu.de} % email of corresponding author
 \begin{figure}[t]
 \begin{center}
 \includegraphics[width=6cm]{figures/shark_speeds.png}
-\caption{Distribution of shark speeds over time.}
+\caption{From back to front: Distribution of shark speeds over time. When sharks learn to herd fishes, the distribution of their speed becomes bimodal after a while --- suggesting that sometimes they wait while other times they actively hunt at high speed.}
 \label{fig:shark_speeds}
 \end{center}
 \end{figure}
 
+TODO: Define active herding.
+
 \begin{figure*}[t]
 \begin{center}
-\includegraphics[width=\textwidth]{figures/herding.png}
-\caption{TODO}
+\includegraphics[width=.9\textwidth]{figures/herding.png}
+    \caption{Herding rate in different scenarios. From left to right, initial fish population is decreased (10, 5, 2). A lower fish population increases sustainability pressure --- the sharks get into the situation of 0 left fishes much quicker. Further, each scenario varies the initial shark survival time. Especially in the scenario with just two fishes the importance of this parameter becomes clear --- giving the sharks an initial 1200 steps induces the highest rate of herding. While low initial survival steps induce too much survival pressure, thus overriding any sustainability with the need for survival, too high initial survival steps do not induce enough pressure, reducing the need for active herding as the sharks now often do not actively hunt but just idle. The curve was fitted using 4 polynomials and each bar represents 20 models.}
 \label{fig:herding}
 \end{center}
 \end{figure*}
 
 \begin{figure*}[t]
 \begin{center}
-\includegraphics[width=\textwidth]{figures/coop_movie_frames2.png}
+\includegraphics[width=.9\textwidth]{figures/coop_movie_frames2.png}
 \caption{From left to right: Two sharks cooperatively catch a fish.}
 \label{fig:coop_movie}
 \end{center}
@@ -177,14 +173,14 @@ D.Ratke@campus.lmu.de} % email of corresponding author
     \subfloat[][\centering Cooperation rate with initial fish population of 10.]{\includegraphics[width=5.5cm]{figures/coop_chart_split1.png} }%
     \subfloat[][\centering Cooperation rate with initial fish population of 5.]{\includegraphics[width=5.5cm]{figures/coop_chart_split2.png} }%
     \subfloat[][\centering Cooperation rate with initial fish population of 5 and stuns.]{\includegraphics[width=6.5cm]{figures/coop_chart_stuns_split2.png} }%
-    \caption{Cooperation rate in different scenarios.}%
+    \caption{Cooperation rate in different scenarios. TODO: Analysis}%
     \label{fig:coop}%
 \end{figure*}
 
 \begin{figure*}[t]
 \begin{center}
 \includegraphics[width=14cm]{figures/coop_vs_sterberisiko_5fish.png}
-\caption{Cooperation rate vs starving pressure with initial fish population of 5.}
+\caption{Cooperation rate vs starving pressure with initial fish population of 5. TODO: Analysis}
 \label{fig:coop_starve}
 \end{center}
 \end{figure*}

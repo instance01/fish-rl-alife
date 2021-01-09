@@ -12,6 +12,8 @@ with open(base_path + 'i5_p150_two_net_herding.pickle', 'rb') as f:
     i5_p150 = pickle.load(f)
 with open(base_path + 'i5_p75_two_net_herding.pickle', 'rb') as f:
     i5_p75 = pickle.load(f)
+with open(base_path + 'i2_p150_sp500_two_net_herding.pickle', 'rb') as f:
+    i2_p150 = pickle.load(f)
 
 
 print(i10_p150)
