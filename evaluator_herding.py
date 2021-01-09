@@ -126,6 +126,20 @@ def main(id_):
         't2000': 'ma3_obs_starve_maxsteps_t2000_i2_p150'
     }
 
+    cfg_ids_i2_p150_AAA = {
+        't200': 'ma3_obs_starve_maxsteps_t200_i2_p150_sp500',
+        't300': 'ma3_obs_starve_maxsteps_t300_i2_p150_sp500',
+        't400': 'ma3_obs_starve_maxsteps_t400_i2_p150_sp500',
+        't500': 'ma3_obs_starve_maxsteps_t500_i2_p150_sp500',
+        't600': 'ma3_obs_starve_maxsteps_t600_i2_p150_sp500',
+        't700': 'ma3_obs_starve_maxsteps_t700_i2_p150_sp500',
+        't800': 'ma3_obs_starve_maxsteps_t800_i2_p150_sp500',
+        't1000': 'ma3_obs_starve_maxsteps_t1000_i2_p150_sp500',
+        't1200': 'ma3_obs_starve_maxsteps_t1200_i2_p150_sp500',
+        't1500': 'ma3_obs_starve_maxsteps_t1500_i2_p150_sp500',
+        't2000': 'ma3_obs_starve_maxsteps_t2000_i2_p150_sp500'
+    }
+
     two_net = True
 
     kv = None
@@ -139,6 +153,8 @@ def main(id_):
         kv = cfg_ids_i5_p150
     elif id_ == 'i2_p150':
         kv = cfg_ids_i2_p150
+    elif id_ == 'i2_p150_AAA':
+        kv = cfg_ids_i2_p150_AAA
 
     # What the fuck. Pool doesn't work.
     # Didn't have the time to investigate so I went for the hacky solution.
