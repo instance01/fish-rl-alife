@@ -142,6 +142,7 @@ class Aquarium:
         self.coop_kills = 0
         self.full_coop_kills = 0
         self.n_stuns = 0
+        self.steps_til_first_kill = 0
 
         # Kill zone
         self.shared_kill_zone = shared_kill_zone
@@ -378,6 +379,8 @@ class Aquarium:
     def _on_shark_fish_collision(self, shark, fish):
         if fish in self.fishes:
             self.fishes.remove(fish)
+        if self.steps_til_first_kill == 0:
+            self.steps_til_first_kill = self.current_step
         if shark in self.track_shark_reward:
             # This was to check whether we have real cooperation or
             # herding.
@@ -412,7 +415,7 @@ class Aquarium:
                 n_participating_sharks = len(participating_sharks)
                 if n_participating_sharks > 0:
                     self.coop_kills += 1
-                if n_participating_sharks == len(self.sharks) - 1:
+                if n_participating_sharks >= len(self.sharks) - 1:
                     self.full_coop_kills += 1
 
                 reward_main_shark = 10. 
