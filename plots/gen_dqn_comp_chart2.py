@@ -93,7 +93,7 @@ def bar_plot(
         ax.legend(bars, data.keys())
 
 
-def plot(data, err_data, data2, err_data2):
+def plot(data, err_data, data2, err_data2, xxx=22):
     scenarios = [100, 200, 300]
     fig, ax = plt.subplots(figsize=(4, 3.5))
     bar_plot(
@@ -111,7 +111,7 @@ def plot(data, err_data, data2, err_data2):
     arr_img = plt.imread(fn, format='png')
     imagebox = OffsetImage(arr_img, zoom=0.07)
     imagebox.image.axes = ax
-    xy = [0.3, 22]
+    xy = [0.3, xxx]
     ab = AnnotationBbox(imagebox, xy,
                         xybox=(50., 0.),
                         xycoords='data',
@@ -153,6 +153,7 @@ def plot(data, err_data, data2, err_data2):
     plt.xlim(-0.5, 2.5)
     plt.tight_layout()
     plt.show()
+    return fig
 
 
 if __name__ == "__main__":
@@ -181,7 +182,8 @@ if __name__ == "__main__":
         "DQN Stage II": [0.149947, 0.013550, 0.014765],
         "PPO": [0.130000, 0.080000, 0.070000]
     }
-    plot(data, err_data, data2, err_data2)
+    fig = plot(data, err_data, data2, err_data2, xxx=20)
+    fig.savefig("dqncomp1.pdf", bbox_inches='tight')
 
     # 2 fish
     data = {
@@ -208,4 +210,5 @@ if __name__ == "__main__":
         "DQN Stage II": [0.252410, 0.025981, 0.024373],
         "PPO": [0.060000, 0.110000, 0.070000]
     }
-    plot(data, err_data, data2, err_data2)
+    fig = plot(data, err_data, data2, err_data2)
+    fig.savefig("dqncomp2.pdf", bbox_inches='tight')

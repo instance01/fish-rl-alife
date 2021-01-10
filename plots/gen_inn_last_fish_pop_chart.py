@@ -21,7 +21,7 @@ def moving_average(x, w):
 a = moving_average(a, 100)
 print(len(a))
 
-plt.figure(figsize=(4, 3))
+fig = plt.figure(figsize=(4, 3))
 plt.plot(a, linewidth=.8, c='#ffffff')
 plt.ylabel('Fish population at the end of an episode')
 plt.xlabel('Steps in million')
@@ -37,3 +37,4 @@ plt.xlim(0, 13980)
 plt.ylim(0, 7)
 plt.tight_layout()
 plt.show()
+fig.savefig("last_fish_pop.pdf", bbox_inches='tight')
