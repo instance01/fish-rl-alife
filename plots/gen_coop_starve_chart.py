@@ -34,6 +34,9 @@ def _prep(data, prefix='i10'):
         ret_labels[k] = '%0.2f\n±%0.2f' % (round(mean, 2), round(ci, 2))
     print(ret_labels)
 
+    print('##', prefix)
+    print(ret)
+
     data = [
         [ret[prefix + '_r4_s03'], ret[prefix + '_r4_s04'], ret[prefix + '_r4_s05']],
         [ret[prefix + '_r6_s03'], ret[prefix + '_r6_s04'], ret[prefix + '_r6_s05']],

@@ -81,8 +81,8 @@ def plot(data, label_data):
     im = ax.imshow(data, cmap=cmap_mod)
 
     # Colorbar
-    cbar = ax.figure.colorbar(im, ax=ax)
-    cbar.ax.set_ylabel('Avg Coop Ratio', rotation=-90, va="bottom")
+    # cbar = ax.figure.colorbar(im, ax=ax)
+    # cbar.ax.set_ylabel('Avg Coop Ratio', rotation=-90, va="bottom")
 
     # Ticks and labels
     ax.set_xticks(np.arange(len(x_labels)))
