@@ -120,6 +120,7 @@ class BoidFishController(Controller):
 
 class TurnAwayFishController(Controller):
     USE_TWO_SHARKS = False
+    USE_THREE_SHARKS = False
     FISH_VIEW_DIST_RATIO = 1.0
 
     @staticmethod
@@ -140,6 +141,11 @@ class TurnAwayFishController(Controller):
         if TurnAwayFishController.USE_TWO_SHARKS:
             distance_to_shark2 = shark_observation[3]
             angle_to_shark2 = shark_observation[4]
+        if TurnAwayFishController.USE_THREE_SHARKS:
+            distance_to_shark2 = shark_observation[3]
+            angle_to_shark2 = shark_observation[4]
+            distance_to_shark3 = shark_observation[6]
+            angle_to_shark3 = shark_observation[7]
 
         distance_to_closest_fish = fish_observation[0]
         angle_to_closest_fish = fish_observation[1]
@@ -156,6 +162,9 @@ class TurnAwayFishController(Controller):
         shark_force = calculate_repel_force(distance_to_shark, angle_to_shark)
         if TurnAwayFishController.USE_TWO_SHARKS:
             shark_force2 = calculate_repel_force(distance_to_shark2, angle_to_shark2)
+        if TurnAwayFishController.USE_THREE_SHARKS:
+            shark_force2 = calculate_repel_force(distance_to_shark2, angle_to_shark2)
+            shark_force3 = calculate_repel_force(distance_to_shark3, angle_to_shark3)
         wall1_force = calculate_repel_force(distance_to_closest_wall, angle_to_closest_wall)
         wall2_force = calculate_repel_force(distance_to_second_closest_wall, angle_to_second_closest_wall)
         # TODO: Unused.
@@ -163,7 +172,12 @@ class TurnAwayFishController(Controller):
 
         target_vector = current_vector + shark_force
         if TurnAwayFishController.USE_TWO_SHARKS:
-            target_vector += shark_force2
+            target_vector = current_vector + .5 * shark_force
+            target_vector += .5 * shark_force2
+        if TurnAwayFishController.USE_THREE_SHARKS:
+            target_vector = current_vector + .33 * shark_force
+            target_vector += .33 * shark_force2
+            target_vector += .33 * shark_force3
         target_vector += 0.5 * fish_force
         target_vector += 0.5 * wall1_force + 0.3 * wall2_force
         angle = util.angle_of(target_vector)
@@ -188,7 +202,6 @@ class TurnAwayFishController(Controller):
         procreate = (not distance_to_shark) or distance_to_shark > TurnAwayFishController.FISH_VIEW_DIST_RATIO
 
         procreate = ready_to_procreate == 1.0 and procreate
-        print(distance_to_shark)
         return 1.0, angle_change, procreate
 
 
