@@ -11,12 +11,29 @@ plt.rc('font', family='Raleway')
 
 base_path = '../pickles/'
 
-with open(base_path + 'i10_p150_two_net_herding.pickle', 'rb') as f:
-    i10_p150 = pickle.load(f)
-with open(base_path + 'i5_p150_two_net_herding.pickle', 'rb') as f:
-    i5_p150 = pickle.load(f)
-with open(base_path + 'i2_p150_sp500_two_net_herding.pickle', 'rb') as f:
-    i2_p150 = pickle.load(f)
+sp100_ma3obs = False
+sp100_ma3obs_sp100 = False
+if sp100_ma3obs:
+    with open(base_path + 'i10_two_net_herding_sp100_ma3obs.pickle', 'rb') as f:
+        i10_p150 = pickle.load(f)
+    with open(base_path + 'i5_two_net_herding_sp100_ma3obs.pickle', 'rb') as f:
+        i5_p150 = pickle.load(f)
+    with open(base_path + 'i2_two_net_herding_sp100_ma3obs.pickle', 'rb') as f:
+        i2_p150 = pickle.load(f)
+elif sp100_ma3obs_sp100:
+    with open(base_path + 'i10_two_net_herding_sp100.pickle', 'rb') as f:
+        i10_p150 = pickle.load(f)
+    with open(base_path + 'i5_two_net_herding_sp100.pickle', 'rb') as f:
+        i5_p150 = pickle.load(f)
+    with open(base_path + 'i2_two_net_herding_sp100.pickle', 'rb') as f:
+        i2_p150 = pickle.load(f)
+else:
+    with open(base_path + 'i10_p150_two_net_herding.pickle', 'rb') as f:
+        i10_p150 = pickle.load(f)
+    with open(base_path + 'i5_p150_two_net_herding.pickle', 'rb') as f:
+        i5_p150 = pickle.load(f)
+    with open(base_path + 'i2_p150_sp500_two_net_herding.pickle', 'rb') as f:
+        i2_p150 = pickle.load(f)
 
 
 print(i10_p150)
@@ -69,3 +86,4 @@ axs[2].plot(x, y_fit, 'k:')
 plt.tight_layout()
 plt.ylim(0., 1.0)
 plt.show()
+fig.savefig("herding.pdf", bbox_inches='tight')
