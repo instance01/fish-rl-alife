@@ -54,8 +54,8 @@ def _prep(data, prefix='i10'):
     return data, label_data
 
 
-base_path = 'pickles/'
-stuns = True
+base_path = '../pickles/'
+stuns = False
 if stuns:
     with open(base_path + 'i10_stun_coop.pickle', 'rb') as f:
         i10_data, i10_label_data = _prep(pickle.load(f))
@@ -100,6 +100,7 @@ def plot(data, label_data):
     # ax.set_title("Fish population: 10")
     # ax2.set_title("Fish population: 5")
     plt.show()
+    return fig
 
 
 def plot_both():
@@ -139,7 +140,16 @@ def plot_both():
     # ax.set_title("Fish population: 10")
     # ax2.set_title("Fish population: 5")
     plt.show()
+    return fig
 
 
-plot(i5_data, i5_label_data)
-plot(i10_data, i10_label_data)
+fig = plot(i5_data, i5_label_data)
+if stuns:
+    fig.savefig("i5_coop_stuns.pdf", bbox_inches='tight')
+else:
+    fig.savefig("i5_coop.pdf", bbox_inches='tight')
+fig = plot(i10_data, i10_label_data)
+if stuns:
+    fig.savefig("i10_coop_stuns.pdf", bbox_inches='tight')
+else:
+    fig.savefig("i10_coop.pdf", bbox_inches='tight')

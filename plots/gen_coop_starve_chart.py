@@ -48,14 +48,16 @@ def _prep(data, prefix='i10'):
     return data, label_data
 
 
-base_path = 'pickles/'
+base_path = '../pickles/'
 with open(base_path + 'i5_coop_starve.pickle', 'rb') as f:
     i5_data, i5_label_data = _prep(pickle.load(f), prefix='t2000_i5')
 with open(base_path + 'i5_coop_starve.pickle', 'rb') as f:
     i5_data2, i5_label_data2 = _prep(pickle.load(f), prefix='t1500_i5')
 with open(base_path + 'i5_coop_starve.pickle', 'rb') as f:
     i5_data3, i5_label_data3 = _prep(pickle.load(f), prefix='t1000_i5')
-with open(base_path + 't500_i5_coop_starve.pickle', 'rb') as f:
+# with open(base_path + 't500_i5_coop_starve.pickle', 'rb') as f:
+#     i5_data4, i5_label_data4 = _prep(pickle.load(f), prefix='t500_i5')
+with open(base_path + 'i5_coop_starve.pickle', 'rb') as f:
     i5_data4, i5_label_data4 = _prep(pickle.load(f), prefix='t500_i5')
 
 with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
@@ -76,10 +78,10 @@ def doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_da
 
     cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
     fig, (ax, ax2, ax3, ax4) = plt.subplots(1, 4, figsize=(8.5, 2.0), constrained_layout=True)
-    im = ax.imshow(i5_data4, cmap=cmap_mod)
-    im2 = ax2.imshow(i5_data, cmap=cmap_mod)
-    im3 = ax3.imshow(i5_data2, cmap=cmap_mod)
-    im4 = ax4.imshow(i5_data3, cmap=cmap_mod)
+    im = ax.imshow(i5_data4, cmap=cmap_mod, vmin=0, vmax=1)
+    im2 = ax2.imshow(i5_data, cmap=cmap_mod, vmin=0, vmax=1)
+    im3 = ax3.imshow(i5_data2, cmap=cmap_mod, vmin=0, vmax=1)
+    im4 = ax4.imshow(i5_data3, cmap=cmap_mod, vmin=0, vmax=1)
 
     # Colorbar
     cbar = ax.figure.colorbar(im, ax=[ax, ax2, ax3, ax4], aspect=40)
@@ -118,7 +120,10 @@ def doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_da
             ax4.text(j, i, i5_label_data3[i][j], ha="center", va="center", color="w")
 
     plt.show()
+    return fig
 
 
-doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3, i5_data4, i5_label_data4)
-doit(i10_data, i10_label_data, i10_data2, i10_label_data2, i10_data3, i10_label_data3, i10_data4, i10_label_data4)
+fig = doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3, i5_data4, i5_label_data4)
+fig.savefig("i5_coop_starve.pdf", bbox_inches='tight')
+fig = doit(i10_data, i10_label_data, i10_data2, i10_label_data2, i10_data3, i10_label_data3, i10_data4, i10_label_data4)
+fig.savefig("i10_coop_starve.pdf", bbox_inches='tight')
