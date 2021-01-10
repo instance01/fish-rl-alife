@@ -57,7 +57,8 @@ class Logger:
             tf.summary.scalar(prefix + '/Full_Coop_Kills_Ratio', full_coop_kills_ratio, n_episode)
             tf.summary.scalar(prefix + '/Stuns', env.n_stuns, n_episode)
             tf.summary.histogram(prefix + '/Last_Fish_Population_H', fish_pop, n_episode)
-            tf.summary.histogram(prefix + '/Last_Shark_Population_H', shark_pop, n_episode)
+            # TODO: January 10 - Got rid of shark pop histogram. Fuck that.
+            # tf.summary.histogram(prefix + '/Last_Shark_Population_H', shark_pop, n_episode)
             tf.summary.histogram(prefix + '/Shark_Speed_H', env.shark_speed_history, n_episode)
             # msgpack is nice but whatever, let's disable this. We need speed.
             # self.log_file(prefix + '/Fish_Population', fish_pop)
@@ -66,18 +67,19 @@ class Logger:
                 name = prefix + '/Sharks/Shark%d_Tot_Reward' % i
                 tf.summary.scalar(name, tot_reward, n_episode)
 
-            # Let's not keep distances at evaluation phase..
-            if prefix != 'Eval':
-                for (s1, s2) in combinations(list(env.shark_tot_reward.keys()), 2):
-                    key = (s1.name(), s2.name())
-                    name_dist = 'Sharks/Shark-%s-%s_Dist_To_Dist' % key
-                    name_dist_at_kill = 'Sharks/Shark-%s-%s_Dist_To_Dist_At_Kill' % key
-                    tf.summary.histogram(
-                        name_dist, env.shark_to_shark_dist[key], n_episode
-                    )
-                    tf.summary.histogram(
-                        name_dist_at_kill, env.shark_to_shark_dist_at_kill[key], n_episode
-                    )
+            # TODO: January 10 - Got rid of distances. Fuck that.
+            # # Let's not keep distances at evaluation phase..
+            # if prefix != 'Eval':
+            #     for (s1, s2) in combinations(list(env.shark_tot_reward.keys()), 2):
+            #         key = (s1.name(), s2.name())
+            #         name_dist = 'Sharks/Shark-%s-%s_Dist_To_Dist' % key
+            #         name_dist_at_kill = 'Sharks/Shark-%s-%s_Dist_To_Dist_At_Kill' % key
+            #         tf.summary.histogram(
+            #             name_dist, env.shark_to_shark_dist[key], n_episode
+            #         )
+            #         tf.summary.histogram(
+            #             name_dist_at_kill, env.shark_to_shark_dist_at_kill[key], n_episode
+            #         )
 
     def log_kv(self, k, v, step):
         # Used by the PPO algorithm internally to log things like policy
