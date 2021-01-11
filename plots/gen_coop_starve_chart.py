@@ -69,7 +69,9 @@ with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
     i10_data2, i10_label_data2 = _prep(pickle.load(f), prefix='t1500_i10')
 with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
     i10_data3, i10_label_data3 = _prep(pickle.load(f), prefix='t1000_i10')
-with open(base_path + 't500_i10_coop_starve.pickle', 'rb') as f:
+# with open(base_path + 't500_i10_coop_starve.pickle', 'rb') as f:
+#     i10_data4, i10_label_data4 = _prep(pickle.load(f), prefix='t500_i10')
+with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
     i10_data4, i10_label_data4 = _prep(pickle.load(f), prefix='t500_i10')
 
 
