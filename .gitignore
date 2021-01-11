@@ -40,3 +40,4 @@ runs_tars/
 *.bbl
 *.blg
 *.log
+../aquarium_experiments.egg-info/
