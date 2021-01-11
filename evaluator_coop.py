@@ -27,6 +27,8 @@ def load(id_, cfg_id, base_cfg_id, return_dict):
     print(id_)
     print(res)
 
+    failures = 0
+    total = 0
     coop_ratios = []
     for fname in res:
         fname = fname[:-3]
@@ -37,17 +39,17 @@ def load(id_, cfg_id, base_cfg_id, return_dict):
             if exp.env.dead_fishes != 0:
                 coop_ratios.append(exp.env.coop_kills / exp.env.dead_fishes)
             else:
-                print('####################')
-                print('NO dead fishes!')
-                print('####################')
+                failures += 1
+                print('#### NO dead fishes! ####')
+            total += 1
             # TODO DUBIOUS! Should we maybe add a [0] if there's no dead fishes?
 
     if coop_ratios:
         ci = st.t.interval(0.95, len(coop_ratios)-1, loc=np.mean(coop_ratios), scale=st.sem(coop_ratios))
         print('avg_coop_ratio:%d' % np.mean(coop_ratios))
-        return_dict[id_] = (np.mean(coop_ratios), ci)
+        return_dict[id_] = (np.mean(coop_ratios), ci, failures / total)
     else:
-        return_dict[id_] = (0, (0, 0))
+        return_dict[id_] = (0, (0, 0), 0)
 
 
 def main(id_):

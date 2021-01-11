@@ -11,6 +11,7 @@ from pipeline import Experiment
 
 
 def load(id_, cfg_id, base_cfg_id, return_dict):
+    return_dict[id_] = (-1, (0, 0))
     # base_paths = ['models', 'modelsDec10-14']
     base_paths = ['models']
     res = []

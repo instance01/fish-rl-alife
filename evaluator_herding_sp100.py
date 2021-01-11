@@ -10,7 +10,8 @@ from pipeline import Experiment
 def load(id_, cfg_id, return_dict):
     # base_cfg_id = 'ma3_obs'  # for i10, i5 (sp600)
     # base_cfg_id = 'ma3_obs_sp100'  # for i2
-    base_cfg_id = 'ma3_obs'
+    # base_cfg_id = 'ma3_obs'
+    base_cfg_id = 'ma3_obs_eval'  # sp100
     base_paths = ['models']
     res = []
     two_net = 'two_net' in cfg_id

@@ -28,7 +28,7 @@ def load(id_, cfg_id, return_dict):
             fname = fname[:-3]
         print('#############################')
         print(fname)
-        for _ in range(3):
+        for _ in range(20):
             exp = Experiment(base_cfg_id, show_gui=False, dump_cfg=False)
             fish_pop_hist, _ = exp.load_eval(fname, steps=5000)
             if fish_pop_hist[-1] > 0 and fish_pop_hist[-1] < 10:
@@ -126,7 +126,7 @@ def main(id_):
         't2000': 'ma3_obs_starve_maxsteps_t2000_i2_p150'
     }
 
-    cfg_ids_i2_p150_AAA = {
+    cfg_ids_i2_p150_sp500 = {
         't200': 'ma3_obs_starve_maxsteps_t200_i2_p150_sp500',
         't300': 'ma3_obs_starve_maxsteps_t300_i2_p150_sp500',
         't400': 'ma3_obs_starve_maxsteps_t400_i2_p150_sp500',
@@ -153,8 +153,8 @@ def main(id_):
         kv = cfg_ids_i5_p150
     elif id_ == 'i2_p150':
         kv = cfg_ids_i2_p150
-    elif id_ == 'i2_p150_AAA':
-        kv = cfg_ids_i2_p150_AAA
+    elif id_ == 'i2_p150_sp500':
+        kv = cfg_ids_i2_p150_sp500
 
     # What the fuck. Pool doesn't work.
     # Didn't have the time to investigate so I went for the hacky solution.
