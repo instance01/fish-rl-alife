@@ -64,14 +64,14 @@ with open(base_path + 'i5_coop_starve_failure.pickle', 'rb') as f:
 with open(base_path + 'i5_coop_starve_failure.pickle', 'rb') as f:
     i5_data4, i5_label_data4 = _prep(pickle.load(f), prefix='t500_i5')
 
-# with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
-#     i10_data, i10_label_data = _prep(pickle.load(f), prefix='t2000_i10')
-# with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
-#     i10_data2, i10_label_data2 = _prep(pickle.load(f), prefix='t1500_i10')
-# with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
-#     i10_data3, i10_label_data3 = _prep(pickle.load(f), prefix='t1000_i10')
-# with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
-#     i10_data4, i10_label_data4 = _prep(pickle.load(f), prefix='t500_i10')
+with open(base_path + 'i10_coop_starve_failure.pickle', 'rb') as f:
+    i10_data, i10_label_data = _prep(pickle.load(f), prefix='t2000_i10')
+with open(base_path + 'i10_coop_starve_failure.pickle', 'rb') as f:
+    i10_data2, i10_label_data2 = _prep(pickle.load(f), prefix='t1500_i10')
+with open(base_path + 'i10_coop_starve_failure.pickle', 'rb') as f:
+    i10_data3, i10_label_data3 = _prep(pickle.load(f), prefix='t1000_i10')
+with open(base_path + 'i10_coop_starve_failure.pickle', 'rb') as f:
+    i10_data4, i10_label_data4 = _prep(pickle.load(f), prefix='t500_i10')
 
 
 def doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3, i5_data4, i5_label_data4):
@@ -131,5 +131,5 @@ def doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_da
 
 fig = doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3, i5_data4, i5_label_data4)
 fig.savefig("i5_coop_starve_failure.pdf", bbox_inches='tight')
-# fig = doit(i10_data, i10_label_data, i10_data2, i10_label_data2, i10_data3, i10_label_data3, i10_data4, i10_label_data4)
-# fig.savefig("i10_coop_starve.pdf", bbox_inches='tight')
+fig = doit(i10_data, i10_label_data, i10_data2, i10_label_data2, i10_data3, i10_label_data3, i10_data4, i10_label_data4)
+fig.savefig("i10_coop_starve.pdf", bbox_inches='tight')
