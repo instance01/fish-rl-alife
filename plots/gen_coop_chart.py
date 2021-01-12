@@ -11,7 +11,7 @@ plt.rc('font', family='Raleway')
 
 
 def truncate_colormap(cmapIn='jet', minval=0.0, maxval=1.0, n=100):
-    '''truncate_colormap(cmapIn='jet', minval=0.0, maxval=1.0, n=100)'''    
+    '''truncate_colormap(cmapIn='jet', minval=0.0, maxval=1.0, n=100)'''
     cmapIn = plt.get_cmap(cmapIn)
 
     new_cmap = colors.LinearSegmentedColormap.from_list(
