@@ -52,27 +52,47 @@ def _prep(data, prefix='i10'):
 
 
 base_path = '../pickles/'
-with open(base_path + 'i5_coop_starve.pickle', 'rb') as f:
-    i5_data, i5_label_data = _prep(pickle.load(f), prefix='t2000_i5')
-with open(base_path + 'i5_coop_starve.pickle', 'rb') as f:
-    i5_data2, i5_label_data2 = _prep(pickle.load(f), prefix='t1500_i5')
-with open(base_path + 'i5_coop_starve.pickle', 'rb') as f:
-    i5_data3, i5_label_data3 = _prep(pickle.load(f), prefix='t1000_i5')
-# with open(base_path + 't500_i5_coop_starve.pickle', 'rb') as f:
-#     i5_data4, i5_label_data4 = _prep(pickle.load(f), prefix='t500_i5')
-with open(base_path + 'i5_coop_starve.pickle', 'rb') as f:
-    i5_data4, i5_label_data4 = _prep(pickle.load(f), prefix='t500_i5')
+include_dead_fishes = True
+if include_dead_fishes:
+    with open(base_path + 'i5_coop_starve_incl_dead_fishes.pickle', 'rb') as f:
+        i5_data, i5_label_data = _prep(pickle.load(f), prefix='t2000_i5')
+    with open(base_path + 'i5_coop_starve_incl_dead_fishes.pickle', 'rb') as f:
+        i5_data2, i5_label_data2 = _prep(pickle.load(f), prefix='t1500_i5')
+    with open(base_path + 'i5_coop_starve_incl_dead_fishes.pickle', 'rb') as f:
+        i5_data3, i5_label_data3 = _prep(pickle.load(f), prefix='t1000_i5')
+    with open(base_path + 't500_i5_coop_starve.pickle', 'rb') as f:
+        i5_data4, i5_label_data4 = _prep(pickle.load(f), prefix='t500_i5')
 
-with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
-    i10_data, i10_label_data = _prep(pickle.load(f), prefix='t2000_i10')
-with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
-    i10_data2, i10_label_data2 = _prep(pickle.load(f), prefix='t1500_i10')
-with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
-    i10_data3, i10_label_data3 = _prep(pickle.load(f), prefix='t1000_i10')
-# with open(base_path + 't500_i10_coop_starve.pickle', 'rb') as f:
-#     i10_data4, i10_label_data4 = _prep(pickle.load(f), prefix='t500_i10')
-with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
-    i10_data4, i10_label_data4 = _prep(pickle.load(f), prefix='t500_i10')
+    with open(base_path + 'i10_coop_starve_incl_dead_fishes.pickle', 'rb') as f:
+        i10_data, i10_label_data = _prep(pickle.load(f), prefix='t2000_i10')
+    with open(base_path + 'i10_coop_starve_incl_dead_fishes.pickle', 'rb') as f:
+        i10_data2, i10_label_data2 = _prep(pickle.load(f), prefix='t1500_i10')
+    with open(base_path + 'i10_coop_starve_incl_dead_fishes.pickle', 'rb') as f:
+        i10_data3, i10_label_data3 = _prep(pickle.load(f), prefix='t1000_i10')
+    with open(base_path + 't500_i10_coop_starve.pickle', 'rb') as f:
+        i10_data4, i10_label_data4 = _prep(pickle.load(f), prefix='t500_i10')
+else:
+    with open(base_path + 'i5_coop_starve.pickle', 'rb') as f:
+        i5_data, i5_label_data = _prep(pickle.load(f), prefix='t2000_i5')
+    with open(base_path + 'i5_coop_starve.pickle', 'rb') as f:
+        i5_data2, i5_label_data2 = _prep(pickle.load(f), prefix='t1500_i5')
+    with open(base_path + 'i5_coop_starve.pickle', 'rb') as f:
+        i5_data3, i5_label_data3 = _prep(pickle.load(f), prefix='t1000_i5')
+    # with open(base_path + 't500_i5_coop_starve.pickle', 'rb') as f:
+    #     i5_data4, i5_label_data4 = _prep(pickle.load(f), prefix='t500_i5')
+    with open(base_path + 'i5_coop_starve.pickle', 'rb') as f:
+        i5_data4, i5_label_data4 = _prep(pickle.load(f), prefix='t500_i5')
+
+    with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
+        i10_data, i10_label_data = _prep(pickle.load(f), prefix='t2000_i10')
+    with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
+        i10_data2, i10_label_data2 = _prep(pickle.load(f), prefix='t1500_i10')
+    with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
+        i10_data3, i10_label_data3 = _prep(pickle.load(f), prefix='t1000_i10')
+    # with open(base_path + 't500_i10_coop_starve.pickle', 'rb') as f:
+    #     i10_data4, i10_label_data4 = _prep(pickle.load(f), prefix='t500_i10')
+    with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
+        i10_data4, i10_label_data4 = _prep(pickle.load(f), prefix='t500_i10')
 
 
 def doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3, i5_data4, i5_label_data4):
@@ -128,7 +148,54 @@ def doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_da
     return fig
 
 
-fig = doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3, i5_data4, i5_label_data4)
-fig.savefig("i5_coop_starve.pdf", bbox_inches='tight')
-fig = doit(i10_data, i10_label_data, i10_data2, i10_label_data2, i10_data3, i10_label_data3, i10_data4, i10_label_data4)
-fig.savefig("i10_coop_starve.pdf", bbox_inches='tight')
+def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3, i5_data4, i5_label_data4):
+    print(i5_data)
+
+    y_labels = ['4', '6', '10']
+    x_labels = ['.03', '.04', '.05']
+
+    cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
+
+    data = [i5_data4, i5_data, i5_data2, i5_data3]
+    label_data = [i5_label_data4, i5_label_data, i5_label_data2, i5_label_data3]
+
+    for m in range(4):
+        d = data[m]
+        ld = label_data[m]
+        fig, ax = plt.subplots(1, 1, figsize=(3.0, 2.0), constrained_layout=True)
+        im = ax.imshow(d, cmap=cmap_mod, vmin=0, vmax=1)
+
+        # Colorbar
+        if m > 1:
+            cbar = ax.figure.colorbar(im, ax=[ax], aspect=20)
+            cbar.ax.set_ylabel('Avg Coop Ratio', rotation=-90, va="bottom")
+
+        # Ticks and labels
+        ax.set_xticks(np.arange(len(x_labels)))
+        ax.set_yticks(np.arange(len(y_labels)))
+        ax.set_xticklabels(x_labels)
+        ax.set_yticklabels(y_labels)
+        ax.set_ylabel('Killzone Radius', rotation=90, va="bottom")
+        ax.set_xlabel('Shark speed', rotation=0, va="top")
+
+        # Text annotations
+        for i in range(len(y_labels)):
+            for j in range(len(x_labels)):
+                ax.text(j, i, ld[i][j], ha="center", va="center", color="w")
+
+        print(id_ + "_coop_starve" + str(m) + ".pdf")
+        fig.savefig(id_ + "_coop_starve" + str(m) + ".pdf", bbox_inches='tight')
+        plt.show()
+
+
+# print('DOING i5')
+# fig = doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3, i5_data4, i5_label_data4)
+# fig.savefig("i5_coop_starve.pdf", bbox_inches='tight')
+# print('DOING i10')
+# fig = doit(i10_data, i10_label_data, i10_data2, i10_label_data2, i10_data3, i10_label_data3, i10_data4, i10_label_data4)
+# fig.savefig("i10_coop_starve.pdf", bbox_inches='tight')
+
+# print('DOING i5')
+# fig = doit('i5', i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3, i5_data4, i5_label_data4)
+print('DOING i10')
+fig = doit_single('i10', i10_data, i10_label_data, i10_data2, i10_label_data2, i10_data3, i10_label_data3, i10_data4, i10_label_data4)
