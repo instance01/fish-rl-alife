@@ -32,6 +32,8 @@ else:
         i10_p150 = pickle.load(f)
     with open(base_path + 'i5_p150_two_net_herding.pickle', 'rb') as f:
         i5_p150 = pickle.load(f)
+    # TODO Could use i2_p150_sp500_two_net_herding_20repeats.pickle too.
+    # Right now we have 3 repeat evals per model.
     with open(base_path + 'i2_p150_sp500_two_net_herding.pickle', 'rb') as f:
         i2_p150 = pickle.load(f)
 
