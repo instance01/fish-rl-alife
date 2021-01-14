@@ -78,11 +78,11 @@ def plot(data, label_data):
 
     cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
     fig, ax = plt.subplots(1, 1, figsize=(3.5, 2.0), constrained_layout=True)
-    im = ax.imshow(data, cmap=cmap_mod)
+    im = ax.imshow(data, cmap=cmap_mod, vmin=0.0, vmax=1.0)
 
     # Colorbar
-    # cbar = ax.figure.colorbar(im, ax=ax)
-    # cbar.ax.set_ylabel('Avg Coop Ratio', rotation=-90, va="bottom")
+    cbar = ax.figure.colorbar(im, ax=ax)
+    cbar.ax.set_ylabel('Avg Cooperation Rate', rotation=-90, va="bottom")
 
     # Ticks and labels
     ax.set_xticks(np.arange(len(x_labels)))
@@ -116,7 +116,7 @@ def plot_both():
 
     # Colorbar
     cbar = ax.figure.colorbar(im, ax=[ax, ax2])
-    cbar.ax.set_ylabel('Avg Coop Ratio', rotation=-90, va="bottom")
+    cbar.ax.set_ylabel('Avg Cooperation Rate', rotation=-90, va="bottom")
 
     # Ticks and labels
     ax.set_xticks(np.arange(len(x_labels)))

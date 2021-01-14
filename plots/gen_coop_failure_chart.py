@@ -80,7 +80,9 @@ def plot(data, label_data):
     y_labels = ['4', '6', '10']
     x_labels = ['.03', '.035', '.04', '.05']
 
-    cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
+    # cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
+    cmap_mod = truncate_colormap('Blues', minval=.3, maxval=.99)
+
     fig, ax = plt.subplots(1, 1, figsize=(3.5, 2.0), constrained_layout=True)
     im = ax.imshow(data, cmap=cmap_mod, vmin=0.0, vmax=1.0)
 
