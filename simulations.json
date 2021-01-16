@@ -13464,6 +13464,28 @@
             "cliprange": 0.1
         }
     },
+    "8_obs_rand_swarm_i2": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 9,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "fish_procreate_after_n_steps": 100,
+            "rand_seed": true,
+
+            "observable_fishes": 10,
+            "shark_initial_survival_time": 3000,
+            "turn_away_fish": 0,
+            "boid_fish": 2
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 8e-5,
+            "cliprange": 0.1
+        }
+    },
     "8_obs_10obs": {
         "base_cfg": "1",
         "aquarium": {
@@ -13534,6 +13556,134 @@
             "num_layers": 3,
             "lr": 5e-5,
             "cliprange": 0.1
+        }
+    },
+    "8_obs_swarm_2": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 9,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "fish_procreate_after_n_steps": 100,
+
+            "observable_fishes": 10,
+            "shark_initial_survival_time": 3000,
+            "turn_away_fish": 0,
+            "boid_fish": 1
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 2e-4,
+            "cliprange": 0.15
+        }
+    },
+    "8_obs_swarm_3": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 9,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "fish_procreate_after_n_steps": 100,
+
+            "observable_fishes": 10,
+            "shark_initial_survival_time": 3000,
+            "turn_away_fish": 0,
+            "boid_fish": 2
+        },
+        "ppo": {
+            "total_timesteps": 21e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 2e-4,
+            "cliprange": 0.15
+        }
+    },
+    "8_obs_swarm_4": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 9,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "fish_procreate_after_n_steps": 100,
+
+            "observable_fishes": 10,
+            "shark_initial_survival_time": 3000,
+            "turn_away_fish": 0,
+            "boid_fish": 2
+        },
+        "ppo": {
+            "total_timesteps": 27e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 2e-4,
+            "cliprange": 0.15
+        }
+    },
+    "8_obs_swarm_5": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 9,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "fish_procreate_after_n_steps": 100,
+
+            "observable_fishes": 10,
+            "shark_initial_survival_time": 3000,
+            "turn_away_fish": 0,
+            "boid_fish": 2
+        },
+        "ppo": {
+            "total_timesteps": 30e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 9e-5,
+            "cliprange": 0.1
+        }
+    },
+    "8_obs_swarm_6": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 9,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "fish_procreate_after_n_steps": 100,
+
+            "observable_fishes": 10,
+            "shark_initial_survival_time": 3000,
+            "turn_away_fish": 0,
+            "boid_fish": 2
+        },
+        "ppo": {
+            "total_timesteps": 30e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 9e-5,
+            "cliprange": 0.2,
+            "gamma": 0.995
+        }
+    },
+    "8_obs_swarm_7": {
+        "base_cfg": "1",
+        "aquarium": {
+            "max_fish": 9,
+            "max_steps": 3000,
+            "shark_agents": 1,
+            "fish_procreate_after_n_steps": 100,
+
+            "observable_fishes": 10,
+            "shark_initial_survival_time": 3000,
+            "turn_away_fish": 0,
+            "boid_fish": 2
+        },
+        "ppo": {
+            "total_timesteps": 30e6,
+            "network": "mlp_batchnorm",
+            "num_layers": 3,
+            "lr": 9e-5,
+            "cliprange": 0.2,
+            "gamma": 0.999
         }
     }
 }

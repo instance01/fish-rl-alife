@@ -14,16 +14,21 @@ MAX_STEPS = 1000
 # 8_obs_rand_sp200 is for 200sp
 # 8_obs_rand_sp300 is for 300sp
 # 6_obs_rand is for 500sp
-BASE_CFG = '8_obs_rand_sp300'
+# BASE_CFG = '8_obs_rand_sp300'
+BASE_CFG = '8_obs_rand'
 
 
 def load(fname, scenario, ret_dead_fishes, ret_last_pops):
+    xx = []
     for _ in range(100):
         exp = Experiment(BASE_CFG, show_gui=False, dump_cfg=False)
         exp.env.select_fish_types(0, scenario, 0)
         _, _ = exp.load_eval(fname, steps=MAX_STEPS, initial_survival_time=3000)
         ret_dead_fishes.append(exp.env.dead_fishes)
         ret_last_pops.append(len(exp.env.fishes))
+
+        xx.append(exp.env.dead_fishes)
+    print(fname, xx)
 
 
 def run(fnames):
