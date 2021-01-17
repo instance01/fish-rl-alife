@@ -41,7 +41,7 @@ def load(id_, cfg_id, base_cfg_id, return_dict):
                 print('####### NO dead fishes! #######')
                 # TODO DUBIOUS! Should we maybe add a [0] if there's no dead fishes?
                 # lets try.
-                coop_ratios.append(0)
+                # coop_ratios.append(0)
 
     if coop_ratios:
         ci = st.t.interval(0.95, len(coop_ratios)-1, loc=np.mean(coop_ratios), scale=st.sem(coop_ratios))
