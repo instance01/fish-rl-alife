@@ -179,3 +179,5 @@ def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3,
 # fig.savefig("i10_coop_starve.pdf", bbox_inches='tight')
 print('DOING i10')
 fig = doit_single('i10', i10_data, i10_label_data, i10_data2, i10_label_data2, i10_data3, i10_label_data3, i10_data4, i10_label_data4)
+# print('DOING i5')
+# fig = doit_single('i5', i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3, i5_data4, i5_label_data4)
