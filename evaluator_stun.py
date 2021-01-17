@@ -47,7 +47,7 @@ def load(id_, cfg_id, base_cfg_id, return_dict):
 def main(id_):
     multiprocessing.set_start_method('spawn')
 
-    cfg_ids_i5 = {
+    cfg_ids_i5_1 = {
         't2000_i5_r4_s03': ['ma9_t2000_i5_p150_r4_s03_stun_ext', 'ma9_t3000_i5_p150_r4_s03_stun_ext'],
         't2000_i5_r4_s04': ['ma9_t2000_i5_p150_r4_s04_stun_ext', 'ma9_t3000_i5_p150_r4_s04_stun_ext'],
         't2000_i5_r4_s05': ['ma9_t2000_i5_p150_r4_s05_stun_ext', 'ma9_t3000_i5_p150_r4_s05_stun_ext'],
@@ -67,7 +67,9 @@ def main(id_):
         't1500_i5_r10_s03': ['ma9_t1500_i5_p150_r10_s03_stun_ext', 'ma9_t3000_i5_p150_r10_s03_stun_ext'],
         't1500_i5_r10_s04': ['ma9_t1500_i5_p150_r10_s04_stun_ext', 'ma9_t3000_i5_p150_r10_s04_stun_ext'],
         't1500_i5_r10_s05': ['ma9_t1500_i5_p150_r10_s05_stun_ext', 'ma9_t3000_i5_p150_r10_s05_stun_ext'],
+    }
 
+    cfg_ids_i5_2 = {
         't1000_i5_r4_s03': ['ma9_t1000_i5_p150_r4_s03_stun_ext', 'ma9_t3000_i5_p150_r4_s03_stun_ext'],
         't1000_i5_r4_s04': ['ma9_t1000_i5_p150_r4_s04_stun_ext', 'ma9_t3000_i5_p150_r4_s04_stun_ext'],
         't1000_i5_r4_s05': ['ma9_t1000_i5_p150_r4_s05_stun_ext', 'ma9_t3000_i5_p150_r4_s05_stun_ext'],
@@ -89,7 +91,7 @@ def main(id_):
         't500_i5_r10_s05': ['ma9_t500_i5_p150_r10_s05_stun_ext', 'ma9_t3000_i5_p150_r10_s05_stun_ext']
     }
 
-    cfg_ids_i10 = {
+    cfg_ids_i10_1 = {
         't2000_i10_r4_s03': ['ma9_t2000_i10_p150_r4_s03_stun_ext', 'ma9_t3000_i10_p150_r4_s03_stun_ext'],
         't2000_i10_r4_s04': ['ma9_t2000_i10_p150_r4_s04_stun_ext', 'ma9_t3000_i10_p150_r4_s04_stun_ext'],  # ggg
         't2000_i10_r4_s05': ['ma9_t2000_i10_p150_r4_s05_stun_ext', 'ma9_t3000_i10_p150_r4_s05_stun_ext'],
@@ -109,7 +111,9 @@ def main(id_):
         't1500_i10_r10_s03': ['ma9_t1500_i10_p150_r10_s03_stun_ext', 'ma9_t3000_i10_p150_r10_s03_stun_ext'],
         't1500_i10_r10_s04': ['ma9_t1500_i10_p150_r10_s04_stun_ext', 'ma9_t3000_i10_p150_r10_s04_stun_ext'],
         't1500_i10_r10_s05': ['ma9_t1500_i10_p150_r10_s05_stun_ext', 'ma9_t3000_i10_p150_r10_s05_stun_ext'],
+    }
 
+    cfg_ids_i10_2 = {
         't1000_i10_r4_s03': ['ma9_t1000_i10_p150_r4_s03_stun_ext', 'ma9_t3000_i10_p150_r4_s03_stun_ext'],
         't1000_i10_r4_s04': ['ma9_t1000_i10_p150_r4_s04_stun_ext', 'ma9_t3000_i10_p150_r4_s04_stun_ext'],
         't1000_i10_r4_s05': ['ma9_t1000_i10_p150_r4_s05_stun_ext', 'ma9_t3000_i10_p150_r4_s05_stun_ext'],
@@ -132,10 +136,14 @@ def main(id_):
     }
 
     kv = None
-    if id_ == 'i5':
-        kv = cfg_ids_i5
-    elif id_ == 'i10':
-        kv = cfg_ids_i10
+    if id_ == 'i5_1':
+        kv = cfg_ids_i5_1
+    elif id_ == 'i5_2':
+        kv = cfg_ids_i5_2
+    elif id_ == 'i10_1':
+        kv = cfg_ids_i10_1
+    elif id_ == 'i10_2':
+        kv = cfg_ids_i10_2
 
     # What the fuck. Pool doesn't work.
     # Didn't have the time to investigate so I went for the hacky solution.
