@@ -464,9 +464,10 @@ class Aquarium:
         dx, dy = a2.position - a1.position
         _, direction = util.cartesian_to_polar(dx, dy)
         if abs(direction - a1.orientation) < self.stun_max_angle_diff:
+            if a2.stun_steps == 0:
+                self.n_stuns += 1
             a2.color = Shark.STUN_COLOR
             a2.stun_steps = self.stun_duration_steps
-            self.n_stuns += 1
 
     def move_sharks(self, joint_shark_action):
         """Move all sharks according to joint_shark_action.
