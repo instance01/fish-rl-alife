@@ -454,7 +454,7 @@ class Aquarium:
 
             self.dead_fishes += 1
             shark.eaten_fish += 1
-            print('coop ratio', self.coop_kills / self.dead_fishes, 'full coop ratio', self.full_coop_kills / self.dead_fishes)
+            # print('coop ratio', self.coop_kills / self.dead_fishes, 'full coop ratio', self.full_coop_kills / self.dead_fishes)
 
     def _handle_stun_move(self, a1, a2):
         """Make a shark unable to move for a certain number of steps and turn it
@@ -505,6 +505,9 @@ class Aquarium:
                 if speed < 0:
                     speed *= .01
                     angle *= .01
+                    # TODO REMOVE AGAIN
+                    # speed *= .5
+                    # angle *= .5
 
                 if shark.stun_steps > 0:
                     shark.stun_steps -= 1

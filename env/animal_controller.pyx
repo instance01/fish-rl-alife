@@ -45,6 +45,8 @@ class BoidFishController(Controller):
             wall_observation: np.ndarray,
             shark_observation: np.ndarray,
             fish_observation: np.ndarray) -> (float, float, float):
+        orig_own_orientation = own_orientation
+
         distance_to_closest_wall = wall_observation[0]
         angle_to_closest_wall = wall_observation[1]
         distance_to_second_closest_wall = wall_observation[2]
@@ -68,6 +70,7 @@ class BoidFishController(Controller):
         average_position_count = 0
 
         # Iterate to get neighbor data.
+        k = 0
         for i in range(0, len(fish_observation), 3):
             distance_to_fish = fish_observation[i]
             if distance_to_fish != 0:
@@ -86,6 +89,15 @@ class BoidFishController(Controller):
                 average_position_count += 1
                 repulse_forces -= vector_to_fish / distance_to_fish
 
+                k += 1
+        if k == 0:
+            return TurnAwayFishController.get_action(
+                    orig_own_orientation,
+                    ready_to_procreate,
+                    wall_observation,
+                    shark_observation,
+                    fish_observation)
+
         # Boid forces.
         alignment_force = np.array([0.0, 0.0])
         if orientation_count > 0:
@@ -101,7 +113,8 @@ class BoidFishController(Controller):
         # noise_force = np.array([random.uniform(-1, 1), random.uniform(-1, 1)])
 
         target_vector = 0.03 * separation_force + 0.2 * alignment_force
-        target_vector += 0.6 * cohesion_force + 0.4 * shark_force
+        # target_vector += 0.6 * cohesion_force + 0.4 * shark_force
+        target_vector += 0.6 * cohesion_force + 1.0 * shark_force
         target_vector += 1.0 * wall1_force + 1.0 * wall2_force
 
         angle = util.angle_of(target_vector)
