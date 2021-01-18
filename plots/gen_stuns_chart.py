@@ -26,13 +26,13 @@ def _prep(data, prefix='i10'):
     ret_labels = {}
     for k, v in zip(data[0], data[1]):
         mean = v[0]
-        # ci = mean - v[1][0]
-        # if np.isnan(ci) or ci == 1.0:
-        #     print('ENCOUNTERED NAN!')
-        #     ci = 0
+        ci = mean - v[1][0]
+        if np.isnan(ci) or ci == 1.0:
+            print('ENCOUNTERED NAN!')
+            ci = 0
         ret[k] = mean
-        # ret_labels[k] = '%0.2f\n±%0.2f' % (round(mean, 2), round(ci, 2))
-        ret_labels[k] = '%0.2f' % mean
+        ret_labels[k] = '%0.2f\n±%0.2f' % (round(mean, 2), round(ci, 2))
+        # ret_labels[k] = '%0.2f' % mean
     print(ret_labels)
 
     print('##', prefix)
@@ -53,22 +53,22 @@ def _prep(data, prefix='i10'):
 
 
 base_path = '../pickles/'
-with open(base_path + 'i5_stuns.pickle', 'rb') as f:
+with open(base_path + 'i5_1_stuns.pickle', 'rb') as f:
     i5_data, i5_label_data = _prep(pickle.load(f), prefix='t2000_i5')
-with open(base_path + 'i5_stuns.pickle', 'rb') as f:
+with open(base_path + 'i5_1_stuns.pickle', 'rb') as f:
     i5_data2, i5_label_data2 = _prep(pickle.load(f), prefix='t1500_i5')
-with open(base_path + 'i5_stuns.pickle', 'rb') as f:
+with open(base_path + 'i5_2_stuns.pickle', 'rb') as f:
     i5_data3, i5_label_data3 = _prep(pickle.load(f), prefix='t1000_i5')
-with open(base_path + 'i5_stuns.pickle', 'rb') as f:
+with open(base_path + 'i5_2_stuns.pickle', 'rb') as f:
     i5_data4, i5_label_data4 = _prep(pickle.load(f), prefix='t500_i5')
 
-with open(base_path + 'i10_stuns.pickle', 'rb') as f:
+with open(base_path + 'i10_1_stuns.pickle', 'rb') as f:
     i10_data, i10_label_data = _prep(pickle.load(f), prefix='t2000_i10')
-with open(base_path + 'i10_stuns.pickle', 'rb') as f:
+with open(base_path + 'i10_1_stuns.pickle', 'rb') as f:
     i10_data2, i10_label_data2 = _prep(pickle.load(f), prefix='t1500_i10')
-with open(base_path + 'i10_stuns.pickle', 'rb') as f:
+with open(base_path + 'i10_2_stuns.pickle', 'rb') as f:
     i10_data3, i10_label_data3 = _prep(pickle.load(f), prefix='t1000_i10')
-with open(base_path + 'i10_stuns.pickle', 'rb') as f:
+with open(base_path + 'i10_2_stuns.pickle', 'rb') as f:
     i10_data4, i10_label_data4 = _prep(pickle.load(f), prefix='t500_i10')
 
 
@@ -89,7 +89,7 @@ def doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_da
 
     # Colorbar
     cbar = ax.figure.colorbar(im, ax=[ax, ax2, ax3, ax4], aspect=40)
-    cbar.ax.set_ylabel('Avg Cooperation Rate', rotation=-90, va="bottom")
+    cbar.ax.set_ylabel('Avg Number of Stuns', rotation=-90, va="bottom")
 
     # Ticks and labels
     ax.set_xticks(np.arange(len(x_labels)))
