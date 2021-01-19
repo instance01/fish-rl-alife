@@ -67,16 +67,16 @@ with open(base_path + 'vd30_coop_net3.pickle', 'rb') as f:
 with open(base_path + 'vd35_coop_net3.pickle', 'rb') as f:
     i5_data5, i5_label_data5 = _prep(pickle.load(f), failure, prefix='vd35')
 
-# with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
-#     i10_data, i10_label_data = _prep(pickle.load(f), prefix='t2000_i10')
-# with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
-#     i10_data2, i10_label_data2 = _prep(pickle.load(f), prefix='t1500_i10')
-# with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
-#     i10_data3, i10_label_data3 = _prep(pickle.load(f), prefix='t1000_i10')
-# # with open(base_path + 't500_i10_coop_starve.pickle', 'rb') as f:
-# #     i10_data4, i10_label_data4 = _prep(pickle.load(f), prefix='t500_i10')
-# with open(base_path + 'i10_coop_starve.pickle', 'rb') as f:
-#     i10_data4, i10_label_data4 = _prep(pickle.load(f), prefix='t500_i10')
+with open(base_path + 'vd15_coop_net3_normal_coop.pickle', 'rb') as f:
+    i10_data, i10_label_data = _prep(pickle.load(f), failure, prefix='vd15')
+with open(base_path + 'vd20_coop_net3_normal_coop.pickle', 'rb') as f:
+    i10_data2, i10_label_data2 = _prep(pickle.load(f), failure, prefix='vd20')
+with open(base_path + 'vd25_coop_net3_normal_coop.pickle', 'rb') as f:
+    i10_data3, i10_label_data3 = _prep(pickle.load(f), failure, prefix='vd25')
+with open(base_path + 'vd30_coop_net3_normal_coop.pickle', 'rb') as f:
+    i10_data4, i10_label_data4 = _prep(pickle.load(f), failure, prefix='vd30')
+with open(base_path + 'vd35_coop_net3_normal_coop.pickle', 'rb') as f:
+    i10_data5, i10_label_data5 = _prep(pickle.load(f), failure, prefix='vd35')
 
 
 def doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3, i5_data4, i5_label_data4, i5_data5, i5_label_data5,):
@@ -187,9 +187,13 @@ if failure:
     fig.savefig("i5_coop_net3_failure.pdf", bbox_inches='tight')
 else:
     fig.savefig("i5_coop_net3.pdf", bbox_inches='tight')
-# print('DOING i10')
-# fig = doit(i10_data, i10_label_data, i10_data2, i10_label_data2, i10_data3, i10_label_data3, i10_data4, i10_label_data4)
-# fig.savefig("i10_coop_starve.pdf", bbox_inches='tight')
+print('DOING i10 (normal coop)')
+fig = doit(i10_data, i10_label_data, i10_data2, i10_label_data2, i10_data3, i10_label_data3, i10_data4, i10_label_data4, i10_data5, i10_label_data5)
+if failure:
+    fig.savefig("i5_coop_net3_failure_normal_coop.pdf", bbox_inches='tight')
+else:
+    fig.savefig("i5_coop_net3_normal_coop.pdf", bbox_inches='tight')
+
 
 # print('DOING i5')
 # fig = doit_single('i5', i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3, i5_data4, i5_label_data4)
