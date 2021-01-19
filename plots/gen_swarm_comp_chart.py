@@ -95,7 +95,8 @@ def bar_plot(
 
 def plot(data, err_data, data2, err_data2, xxx=22):
     scenarios = ['static-wait', 'DQN Stage II', 'PPO']
-    fig, ax = plt.subplots(figsize=(4, 3.5))
+    # fig, ax = plt.subplots(figsize=(4, 3.5))
+    fig, ax = plt.subplots(figsize=(3.2, 4))
     bar_plot(
         ax,
         data,
@@ -104,7 +105,9 @@ def plot(data, err_data, data2, err_data2, xxx=22):
         err_data2,
         # colors=['#6497b1', '#005b96', '#9FD983', '#009440'],
         colors=['#9FD983', '#009440'],
-        total_width=.6,
+        # total_width=.6,
+        # single_width=.9
+        total_width=.5,
         single_width=.9
     )
 
@@ -120,46 +123,20 @@ def plot(data, err_data, data2, err_data2, xxx=22):
 if __name__ == "__main__":
     # static-wait, dqn, ppo
     data = {
-        "Swarm": [4.850000, 0.0, 33.050000],
+        "Swarm": [4.850000, 17.877143, 33.050000],
         "TurnAway": [9.740000, 6.504000, 16.220000]
     }
     err_data = {
-        "Swarm": [0.540000, 0.0, 0.640000],
+        "Swarm": [0.540000, 0.813596, 0.640000],
         "TurnAway": [0.170000, 0.299598, 0.180000]
     }
     data2 = {
-        "Swarm": [0.170000, 0.0, 7.530000],
+        "Swarm": [0.170000, 6.578571, 7.530000],
         "TurnAway": [1.150000, 2.157000, 10.880000]
     }
     err_data2 = {
-        "Swarm": [0.120000, 0.0, 0.210000],
+        "Swarm": [0.120000, 0.196203, 0.210000],
         "TurnAway": [0.070000, 0.252410, 0.060000]
     }
-
-    # # X fish
-    # data = {
-    #     "Static": [2.070000],
-    #     "Static-wait": [4.850000],
-    #     "DQN Stage II": [0.0],
-    #     "PPO": [33.050000]
-    # }
-    # err_data = {
-    #     "Static": [0.060000],
-    #     "Static-wait": [0.540000],
-    #     "DQN Stage II": [0.0],
-    #     "PPO": [0.640000]
-    # }
-    # data2 = {
-    #     "Static": [0.000000],
-    #     "Static-wait": [0.170000],
-    #     "DQN Stage II": [0.0],
-    #     "PPO": [7.530000]
-    # }
-    # err_data2 = {
-    #     "Static": [0.000000],
-    #     "Static-wait": [0.120000],
-    #     "DQN Stage II": [0.0],
-    #     "PPO": [0.210000]
-    # }
     fig = plot(data, err_data, data2, err_data2, xxx=20)
     fig.savefig("swarmcomp.pdf", bbox_inches='tight')
