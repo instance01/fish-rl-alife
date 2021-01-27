@@ -62,18 +62,18 @@ def main(id_):
     multiprocessing.set_start_method('spawn')
 
     cfg_ids_i5 = {
-        # 'i5_r4_s03': ['ma9_t*_i5_p150_r4_s03', 'ma9_t2000_i5_p150_r4_s03_sp200'],
-        # 'i5_r4_s035': ['ma9_t*_i5_p150_r4_s035', 'ma9_t3000_i5_p150_r4_s035_sp200'],
+        'i5_r4_s03': ['ma9_t*_i5_p150_r4_s03', 'ma9_t2000_i5_p150_r4_s03_sp200'],
+        'i5_r4_s035': ['ma9_t*_i5_p150_r4_s035', 'ma9_t3000_i5_p150_r4_s035_sp200'],
         'i5_r4_s04': ['ma9_t3000_i5_p150_r4_s04', 'ma9_t3000_i5_p150_r4_s04_sp200'],
-        # 'i5_r4_s05': ['ma9_t*_i5_p150_r4_s05', 'ma9_t2000_i5_p150_r4_s05_sp200'],
+        'i5_r4_s05': ['ma9_t*_i5_p150_r4_s05', 'ma9_t2000_i5_p150_r4_s05_sp200'],
 
         'i5_r6_s03': ['ma9_t*_i5_p150_r6_s03', 'ma9_t2000_i5_p150_r6_s03_sp200'],
         'i5_r6_s035': ['ma9_t*_i5_p150_r6_s035', 'ma9_t3000_i5_p150_r6_s035_sp200'],
         'i5_r6_s04': ['ma9_t3000_i5_p150_r6_s04', 'ma9_t3000_i5_p150_r6_s04_sp200'],
-        # 'i5_r6_s05': ['ma9_t*_i5_p150_r6_s05', 'ma9_t2000_i5_p150_r6_s05_sp200'],
+        'i5_r6_s05': ['ma9_t*_i5_p150_r6_s05', 'ma9_t2000_i5_p150_r6_s05_sp200'],
 
-        # 'i5_r10_s03': ['ma9_t*_i5_p150_r10_s03', 'ma9_t2000_i5_p150_r10_s03_sp200'],
-        # 'i5_r10_s035': ['ma9_t*_i5_p150_r10_s035', 'ma9_t3000_i5_p150_r10_s035_sp200'],
+        'i5_r10_s03': ['ma9_t*_i5_p150_r10_s03', 'ma9_t2000_i5_p150_r10_s03_sp200'],
+        'i5_r10_s035': ['ma9_t*_i5_p150_r10_s035', 'ma9_t3000_i5_p150_r10_s035_sp200'],
         'i5_r10_s04': ['ma9_t3000_i5_p150_r10_s04', 'ma9_t3000_i5_p150_r10_s04_sp200'],
         'i5_r10_s05': ['ma9_t*_i5_p150_r10_s05', 'ma9_t2000_i5_p150_r10_s05_sp200']
     }
@@ -129,6 +129,23 @@ def main(id_):
         'i10_r10_s05': ['ma9_t*_i10_p150_r10_s05_stun_ext', 'ma9_t2000_i10_p150_r10_s05_stun_ext_sp200']
     }
 
+    cfg_ids_i5_vd20 = {
+        'i5_r4_s03': ['ma9_i5_p150_r4_s03_sp200_two_net_vd20', 'ma9_i5_p150_r4_s03_sp200_two_net_vd20'],
+        'i5_r4_s035': ['ma9_i5_p150_r4_s03_sp200_two_net_vd20', 'ma9_i5_p150_r4_s035_sp200_two_net_vd20'],
+        'i5_r4_s04': ['ma9_i5_p150_r4_s04_sp200_two_net_vd20', 'ma9_i5_p150_r4_s04_sp200_two_net_vd20'],
+        'i5_r4_s05': ['ma9_i5_p150_r4_s05_sp200_two_net_vd20', 'ma9_i5_p150_r4_s05_sp200_two_net_vd20'],
+
+        'i5_r6_s03': ['ma9_i5_p150_r6_s03_sp200_two_net_vd20', 'ma9_i5_p150_r6_s03_sp200_two_net_vd20'],
+        'i5_r6_s035': ['ma9_i5_p150_r6_s035_sp200_two_net_vd20', 'ma9_i5_p150_r6_s035_sp200_two_net_vd20'],
+        'i5_r6_s04': ['ma9_i5_p150_r6_s04_sp200_two_net_vd20', 'ma9_i5_p150_r6_s04_sp200_two_net_vd20'],
+        'i5_r6_s05': ['ma9_i5_p150_r6_s05_sp200_two_net_vd20', 'ma9_i5_p150_r6_s05_sp200_two_net_vd20'],
+
+        'i5_r10_s03': ['ma9_i5_p150_r10_s03_sp200_two_net_vd20', 'ma9_i5_p150_r10_s03_sp200_two_net_vd20'],
+        'i5_r10_s035': ['ma9_i5_p150_r10_s035_sp200_two_net_vd20', 'ma9_i5_p150_r10_s035_sp200_two_net_vd20'],
+        'i5_r10_s04': ['ma9_i5_p150_r10_s04_sp200_two_net_vd20', 'ma9_i5_p150_r10_s04_sp200_two_net_vd20'],
+        'i5_r10_s05': ['ma9_i5_p150_r10_s05_sp200_two_net_vd20', 'ma9_i5_p150_r10_s05_sp200_two_net_vd20']
+    }
+
     kv = None
     if id_ == 'i5':
         kv = cfg_ids_i5
@@ -138,6 +155,8 @@ def main(id_):
         kv = cfg_ids_i5_stun
     elif id_ == 'i10_stun':
         kv = cfg_ids_i10_stun
+    elif id_ == 'vd20':
+        kv = cfg_ids_i5_vd20
 
     # What the fuck. Pool doesn't work.
     # Didn't have the time to investigate so I went for the hacky solution.
