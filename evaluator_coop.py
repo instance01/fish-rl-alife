@@ -11,7 +11,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
 def load(id_, cfg_id, base_cfg_id, return_dict):
-    base_paths = ['models', 'modelsDec10-14', 'modelsDec15-20']
+    base_paths = ['models']
     res = []
     for base_path in base_paths:
         ids_ = [
@@ -155,7 +155,7 @@ def main(id_):
         kv = cfg_ids_i5_stun
     elif id_ == 'i10_stun':
         kv = cfg_ids_i10_stun
-    elif id_ == 'vd20':
+    elif id_ == 'vd20' or id_ == 'vd20_fast':
         kv = cfg_ids_i5_vd20
 
     # What the fuck. Pool doesn't work.
