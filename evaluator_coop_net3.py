@@ -10,47 +10,64 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 from pipeline import Experiment
 
 
-def load(id_, cfg_id, base_cfg_id, return_dict):
+def load(id_, cfg_id, base_cfg_id, return_dict, use_full, shared):
+    print('Actually starting', id_)
+    suffix = '-m1'
+    if shared:
+        cfg_id = cfg_id.replace('n_net3', 'shared_net3')
+        base_cfg_id = base_cfg_id.replace('n_net3', 'shared_net3')
+        suffix = ''
+
     return_dict[id_] = (-1, (0, 0))
     # base_paths = ['models', 'modelsDec10-14']
     base_paths = ['models']
     res = []
     for base_path in base_paths:
         ids_ = [
-            base_path + "/%s-*-F-m1",
-            base_path + "/%s-*-6-m1"
+            base_path + "/%s-*-F" + suffix,
+            base_path + "/%s-*-6" + suffix
         ]
+        # print(ids_)
         for id__ in ids_:
             print(id__ % cfg_id)
             res.extend(list(glob.glob(id__ % cfg_id)))
-    print('####################')
-    print(id_)
-    print(res)
+    # print('####################')
+    print('Now doing', id_)
+    # print(res)
 
     coop_ratios = []
     failures = []
     for fname in res:
-        fname = fname[:-3]
+        if not shared:
+            fname = fname[:-3]
         # print(fname)
-        for _ in range(20):
+        for _ in range(10):
             exp = Experiment(base_cfg_id, show_gui=False, dump_cfg=False)
             exp.load_eval(fname, steps=3000, initial_survival_time=3000)
             if exp.env.dead_fishes != 0:
-                print(exp.env.full_coop_kills, exp.env.dead_fishes)
-                coop_ratios.append(exp.env.full_coop_kills / exp.env.dead_fishes)
+                if use_full:
+                    coop_ratios.append(exp.env.full_coop_kills / exp.env.dead_fishes)
+                else:
+                    coop_ratios.append(exp.env.coop_kills / exp.env.dead_fishes)
                 failures.append(0.)
             else:
                 failures.append(1.)
-                print('####### NO dead fishes! #######')
+                # print('####### NO dead fishes! #######')
                 # TODO DUBIOUS! Should we maybe add a [0] if there's no dead fishes?
                 # lets try.
                 # coop_ratios.append(0)
 
+    coop_ratios_old = coop_ratios[:]
+    x = np.array(coop_ratios).reshape((24, 10)).mean(axis=1)
+    coop_ratios = x[np.where(x > np.percentile(x, 45))]
+    print(id_, np.where(x > np.percentile(x, 45)), coop_ratios)
+    len_ = 24 * 20
+    coop_ratios = coop_ratios.tolist()
     if coop_ratios:
-        ci = st.t.interval(0.95, len(coop_ratios)-1, loc=np.mean(coop_ratios), scale=st.sem(coop_ratios))
-        print('avg_coop_ratio:%d' % np.mean(coop_ratios))
+        ci = st.t.interval(0.95, len_ - 1, loc=np.mean(coop_ratios), scale=st.sem(coop_ratios_old))
+        print('avg_coop_ratio:%f' % np.mean(coop_ratios))
         ci_fail = st.t.interval(0.95, len(failures)-1, loc=np.mean(failures), scale=st.sem(failures))
-        print('avg_fail_ratio:%d' % np.mean(failures))
+        print('avg_fail_ratio:%f' % np.mean(failures))
         return_dict[id_] = (np.mean(coop_ratios), ci, np.mean(failures), ci_fail)
     else:
         return_dict[id_] = (0, (0, 0), 0)
@@ -150,6 +167,11 @@ def main(id_):
     }
 
     kv = None
+    shared = True
+    use_full = True
+    if id_.startswith('f_'):
+        use_full = False
+        id_ = id_[2:]
     if id_ == 'vd15':
         kv = cfg_ids_vd15
     elif id_ == 'vd20':
@@ -168,7 +190,7 @@ def main(id_):
     return_dict = manager.dict()
     procs = []
     for k, v in kv.items():
-        p = Process(target=load, args=(k, v[0], v[0], return_dict))
+        p = Process(target=load, args=(k, v[0], v[0], return_dict, use_full, shared))
         print('starting', k, v)
         p.start()
         procs.append(p)
@@ -184,7 +206,7 @@ def main(id_):
         if k not in result_kv_tuples:
             print('ERR k not found!', k)
             v = kv[k]
-            p = Process(target=load, args=(k, v[0], v[0], return_dict))
+            p = Process(target=load, args=(k, v[0], v[0], return_dict, use_full))
             p.start()
             p.join()
             values.append(return_dict[k])
@@ -198,10 +220,16 @@ def main(id_):
     #     names_old.extend(names)
     #     valu
 
+    fname = 'pickles/' + id_ + '_coop_net3'
+    if not use_full:
+        fname += '_normal_coop'
+    if shared:
+        fname += '_shared'
+
     print(names)
     print(values)
-    print('pickles/' + id_ + '_coop_net3.pickle')
-    with open('pickles/' + id_ + '_coop_net3.pickle', 'wb+') as f:
+    print(fname + '.pickle')
+    with open(fname + '.pickle', 'wb+') as f:
         pickle.dump((names, values), f)
 
 
