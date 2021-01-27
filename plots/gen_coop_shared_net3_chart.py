@@ -132,18 +132,18 @@ def doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_da
     return fig
 
 
-def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3, i5_data4, i5_label_data4):
+def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2):
     print(i5_data)
 
     y_labels = ['4', '6', '10']
-    x_labels = ['.03', '.04', '.05']
+    x_labels = ['.025', '.03', '.035', '.04', '.05']
 
     cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
 
-    data = [i5_data4, i5_data, i5_data2, i5_data3]
-    label_data = [i5_label_data4, i5_label_data, i5_label_data2, i5_label_data3]
+    data = [i5_data, i5_data2]
+    label_data = [i5_label_data, i5_label_data2]
 
-    for m in range(4):
+    for m in range(2):
         d = data[m]
         ld = label_data[m]
         fig, ax = plt.subplots(1, 1, figsize=(3.0, 2.0), constrained_layout=True)
@@ -167,14 +167,15 @@ def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3,
             for j in range(len(x_labels)):
                 ax.text(j, i, ld[i][j], ha="center", va="center", color="w")
 
-        print(id_ + "_coop_starve" + str(m) + ".pdf")
-        fig.savefig(id_ + "_coop_starve" + str(m) + ".pdf", bbox_inches='tight')
+        print(id_ + "_coop_net3_shared" + str(m) + ".pdf")
+        fig.savefig(id_ + "_coop_net3_shared" + str(m) + ".pdf", bbox_inches='tight')
         plt.show()
 
 
 print('DOING i5')
-fig = doit(i5_data, i5_label_data, None, None, i5_data3, i5_label_data3, None, None, None, None)
-if failure:
-    fig.savefig("i5_coop_net3_failure.pdf", bbox_inches='tight')
-else:
-    fig.savefig("i5_coop_net3.pdf", bbox_inches='tight')
+# fig = doit(i5_data, i5_label_data, None, None, i5_data3, i5_label_data3, None, None, None, None)
+# if failure:
+#     fig.savefig("i5_coop_net3_failure.pdf", bbox_inches='tight')
+# else:
+#     fig.savefig("i5_coop_net3.pdf", bbox_inches='tight')
+doit_single('i5', i5_data, i5_label_data, i5_data3, i5_label_data3)

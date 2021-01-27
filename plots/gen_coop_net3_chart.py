@@ -145,17 +145,20 @@ def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3,
     print(i5_data)
 
     y_labels = ['4', '6', '10']
-    x_labels = ['.03', '.04', '.05']
+    x_labels = ['.025', '.03', '.035', '.04', '.05']
 
     cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
 
-    data = [i5_data4, i5_data, i5_data2, i5_data3]
-    label_data = [i5_label_data4, i5_label_data, i5_label_data2, i5_label_data3]
+    data = [i5_data3]
+    label_data = [i5_label_data3]
 
     for m in range(4):
         d = data[m]
         ld = label_data[m]
-        fig, ax = plt.subplots(1, 1, figsize=(3.0, 2.0), constrained_layout=True)
+        if m > 1:
+            fig, ax = plt.subplots(1, 1, figsize=(4.0, 2.0), constrained_layout=True)
+        else:
+            fig, ax = plt.subplots(1, 1, figsize=(3.0, 2.0), constrained_layout=True)
         im = ax.imshow(d, cmap=cmap_mod, vmin=0, vmax=1)
 
         # Colorbar
@@ -176,26 +179,26 @@ def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3,
             for j in range(len(x_labels)):
                 ax.text(j, i, ld[i][j], ha="center", va="center", color="w")
 
-        print(id_ + "_coop_starve" + str(m) + ".pdf")
-        fig.savefig(id_ + "_coop_starve" + str(m) + ".pdf", bbox_inches='tight')
+        print(id_ + "_coop_net3_" + str(m) + ".pdf")
+        fig.savefig(id_ + "_coop_net3_" + str(m) + ".pdf", bbox_inches='tight')
         plt.show()
 
 
 print('DOING i5')
-fig = doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3, i5_data4, i5_label_data4, i5_data5, i5_label_data5)
-if failure:
-    fig.savefig("i5_coop_net3_failure.pdf", bbox_inches='tight')
-else:
-    fig.savefig("i5_coop_net3.pdf", bbox_inches='tight')
-print('DOING i10 (normal coop)')
-fig = doit(i10_data, i10_label_data, i10_data2, i10_label_data2, i10_data3, i10_label_data3, i10_data4, i10_label_data4, i10_data5, i10_label_data5)
-if failure:
-    fig.savefig("i5_coop_net3_failure_normal_coop.pdf", bbox_inches='tight')
-else:
-    fig.savefig("i5_coop_net3_normal_coop.pdf", bbox_inches='tight')
+# fig = doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3, i5_data4, i5_label_data4, i5_data5, i5_label_data5)
+# if failure:
+#     fig.savefig("i5_coop_net3_failure.pdf", bbox_inches='tight')
+# else:
+#     fig.savefig("i5_coop_net3.pdf", bbox_inches='tight')
+# print('DOING i10 (normal coop)')
+# fig = doit(i10_data, i10_label_data, i10_data2, i10_label_data2, i10_data3, i10_label_data3, i10_data4, i10_label_data4, i10_data5, i10_label_data5)
+# if failure:
+#     fig.savefig("i5_coop_net3_failure_normal_coop.pdf", bbox_inches='tight')
+# else:
+#     fig.savefig("i5_coop_net3_normal_coop.pdf", bbox_inches='tight')
 
 
 # print('DOING i5')
-# fig = doit_single('i5', i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3, i5_data4, i5_label_data4)
+fig = doit_single('i5', i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_data3, i5_data4, i5_label_data4)
 # print('DOING i10')
 # fig = doit_single('i10', i10_data, i10_label_data, i10_data2, i10_label_data2, i10_data3, i10_label_data3, i10_data4, i10_label_data4)
