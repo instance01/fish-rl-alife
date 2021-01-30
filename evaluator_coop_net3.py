@@ -18,7 +18,7 @@ def load(id_, cfg_id, base_cfg_id, return_dict, use_full, shared):
         base_cfg_id = base_cfg_id.replace('n_net3', 'shared_net3')
         suffix = ''
 
-    return_dict[id_] = (-1, (0, 0))
+    return_dict[id_] = (-1, (0, 0), -1)
     # base_paths = ['models', 'modelsDec10-14']
     base_paths = ['models']
     res = []
@@ -35,6 +35,7 @@ def load(id_, cfg_id, base_cfg_id, return_dict, use_full, shared):
     print('Now doing', id_)
     # print(res)
 
+    dead_fishes = []
     coop_ratios = []
     failures = []
     for fname in res:
@@ -49,6 +50,7 @@ def load(id_, cfg_id, base_cfg_id, return_dict, use_full, shared):
                     coop_ratios.append(exp.env.full_coop_kills / exp.env.dead_fishes)
                 else:
                     coop_ratios.append(exp.env.coop_kills / exp.env.dead_fishes)
+                dead_fishes.append(exp.env.dead_fishes)
                 failures.append(0.)
             else:
                 failures.append(1.)
@@ -57,20 +59,18 @@ def load(id_, cfg_id, base_cfg_id, return_dict, use_full, shared):
                 # lets try.
                 # coop_ratios.append(0)
 
+    len_ = len(coop_ratios)
     coop_ratios_old = coop_ratios[:]
-    x = np.array(coop_ratios).reshape((24, 10)).mean(axis=1)
-    coop_ratios = x[np.where(x > np.percentile(x, 45))]
-    print(id_, np.where(x > np.percentile(x, 45)), coop_ratios)
-    len_ = 24 * 20
-    coop_ratios = coop_ratios.tolist()
     if coop_ratios:
         ci = st.t.interval(0.95, len_ - 1, loc=np.mean(coop_ratios), scale=st.sem(coop_ratios_old))
         print('avg_coop_ratio:%f' % np.mean(coop_ratios))
         ci_fail = st.t.interval(0.95, len(failures)-1, loc=np.mean(failures), scale=st.sem(failures))
         print('avg_fail_ratio:%f' % np.mean(failures))
-        return_dict[id_] = (np.mean(coop_ratios), ci, np.mean(failures), ci_fail)
+        ci_dead = st.t.interval(0.95, len(dead_fishes)-1, loc=np.mean(dead_fishes), scale=st.sem(dead_fishes))
+        print('avg_dead_ratio:%f' % np.mean(dead_fishes))
+        return_dict[id_] = (np.mean(coop_ratios), ci, np.mean(failures), ci_fail, np.mean(dead_fishes), ci_dead)
     else:
-        return_dict[id_] = (0, (0, 0), 0)
+        return_dict[id_] = (0, (0, 0), 0, (0, 0), 0, (0, 0))
 
 
 def main(id_):
@@ -167,7 +167,7 @@ def main(id_):
     }
 
     kv = None
-    shared = True
+    shared = False
     use_full = True
     if id_.startswith('f_'):
         use_full = False

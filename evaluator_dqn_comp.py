@@ -60,17 +60,18 @@ def run(fnames):
 
 def main():
     models = [
-        'models/8_obs-smaragd.cip.ifi.lmu.de-20.12.26-15:47:34-21372910-model-6',
-        'models/8_obs-opal.cip.ifi.lmu.de-20.12.26-15:48:08-42810204-model-6',
-        'models/8_obs-opal.cip.ifi.lmu.de-20.12.26-15:48:05-64795473-model-6',
-        'models/8_obs-opal.cip.ifi.lmu.de-20.12.26-15:48:05-30316607-model-6',
-        'models/8_obs-opal.cip.ifi.lmu.de-20.12.26-15:48:05-26456983-model-6',
-        'models/8_obs-jachen.cip.ifi.lmu.de-20.12.26-15:44:37-70807588-model-F',
-        'models/8_obs-jachen.cip.ifi.lmu.de-20.12.26-15:44:33-59934980-model-F',
-        'models/8_obs-itz.cip.ifi.lmu.de-20.12.26-15:44:33-57979089-model-F',
-        'models/8_obs-itz.cip.ifi.lmu.de-20.12.26-15:44:29-47874541-model-F',
-        'models/8_obs-anlauter.cip.ifi.lmu.de-20.12.27-13:09:56-32890563-model-F'
+        # 'models/8_obs-smaragd.cip.ifi.lmu.de-20.12.26-15:47:34-21372910-model-6',
+        # 'models/8_obs-opal.cip.ifi.lmu.de-20.12.26-15:48:08-42810204-model-6',
+        # 'models/8_obs-opal.cip.ifi.lmu.de-20.12.26-15:48:05-64795473-model-6',
+        # 'models/8_obs-opal.cip.ifi.lmu.de-20.12.26-15:48:05-30316607-model-6',
+        # 'models/8_obs-opal.cip.ifi.lmu.de-20.12.26-15:48:05-26456983-model-6',
+        # 'models/8_obs-jachen.cip.ifi.lmu.de-20.12.26-15:44:37-70807588-model-F',
+        # 'models/8_obs-jachen.cip.ifi.lmu.de-20.12.26-15:44:33-59934980-model-F',
+        # 'models/8_obs-itz.cip.ifi.lmu.de-20.12.26-15:44:33-57979089-model-F',
+        # 'models/8_obs-itz.cip.ifi.lmu.de-20.12.26-15:44:29-47874541-model-F',
+        # 'models/8_obs-anlauter.cip.ifi.lmu.de-20.12.27-13:09:56-32890563-model-F'
 
+        # Unusued:
         # 'models/8_obs-diamant.cip.ifi.lmu.de-20.12.26-15:44:55-1934685-model-6',
         # 'models/8_obs-anlauter.cip.ifi.lmu.de-20.12.27-13:09:56-80420989-model-F',
         # 'models/8_obs-anlauter.cip.ifi.lmu.de-20.12.27-13:09:56-14082254-model-F',
@@ -83,6 +84,26 @@ def main():
         # 'models/8_obs-anlauter.cip.ifi.lmu.de-20.12.29-04:35:15-69783370-model-F',
         # 'models/8_obs-anlauter.cip.ifi.lmu.de-20.12.29-05:39:42-26822818-model-F',
         # 'models/8_obs-anlauter.cip.ifi.lmu.de-20.12.29-06:36:43-49685912-model-F'
+
+        # Just testing gamma1
+        'models/8_obs_gamma_1-elbait.cip.ifi.lmu.de-21.01.17-15:51:52-26506063-model-F',
+        'models/8_obs_gamma_1-elbait.cip.ifi.lmu.de-21.01.17-15:51:52-29410872-model-F',
+        'models/8_obs_gamma_1-elbait.cip.ifi.lmu.de-21.01.17-15:51:52-77118631-model-F',
+        'models/8_obs_gamma_1-elbait.cip.ifi.lmu.de-21.01.17-15:51:52-77466133-model-F',
+        'models/8_obs_gamma_1-elbait.cip.ifi.lmu.de-21.01.17-15:51:52-98751293-model-F',
+        'models/8_obs_gamma_1-elbait.cip.ifi.lmu.de-21.01.17-15:51:53-14611810-model-F',
+        'models/8_obs_gamma_1-elbait.cip.ifi.lmu.de-21.01.17-15:51:53-40866220-model-F',
+        'models/8_obs_gamma_1-elbait.cip.ifi.lmu.de-21.01.17-15:51:53-79520919-model-F'
+
+        # # Just testing gamma2
+        # 'models/8_obs_gamma_2-feueropal.cip.ifi.lmu.de-21.01.17-15:51:56-24258791-model-F',
+        # 'models/8_obs_gamma_2-feueropal.cip.ifi.lmu.de-21.01.17-15:51:56-6886959-model-F',
+        # 'models/8_obs_gamma_2-feueropal.cip.ifi.lmu.de-21.01.17-15:51:57-35156220-model-F',
+        # 'models/8_obs_gamma_2-feueropal.cip.ifi.lmu.de-21.01.17-15:51:57-6822743-model-F',
+        # 'models/8_obs_gamma_2-feueropal.cip.ifi.lmu.de-21.01.17-15:51:57-85339846-model-F',
+        # 'models/8_obs_gamma_2-feueropal.cip.ifi.lmu.de-21.01.17-15:51:56-47635543-model-6',
+        # 'models/8_obs_gamma_2-feueropal.cip.ifi.lmu.de-21.01.17-15:51:56-65719673-model-6',
+        # 'models/8_obs_gamma_2-feueropal.cip.ifi.lmu.de-21.01.17-15:51:56-72131076-model-6'
     ]
     run(models)
 

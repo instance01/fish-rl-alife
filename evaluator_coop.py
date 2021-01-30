@@ -11,6 +11,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
 def load(id_, cfg_id, base_cfg_id, return_dict):
+    # TODO UNCOMMENT THIS AGAIN!
+    base_paths = ['models', 'modelsDec10-14', 'modelsDec15-20']
     base_paths = ['models']
     res = []
     for base_path in base_paths:
