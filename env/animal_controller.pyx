@@ -155,11 +155,14 @@ class TurnAwayFishController(Controller):
         if TurnAwayFishController.USE_TWO_SHARKS or TurnAwayFishController.USE_TWO_SHARK_HACK:
             distance_to_shark2 = shark_observation[3]
             angle_to_shark2 = shark_observation[4]
+            angle_to_shark2 = util.scale(angle_to_shark2, -1, 1, -np.pi, np.pi)
         if TurnAwayFishController.USE_THREE_SHARKS:
             distance_to_shark2 = shark_observation[3]
             angle_to_shark2 = shark_observation[4]
+            angle_to_shark2 = util.scale(angle_to_shark2, -1, 1, -np.pi, np.pi)
             distance_to_shark3 = shark_observation[6]
             angle_to_shark3 = shark_observation[7]
+            angle_to_shark3 = util.scale(angle_to_shark3, -1, 1, -np.pi, np.pi)
 
         distance_to_closest_fish = fish_observation[0]
         angle_to_closest_fish = fish_observation[1]
@@ -174,7 +177,7 @@ class TurnAwayFishController(Controller):
         current_vector = np.array(util.polar_to_cartesian(1.0, own_orientation))
         fish_force = calculate_repel_force(distance_to_closest_fish, angle_to_closest_fish)
         shark_force = calculate_repel_force(distance_to_shark, angle_to_shark)
-        if TurnAwayFishController.USE_TWO_SHARKS:
+        if TurnAwayFishController.USE_TWO_SHARKS or TurnAwayFishController.USE_TWO_SHARK_HACK:
             shark_force2 = calculate_repel_force(distance_to_shark2, angle_to_shark2)
         if TurnAwayFishController.USE_THREE_SHARKS:
             shark_force2 = calculate_repel_force(distance_to_shark2, angle_to_shark2)
@@ -193,8 +196,8 @@ class TurnAwayFishController(Controller):
             target_vector += .33 * shark_force2
             target_vector += .33 * shark_force3
         if TurnAwayFishController.USE_TWO_SHARK_HACK:
-            if abs(angle_to_shark - angle_to_shark2) < 0.1:
-                target_vector += calculate_repel_force(distance_to_shark, angle_to_shark + .5)
+            if abs(-1 * angle_to_shark - angle_to_shark2) < 0.1:
+                target_vector += calculate_repel_force(distance_to_shark, angle_to_shark + np.pi / 2)
         target_vector += 0.5 * fish_force
         target_vector += 0.5 * wall1_force + 0.3 * wall2_force
         angle = util.angle_of(target_vector)
