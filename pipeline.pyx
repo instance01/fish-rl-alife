@@ -334,6 +334,8 @@ class Experiment:
 
         if self.cfg['aquarium']['turnaway_fish_use_two_sharks_for_repel']:
             env.animal_controller.TurnAwayFishController.USE_TWO_SHARKS = True
+        if self.cfg['aquarium']['turnaway_fish_use_two_shark_hack']:
+            env.animal_controller.TurnAwayFishController.USE_TWO_SHARK_HACK = True
         if self.cfg['aquarium']['turnaway_fish_use_three_sharks_for_repel']:
             env.animal_controller.TurnAwayFishController.USE_THREE_SHARKS = True
         env.animal_controller.TurnAwayFishController.FISH_VIEW_DIST_RATIO = 10. / self.cfg['aquarium']['fish_view_distance']
@@ -633,6 +635,8 @@ class Experiment:
         Shark.INITIAL_SURVIVAL_TIME = initial_survival_time
         self.env.env.seed = int(np.random.random() * 1e9)
 
+        self.show_gui = True
+
         """Run an evaluation game."""
         obs = self.env.reset()
         i = 0
@@ -646,6 +650,7 @@ class Experiment:
                 self.env.env.render()
             rewards.append(reward)
             tot_rew += reward
+            self.env.render()
             if done:
                 break
         return rewards

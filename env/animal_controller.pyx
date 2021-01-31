@@ -134,6 +134,7 @@ class BoidFishController(Controller):
 class TurnAwayFishController(Controller):
     USE_TWO_SHARKS = False
     USE_THREE_SHARKS = False
+    USE_TWO_SHARK_HACK = False
     FISH_VIEW_DIST_RATIO = 1.0
 
     @staticmethod
@@ -151,7 +152,7 @@ class TurnAwayFishController(Controller):
         distance_to_shark = shark_observation[0]
         angle_to_shark = shark_observation[1]
         # TODO: Added by instance01
-        if TurnAwayFishController.USE_TWO_SHARKS:
+        if TurnAwayFishController.USE_TWO_SHARKS or TurnAwayFishController.USE_TWO_SHARK_HACK:
             distance_to_shark2 = shark_observation[3]
             angle_to_shark2 = shark_observation[4]
         if TurnAwayFishController.USE_THREE_SHARKS:
@@ -184,13 +185,16 @@ class TurnAwayFishController(Controller):
         # noise_force = np.array([random.uniform(-1, 1), random.uniform(-1, 1)])
 
         target_vector = current_vector + shark_force
-        if TurnAwayFishController.USE_TWO_SHARKS:
+        if TurnAwayFishController.USE_TWO_SHARKS or TurnAwayFishController.USE_TWO_SHARK_HACK:
             target_vector = current_vector + .5 * shark_force
             target_vector += .5 * shark_force2
         if TurnAwayFishController.USE_THREE_SHARKS:
             target_vector = current_vector + .33 * shark_force
             target_vector += .33 * shark_force2
             target_vector += .33 * shark_force3
+        if TurnAwayFishController.USE_TWO_SHARK_HACK:
+            if abs(angle_to_shark - angle_to_shark2) < 0.1:
+                target_vector += calculate_repel_force(distance_to_shark, angle_to_shark + .5)
         target_vector += 0.5 * fish_force
         target_vector += 0.5 * wall1_force + 0.3 * wall2_force
         angle = util.angle_of(target_vector)
