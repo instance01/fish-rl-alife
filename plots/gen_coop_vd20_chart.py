@@ -56,13 +56,15 @@ def _prep(data, prefix='i10'):
 
 base_path = '../pickles/'
 # with open(base_path + 'vd20_fast_coop.pickle', 'rb') as f:
-id_ = 'vd20'
-with open(base_path + 'vd20_coop.pickle', 'rb') as f:
-    i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
+id_ = 'vd35'
+# with open(base_path + 'vd20_coop.pickle', 'rb') as f:
+#     i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
 # with open(base_path + 'vd25_coop.pickle', 'rb') as f:
 #     i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
 # with open(base_path + 'vd30_coop.pickle', 'rb') as f:
 #     i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
+with open(base_path + 'vd35_coop.pickle', 'rb') as f:
+    i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
 
 
 print(i5_data)
