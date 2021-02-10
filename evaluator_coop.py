@@ -132,20 +132,71 @@ def main(id_):
     }
 
     cfg_ids_i5_vd20 = {
-        'i5_r4_s03': ['ma9_i5_p150_r4_s03_sp200_two_net_vd20', 'ma9_i5_p150_r4_s03_sp200_two_net_vd20'],
-        'i5_r4_s035': ['ma9_i5_p150_r4_s03_sp200_two_net_vd20', 'ma9_i5_p150_r4_s035_sp200_two_net_vd20'],
-        'i5_r4_s04': ['ma9_i5_p150_r4_s04_sp200_two_net_vd20', 'ma9_i5_p150_r4_s04_sp200_two_net_vd20'],
-        'i5_r4_s05': ['ma9_i5_p150_r4_s05_sp200_two_net_vd20', 'ma9_i5_p150_r4_s05_sp200_two_net_vd20'],
+        'i5_r4_s03': ['ma9_i5_p150_r4_s03_sp200_two_net_vd20_f', 'ma9_i5_p150_r4_s03_sp200_two_net_vd20_f'],
+        'i5_r4_s035': ['ma9_i5_p150_r4_s03_sp200_two_net_vd20_f', 'ma9_i5_p150_r4_s035_sp200_two_net_vd20_f'],
+        'i5_r4_s04': ['ma9_i5_p150_r4_s04_sp200_two_net_vd20_f', 'ma9_i5_p150_r4_s04_sp200_two_net_vd20_f'],
+        'i5_r4_s05': ['ma9_i5_p150_r4_s05_sp200_two_net_vd20_f', 'ma9_i5_p150_r4_s05_sp200_two_net_vd20_f'],
 
-        'i5_r6_s03': ['ma9_i5_p150_r6_s03_sp200_two_net_vd20', 'ma9_i5_p150_r6_s03_sp200_two_net_vd20'],
-        'i5_r6_s035': ['ma9_i5_p150_r6_s035_sp200_two_net_vd20', 'ma9_i5_p150_r6_s035_sp200_two_net_vd20'],
-        'i5_r6_s04': ['ma9_i5_p150_r6_s04_sp200_two_net_vd20', 'ma9_i5_p150_r6_s04_sp200_two_net_vd20'],
-        'i5_r6_s05': ['ma9_i5_p150_r6_s05_sp200_two_net_vd20', 'ma9_i5_p150_r6_s05_sp200_two_net_vd20'],
+        'i5_r6_s03': ['ma9_i5_p150_r6_s03_sp200_two_net_vd20_f', 'ma9_i5_p150_r6_s03_sp200_two_net_vd20_f'],
+        'i5_r6_s035': ['ma9_i5_p150_r6_s035_sp200_two_net_vd20_f', 'ma9_i5_p150_r6_s035_sp200_two_net_vd20_f'],
+        'i5_r6_s04': ['ma9_i5_p150_r6_s04_sp200_two_net_vd20_f', 'ma9_i5_p150_r6_s04_sp200_two_net_vd20_f'],
+        'i5_r6_s05': ['ma9_i5_p150_r6_s05_sp200_two_net_vd20_f', 'ma9_i5_p150_r6_s05_sp200_two_net_vd20_f'],
 
-        'i5_r10_s03': ['ma9_i5_p150_r10_s03_sp200_two_net_vd20', 'ma9_i5_p150_r10_s03_sp200_two_net_vd20'],
-        'i5_r10_s035': ['ma9_i5_p150_r10_s035_sp200_two_net_vd20', 'ma9_i5_p150_r10_s035_sp200_two_net_vd20'],
-        'i5_r10_s04': ['ma9_i5_p150_r10_s04_sp200_two_net_vd20', 'ma9_i5_p150_r10_s04_sp200_two_net_vd20'],
-        'i5_r10_s05': ['ma9_i5_p150_r10_s05_sp200_two_net_vd20', 'ma9_i5_p150_r10_s05_sp200_two_net_vd20']
+        'i5_r10_s03': ['ma9_i5_p150_r10_s03_sp200_two_net_vd20_f', 'ma9_i5_p150_r10_s03_sp200_two_net_vd20_f'],
+        'i5_r10_s035': ['ma9_i5_p150_r10_s035_sp200_two_net_vd20_f', 'ma9_i5_p150_r10_s035_sp200_two_net_vd20_f'],
+        'i5_r10_s04': ['ma9_i5_p150_r10_s04_sp200_two_net_vd20_f', 'ma9_i5_p150_r10_s04_sp200_two_net_vd20_f'],
+        'i5_r10_s05': ['ma9_i5_p150_r10_s05_sp200_two_net_vd20_f', 'ma9_i5_p150_r10_s05_sp200_two_net_vd20_f']
+    }
+
+    cfg_ids_i5_vd25 = {
+        'i5_r4_s03': ['ma9_i5_p150_r4_s03_sp200_two_net_vd25_f', 'ma9_i5_p150_r4_s03_sp200_two_net_vd25_f'],
+        'i5_r4_s035': ['ma9_i5_p150_r4_s03_sp200_two_net_vd25_f', 'ma9_i5_p150_r4_s035_sp200_two_net_vd25_f'],
+        'i5_r4_s04': ['ma9_i5_p150_r4_s04_sp200_two_net_vd25_f', 'ma9_i5_p150_r4_s04_sp200_two_net_vd25_f'],
+        'i5_r4_s05': ['ma9_i5_p150_r4_s05_sp200_two_net_vd25_f', 'ma9_i5_p150_r4_s05_sp200_two_net_vd25_f'],
+
+        'i5_r6_s03': ['ma9_i5_p150_r6_s03_sp200_two_net_vd25_f', 'ma9_i5_p150_r6_s03_sp200_two_net_vd25_f'],
+        'i5_r6_s035': ['ma9_i5_p150_r6_s035_sp200_two_net_vd25_f', 'ma9_i5_p150_r6_s035_sp200_two_net_vd25_f'],
+        'i5_r6_s04': ['ma9_i5_p150_r6_s04_sp200_two_net_vd25_f', 'ma9_i5_p150_r6_s04_sp200_two_net_vd25_f'],
+        'i5_r6_s05': ['ma9_i5_p150_r6_s05_sp200_two_net_vd25_f', 'ma9_i5_p150_r6_s05_sp200_two_net_vd25_f'],
+
+        'i5_r10_s03': ['ma9_i5_p150_r10_s03_sp200_two_net_vd25_f', 'ma9_i5_p150_r10_s03_sp200_two_net_vd25_f'],
+        'i5_r10_s035': ['ma9_i5_p150_r10_s035_sp200_two_net_vd25_f', 'ma9_i5_p150_r10_s035_sp200_two_net_vd25_f'],
+        'i5_r10_s04': ['ma9_i5_p150_r10_s04_sp200_two_net_vd25_f', 'ma9_i5_p150_r10_s04_sp200_two_net_vd25_f'],
+        'i5_r10_s05': ['ma9_i5_p150_r10_s05_sp200_two_net_vd25_f', 'ma9_i5_p150_r10_s05_sp200_two_net_vd25_f']
+    }
+
+    cfg_ids_i5_vd30 = {
+        'i5_r4_s03': ['ma9_i5_p150_r4_s03_sp200_two_net_vd30_f', 'ma9_i5_p150_r4_s03_sp200_two_net_vd30_f'],
+        'i5_r4_s035': ['ma9_i5_p150_r4_s03_sp200_two_net_vd30_f', 'ma9_i5_p150_r4_s035_sp200_two_net_vd30_f'],
+        'i5_r4_s04': ['ma9_i5_p150_r4_s04_sp200_two_net_vd30_f', 'ma9_i5_p150_r4_s04_sp200_two_net_vd30_f'],
+        'i5_r4_s05': ['ma9_i5_p150_r4_s05_sp200_two_net_vd30_f', 'ma9_i5_p150_r4_s05_sp200_two_net_vd30_f'],
+
+        'i5_r6_s03': ['ma9_i5_p150_r6_s03_sp200_two_net_vd30_f', 'ma9_i5_p150_r6_s03_sp200_two_net_vd30_f'],
+        'i5_r6_s035': ['ma9_i5_p150_r6_s035_sp200_two_net_vd30_f', 'ma9_i5_p150_r6_s035_sp200_two_net_vd30_f'],
+        'i5_r6_s04': ['ma9_i5_p150_r6_s04_sp200_two_net_vd30_f', 'ma9_i5_p150_r6_s04_sp200_two_net_vd30_f'],
+        'i5_r6_s05': ['ma9_i5_p150_r6_s05_sp200_two_net_vd30_f', 'ma9_i5_p150_r6_s05_sp200_two_net_vd30_f'],
+
+        'i5_r10_s03': ['ma9_i5_p150_r10_s03_sp200_two_net_vd30_f', 'ma9_i5_p150_r10_s03_sp200_two_net_vd30_f'],
+        'i5_r10_s035': ['ma9_i5_p150_r10_s035_sp200_two_net_vd30_f', 'ma9_i5_p150_r10_s035_sp200_two_net_vd30_f'],
+        'i5_r10_s04': ['ma9_i5_p150_r10_s04_sp200_two_net_vd30_f', 'ma9_i5_p150_r10_s04_sp200_two_net_vd30_f'],
+        'i5_r10_s05': ['ma9_i5_p150_r10_s05_sp200_two_net_vd30_f', 'ma9_i5_p150_r10_s05_sp200_two_net_vd30_f']
+    }
+
+    cfg_ids_i5_vd35 = {
+        'i5_r4_s03': ['ma9_i5_p150_r4_s03_sp200_two_net_vd35_f', 'ma9_i5_p150_r4_s03_sp200_two_net_vd35_f'],
+        'i5_r4_s035': ['ma9_i5_p150_r4_s03_sp200_two_net_vd35_f', 'ma9_i5_p150_r4_s035_sp200_two_net_vd35_f'],
+        'i5_r4_s04': ['ma9_i5_p150_r4_s04_sp200_two_net_vd35_f', 'ma9_i5_p150_r4_s04_sp200_two_net_vd35_f'],
+        'i5_r4_s05': ['ma9_i5_p150_r4_s05_sp200_two_net_vd35_f', 'ma9_i5_p150_r4_s05_sp200_two_net_vd35_f'],
+
+        'i5_r6_s03': ['ma9_i5_p150_r6_s03_sp200_two_net_vd35_f', 'ma9_i5_p150_r6_s03_sp200_two_net_vd35_f'],
+        'i5_r6_s035': ['ma9_i5_p150_r6_s035_sp200_two_net_vd35_f', 'ma9_i5_p150_r6_s035_sp200_two_net_vd35_f'],
+        'i5_r6_s04': ['ma9_i5_p150_r6_s04_sp200_two_net_vd35_f', 'ma9_i5_p150_r6_s04_sp200_two_net_vd35_f'],
+        'i5_r6_s05': ['ma9_i5_p150_r6_s05_sp200_two_net_vd35_f', 'ma9_i5_p150_r6_s05_sp200_two_net_vd35_f'],
+
+        'i5_r10_s03': ['ma9_i5_p150_r10_s03_sp200_two_net_vd35_f', 'ma9_i5_p150_r10_s03_sp200_two_net_vd35_f'],
+        'i5_r10_s035': ['ma9_i5_p150_r10_s035_sp200_two_net_vd35_f', 'ma9_i5_p150_r10_s035_sp200_two_net_vd35_f'],
+        'i5_r10_s04': ['ma9_i5_p150_r10_s04_sp200_two_net_vd35_f', 'ma9_i5_p150_r10_s04_sp200_two_net_vd35_f'],
+        'i5_r10_s05': ['ma9_i5_p150_r10_s05_sp200_two_net_vd35_f', 'ma9_i5_p150_r10_s05_sp200_two_net_vd35_f']
     }
 
     kv = None
@@ -159,6 +210,12 @@ def main(id_):
         kv = cfg_ids_i10_stun
     elif id_ == 'vd20' or id_ == 'vd20_fast':
         kv = cfg_ids_i5_vd20
+    elif id_ == 'vd25':
+        kv = cfg_ids_i5_vd25
+    elif id_ == 'vd30':
+        kv = cfg_ids_i5_vd30
+    elif id_ == 'vd35':
+        kv = cfg_ids_i5_vd35
 
     # What the fuck. Pool doesn't work.
     # Didn't have the time to investigate so I went for the hacky solution.
