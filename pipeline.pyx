@@ -763,6 +763,10 @@ def main():
     #   - python3 main.py cfg_id det  -> Run deterministic shark algorithm.
     #   - python3 main.py cfg_id load runs/model1  -> Watch learnt model.
     #   - python3 main.py cfg_id continue runs/model1  -> Continue using pretrained model.
+    if len(sys.argv) < 2:
+        print('Error: Please run with a cfg_id: python3 main.py cfg_id')
+        return
+
     cfg_id = sys.argv[1]
 
     runs_folder = 'runs'
@@ -788,7 +792,7 @@ def main():
             for _ in range(3):
                 Experiment(cfg_id, runs_folder=runs_folder).train()
     else:
-        # Just do 3 runs. I can cancel whenever I want.
+        # Just do 2 runs. I can cancel whenever I want.
         # Use multi_scancel.sh to cancel multiple jobs in a range.
         print('DEPRECATED! USE SINGLE OR MULTI KEYWORD!')
         for _ in range(2):
