@@ -22,7 +22,7 @@ Using PPO.
 |main.py|Entry point.|
 |main\_ddpg.py|Out of date!|
 |network\_models.py|MLP (norm/batchnorm) neural network models for baselines PPO.|
-|pipeline.py|End to end training and evaluation of experiments from simulations.json.|
+|pipeline.py|End to end training and evaluation of experiments from simulations.json. The meat of the project.|
 |run\_profile.py|For running cProfile.|
 |show\_profile.py|For showing cProfile results.|
 |shark\_baselines.py|Contains code to run deterministic shark algorithm.|
@@ -40,7 +40,7 @@ It was simply a basically free 40% performance boost.
 ## Running
 
 1. Create a new experiment in simulations.json or re-use one. For instance, you could pick `ma9_i5_p150_r10_s05_sp200_two_net_vd35_f`.
-2. Run: python3 main.py `ma9_i5_p150_r10_s05_sp200_two_net_vd35_f` single
+2. Run: `python3 main.py ma9_i5_p150_r10_s05_sp200_two_net_vd35_f single`
 
 Models are saved in `models/` and runs (for checking them in Tensorboard, e.g. `tensorboard --logdir runs`) are saved in `runs/`.
 
