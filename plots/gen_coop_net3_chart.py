@@ -40,15 +40,28 @@ def _prep(data, failure=False, prefix='i10'):
     print('##', prefix)
     print(ret)
 
+    # Note: We also have data for s025.
+
+    # data = [
+    #     [ret['r4_s025'], ret['r4_s03'], ret['r4_s035'], ret['r4_s04'], ret['r4_s05']],
+    #     [ret['r6_s025'], ret['r6_s03'], ret['r6_s035'], ret['r6_s04'], ret['r6_s05']],
+    #     [ret['r10_s025'], ret['r10_s03'], ret['r10_s035'], ret['r10_s04'], ret['r10_s05']]
+    # ]
+    # label_data = [
+    #     [ret_labels['r4_s025'], ret_labels['r4_s03'], ret_labels['r4_s035'], ret_labels['r4_s04'], ret_labels['r4_s05']],
+    #     [ret_labels['r6_s025'], ret_labels['r6_s03'], ret_labels['r6_s035'], ret_labels['r6_s04'], ret_labels['r6_s05']],
+    #     [ret_labels['r10_s025'], ret_labels['r10_s03'], ret_labels['r10_s035'], ret_labels['r10_s04'], ret_labels['r10_s05']]
+    # ]
+
     data = [
-        [ret['r4_s025'], ret['r4_s03'], ret['r4_s035'], ret['r4_s04'], ret['r4_s05']],
-        [ret['r6_s025'], ret['r6_s03'], ret['r6_s035'], ret['r6_s04'], ret['r6_s05']],
-        [ret['r10_s025'], ret['r10_s03'], ret['r10_s035'], ret['r10_s04'], ret['r10_s05']]
+        [ret['r4_s03'], ret['r4_s035'], ret['r4_s04'], ret['r4_s05']],
+        [ret['r6_s03'], ret['r6_s035'], ret['r6_s04'], ret['r6_s05']],
+        [ret['r10_s03'], ret['r10_s035'], ret['r10_s04'], ret['r10_s05']]
     ]
     label_data = [
-        [ret_labels['r4_s025'], ret_labels['r4_s03'], ret_labels['r4_s035'], ret_labels['r4_s04'], ret_labels['r4_s05']],
-        [ret_labels['r6_s025'], ret_labels['r6_s03'], ret_labels['r6_s035'], ret_labels['r6_s04'], ret_labels['r6_s05']],
-        [ret_labels['r10_s025'], ret_labels['r10_s03'], ret_labels['r10_s035'], ret_labels['r10_s04'], ret_labels['r10_s05']]
+        [ret_labels['r4_s03'], ret_labels['r4_s035'], ret_labels['r4_s04'], ret_labels['r4_s05']],
+        [ret_labels['r6_s03'], ret_labels['r6_s035'], ret_labels['r6_s04'], ret_labels['r6_s05']],
+        [ret_labels['r10_s03'], ret_labels['r10_s035'], ret_labels['r10_s04'], ret_labels['r10_s05']]
     ]
 
     return data, label_data
@@ -83,7 +96,7 @@ def doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_da
     print(i5_data)
 
     y_labels = ['4', '6', '10']
-    x_labels = ['.025', '.03', '.035', '.04', '.05']
+    x_labels = ['.03', '.035', '.04', '.05']
 
     cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
     fig, (ax, ax2, ax3, ax4, ax5) = plt.subplots(1, 5, figsize=(14.5, 2.0), constrained_layout=True)
@@ -145,7 +158,7 @@ def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3,
     print(i5_data)
 
     y_labels = ['4', '6', '10']
-    x_labels = ['.025', '.03', '.035', '.04', '.05']
+    x_labels = ['.03', '.035', '.04', '.05']
 
     cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
 
