@@ -41,3 +41,5 @@ runs_tars/
 *.blg
 *.log
 ../aquarium_experiments.egg-info/
+old/
+paper/
