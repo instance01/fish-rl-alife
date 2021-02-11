@@ -1,23 +1,57 @@
 
-MARL on Aquarium environment --- can sharks learn to cooperate? Or is the tragedy of the commons unavoidable?
+MARL on predator-prey aquarium environment --- can sharks learn to cooperate? Or is the tragedy of the commons unavoidable?
 
 Using PPO.
 
-![PPO](plots/plot.png)
+## Project Structure
 
-This is a Cython project, that's why there's `.pyx` files everywhere. They still work with normal Python when executed directly (e.g. `python3 config.pyx`), because I didn't go deep into cythonization due to time constraints. It was simply a basically free 40% performance boost.
+|File/Folder|Purpose|
+|----|-------|
+|contrib/|Helper bash files for the compute pool.|
+|env/|Contains the aquarium environment with an API in accordance to OpenAI gym.|
+|guide/|Contains a small guide to the environment.|
+|models/|Trained models are saved here.|
+|paper/|Configuration (json) handling|
+|pickles/|Data created by evaluators.|
+|plots/|Plots for the collected data.|
+|profiles/|cProfile files used when I sped up the pipeline by using Cython.|
+|runs/|Contains runs (for watching in Tensorboard).|
+|build.sh|Builds the Cython project.|
+|config.pyx|Handles simulations.json. Can be executed directly to get all keys in simulations.json.|
+|custom\_logger.pyx|Logging KPIs to Tensorboard.|
+|main.py|Entry point.|
+|main\_ddpg.py|Out of date!|
+|network\_models.py|MLP (norm/batchnorm) neural network models for baselines PPO.|
+|pipeline.py|End to end training and evaluation of experiments from simulations.json.|
+|run\_profile.py|For running cProfile.|
+|show\_profile.py|For showing cProfile results.|
+|shark\_baselines.py|Contains code to run deterministic shark algorithm.|
+|simulations.json|All experiments and configurations.|
 
-## Debugging
+Note. This is a Cython project, which is why there are `.pyx` files everywhere.
+They still work with normal Python when executed directly (e.g. `python3 config.pyx`), because I didn't go deep into cythonization due to time constraints.
+It was simply a basically free 40% performance boost.
 
-python3 -m pdb -c continue main.py
+## Installation and building
+
+1. Install all packages in `requirements.txt`: `pip3 install -r requirements.txt`
+2. Run `build.sh`. This requires `g++`!
+
+## Running
+
+1. Create a new experiment in simulations.json or re-use one. For instance, you could pick `ma9_i5_p150_r10_s05_sp200_two_net_vd35_f`.
+2. Run: python3 main.py `ma9_i5_p150_r10_s05_sp200_two_net_vd35_f` single
+
+Models are saved in `models/` and runs (for checking them in Tensorboard, e.g. `tensorboard --logdir runs`) are saved in `runs/`.
+
+To load and watch a model, run for example: `python3 main.py ma8_obs load models/ma8_obs-chamb.cip.ifi.lmu.de-20.12.29-20:02:12-83775101-model-F`
+You can change the cfg\_id to run the model in (ma8\_obs) and you can change the model to run.
 
 ## Results
 
-Best so far: 13\_3 and ma3 (20-11-27\_07:56:47-99-inn.cip.ifi.lmu.de-ma3)
+Accompanying blog post can be found [here](https://blog.xa0.de/post/Emergent-Behaviour-in-Multi-Agent-Reinforcement-Learning%20---%20Independent-PPO/).
 
-Of course ma3 had the sharks not die. So they cooperated because they can't die and cooperating increases reward.
-
-![Sterberisiko vs Herding rate](plots/sterberisiko_vs_herding_rate_3_evals_per_model.png)
+TODO: Add a few pictures here.
 
 ## Citing
 
