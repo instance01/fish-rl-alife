@@ -7,6 +7,7 @@ from multiprocessing import Process
 import numpy as np
 import scipy.stats as st
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+sys.path.append('..')
 from pipeline import Experiment
 
 
@@ -17,8 +18,8 @@ def load(id_, cfg_id, base_cfg_id, return_dict):
     res = []
     for base_path in base_paths:
         ids_ = [
-            base_path + "/%s-*-F-m1",
-            base_path + "/%s-*-6-m1"
+            '../' + base_path + "/%s-*-F-m1",
+            '../' + base_path + "/%s-*-6-m1"
         ]
         for id__ in ids_:
             print(id__ % cfg_id)
@@ -30,7 +31,6 @@ def load(id_, cfg_id, base_cfg_id, return_dict):
     coop_ratios = []
     for fname in res:
         fname = fname[:-3]
-        # print(fname)
         for _ in range(20):
             exp = Experiment(base_cfg_id, show_gui=False, dump_cfg=False)
             exp.load_eval(fname, steps=3000, initial_survival_time=3000)
@@ -39,9 +39,6 @@ def load(id_, cfg_id, base_cfg_id, return_dict):
                 coop_ratios.append(exp.env.coop_kills / exp.env.dead_fishes)
             else:
                 print('####### NO dead fishes! #######')
-                # TODO DUBIOUS! Should we maybe add a [0] if there's no dead fishes?
-                # lets try.
-                # coop_ratios.append(0)
 
     if coop_ratios:
         ci = st.t.interval(0.95, len(coop_ratios)-1, loc=np.mean(coop_ratios), scale=st.sem(coop_ratios))
@@ -176,8 +173,9 @@ def main(id_):
 
     print(names)
     print(values)
-    print('pickles/' + id_ + '_coop_starve.pickle')
-    with open('pickles/' + id_ + '_coop_starve.pickle', 'wb+') as f:
+    fname = '../pickles/' + id_ + '_coop_starve.pickle'
+    print(fname)
+    with open(fname, 'wb+') as f:
         pickle.dump((names, values), f)
 
 

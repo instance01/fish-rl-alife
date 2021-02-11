@@ -4,9 +4,8 @@ import multiprocessing
 from multiprocessing import Process
 import numpy as np
 import scipy.stats as st
-
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-
+sys.path.append('..')
 from pipeline import Experiment
 
 
@@ -59,16 +58,16 @@ def run(fnames):
 
 def main():
     models = [
-        'models/8_obs-smaragd.cip.ifi.lmu.de-20.12.26-15:47:34-21372910-model-6',
-        'models/8_obs-opal.cip.ifi.lmu.de-20.12.26-15:48:08-42810204-model-6',
-        'models/8_obs-opal.cip.ifi.lmu.de-20.12.26-15:48:05-64795473-model-6',
-        'models/8_obs-opal.cip.ifi.lmu.de-20.12.26-15:48:05-30316607-model-6',
-        'models/8_obs-opal.cip.ifi.lmu.de-20.12.26-15:48:05-26456983-model-6',
-        'models/8_obs-jachen.cip.ifi.lmu.de-20.12.26-15:44:37-70807588-model-F',
-        'models/8_obs-jachen.cip.ifi.lmu.de-20.12.26-15:44:33-59934980-model-F',
-        'models/8_obs-itz.cip.ifi.lmu.de-20.12.26-15:44:33-57979089-model-F',
-        'models/8_obs-itz.cip.ifi.lmu.de-20.12.26-15:44:29-47874541-model-F',
-        'models/8_obs-anlauter.cip.ifi.lmu.de-20.12.27-13:09:56-32890563-model-F'
+        '../models/8_obs-smaragd.cip.ifi.lmu.de-20.12.26-15:47:34-21372910-model-6',
+        '../models/8_obs-opal.cip.ifi.lmu.de-20.12.26-15:48:08-42810204-model-6',
+        '../models/8_obs-opal.cip.ifi.lmu.de-20.12.26-15:48:05-64795473-model-6',
+        '../models/8_obs-opal.cip.ifi.lmu.de-20.12.26-15:48:05-30316607-model-6',
+        '../models/8_obs-opal.cip.ifi.lmu.de-20.12.26-15:48:05-26456983-model-6',
+        '../models/8_obs-jachen.cip.ifi.lmu.de-20.12.26-15:44:37-70807588-model-F',
+        '../models/8_obs-jachen.cip.ifi.lmu.de-20.12.26-15:44:33-59934980-model-F',
+        '../models/8_obs-itz.cip.ifi.lmu.de-20.12.26-15:44:33-57979089-model-F',
+        '../models/8_obs-itz.cip.ifi.lmu.de-20.12.26-15:44:29-47874541-model-F',
+        '../models/8_obs-anlauter.cip.ifi.lmu.de-20.12.27-13:09:56-32890563-model-F'
     ]
     run(models)
 

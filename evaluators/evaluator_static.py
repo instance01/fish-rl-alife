@@ -1,9 +1,12 @@
+import sys
 import os
 import multiprocessing
 from multiprocessing import Process
 import numpy as np
 import scipy.stats as st
+sys.path.append('..')
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+from pipeline import Experiment
 
 
 MAX_STEPS = 1000
@@ -15,7 +18,6 @@ BASE_CFG = '8_obs_rand_sp200'
 
 
 def load(scenario, return_dict, wait):
-    from pipeline import Experiment
     dead_fishes = []
     last_pops = []
     tot_rewards = []

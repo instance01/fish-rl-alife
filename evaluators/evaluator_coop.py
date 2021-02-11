@@ -6,21 +6,21 @@ import multiprocessing
 from multiprocessing import Process
 import numpy as np
 import scipy.stats as st
-from pipeline import Experiment
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+sys.path.append('..')
+from pipeline import Experiment
 
 
 def load(id_, cfg_id, base_cfg_id, return_dict):
-    # TODO UNCOMMENT THIS AGAIN!
     base_paths = ['models', 'modelsDec10-14', 'modelsDec15-20']
     base_paths = ['models']
     res = []
     for base_path in base_paths:
         ids_ = [
-            base_path + "/%s-*-F-m1",
-            base_path + "/%s_sp200-*-F-m1",
-            base_path + "/%s-*-6-m1",
-            base_path + "/%s_sp200-*-6-m1"
+            '../' + base_path + "/%s-*-F-m1",
+            '../' + base_path + "/%s_sp200-*-F-m1",
+            '../' + base_path + "/%s-*-6-m1",
+            '../' + base_path + "/%s_sp200-*-6-m1"
         ]
         for id__ in ids_:
             print(id__ % cfg_id)
@@ -45,7 +45,6 @@ def load(id_, cfg_id, base_cfg_id, return_dict):
                     failures += 1
                     print('#### NO dead fishes! ####')
                 total += 1
-                # TODO DUBIOUS! Should we maybe add a [0] if there's no dead fishes?
         except Exception as ex:
             print('wtf.', ex)
             return_dict['fails'] += 1
@@ -243,8 +242,9 @@ def main(id_):
     print('TOTAL EXCEPTIONS', return_dict['fails'])
     print(names)
     print(values)
-    print('pickles/' + id_ + '_coop.pickle')
-    with open('pickles/' + id_ + '_coop.pickle', 'wb+') as f:
+    fname = '../pickles/' + id_ + '_coop.pickle'
+    print(fname)
+    with open(fname, 'wb+') as f:
         pickle.dump((names, values), f)
 
 

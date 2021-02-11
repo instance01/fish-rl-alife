@@ -4,6 +4,7 @@ import pickle
 import multiprocessing
 from multiprocessing import Process
 from collections import OrderedDict
+sys.path.append('..')
 from pipeline import Experiment
 
 
@@ -16,11 +17,10 @@ def load(id_, cfg_id, return_dict):
     res = []
     two_net = 'two_net' in cfg_id
     for base_path in base_paths:
-        id__ = base_path + "/%s-*-F"
+        id__ = '../' + base_path + "/%s-*-F"
         if two_net:
-            id__ = base_path + "/%s-*-F-m1"
+            id__ = '../' + base_path + "/%s-*-F-m1"
         res.extend(list(glob.glob(id__ % cfg_id)))
-    # print(res)
     counter_coop = 0.
     counter_fail = 0.
     counter_greedy = 0.
@@ -45,7 +45,7 @@ def load(id_, cfg_id, return_dict):
             # print(exp.env.dead_fishes)
 
         total = counter_coop + counter_greedy + counter_fail
-        print('c:%d' %counter_coop, 'f:%d' % counter_fail, 'g:%d' % counter_greedy, 't:%d' % total)
+        print('c:%d' % counter_coop, 'f:%d' % counter_fail, 'g:%d' % counter_greedy, 't:%d' % total)
 
     print('coop', counter_coop / total)
     print('greedy', counter_greedy / total)
@@ -146,8 +146,9 @@ def main(id_):
     print(values)
     if two_net:
         id_ += '_two_net'
-    print('pickles/' + id_ + '_herding_sp100.pickle')
-    with open('pickles/' + id_ + '_herding_sp100.pickle', 'wb+') as f:
+    fname = '../pickles/' + id_ + '_herding_sp100.pickle'
+    print(fname)
+    with open(fname, 'wb+') as f:
         pickle.dump((names, values), f)
 
 

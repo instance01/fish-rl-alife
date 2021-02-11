@@ -1,11 +1,11 @@
+import sys
 import os
 import multiprocessing
 from multiprocessing import Process
 import numpy as np
 import scipy.stats as st
-
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-
+sys.path.append('..')
 from pipeline import Experiment
 
 
@@ -122,7 +122,6 @@ def main():
         # 'models/8_obs_10obs_4-danburit.cip.ifi.lmu.de-21.01.14-18:08:10-63863466-model-5',
         # 'models/8_obs_10obs_4-danburit.cip.ifi.lmu.de-21.01.14-18:08:11-50013430-model-5'
 
-
         # # TODO BEST SO FAR
         # 'models/8_obs_swarm_6-heliodor.cip.ifi.lmu.de-21.01.15-19:26:21-2907918-model-4',
         # 'models/8_obs_swarm_6-heliodor.cip.ifi.lmu.de-21.01.15-19:26:21-33770853-model-4',
@@ -142,14 +141,14 @@ def main():
 
         # TODO BEST ! 33+7 ~= 30! log_8567.log
         # Same as above but with 4k model and not 3k model.
-        'models/8_obs_swarm_7-leucit.cip.ifi.lmu.de-21.01.16-08:03:01-127351-model-4',
-        'models/8_obs_swarm_7-leucit.cip.ifi.lmu.de-21.01.16-08:03:01-22008984-model-4',
-        'models/8_obs_swarm_7-leucit.cip.ifi.lmu.de-21.01.16-08:03:01-33111507-model-4',
-        'models/8_obs_swarm_7-leucit.cip.ifi.lmu.de-21.01.16-08:03:01-71672721-model-4',
-        'models/8_obs_swarm_7-leucit.cip.ifi.lmu.de-21.01.16-08:03:01-76676435-model-4',
-        'models/8_obs_swarm_7-leucit.cip.ifi.lmu.de-21.01.16-08:03:01-76689731-model-4',
-        'models/8_obs_swarm_7-leucit.cip.ifi.lmu.de-21.01.16-08:03:01-87702858-model-4',
-        'models/8_obs_swarm_7-leucit.cip.ifi.lmu.de-21.01.16-08:03:01-96924183-model-4'
+        '../models/8_obs_swarm_7-leucit.cip.ifi.lmu.de-21.01.16-08:03:01-127351-model-4',
+        '../models/8_obs_swarm_7-leucit.cip.ifi.lmu.de-21.01.16-08:03:01-22008984-model-4',
+        '../models/8_obs_swarm_7-leucit.cip.ifi.lmu.de-21.01.16-08:03:01-33111507-model-4',
+        '../models/8_obs_swarm_7-leucit.cip.ifi.lmu.de-21.01.16-08:03:01-71672721-model-4',
+        '../models/8_obs_swarm_7-leucit.cip.ifi.lmu.de-21.01.16-08:03:01-76676435-model-4',
+        '../models/8_obs_swarm_7-leucit.cip.ifi.lmu.de-21.01.16-08:03:01-76689731-model-4',
+        '../models/8_obs_swarm_7-leucit.cip.ifi.lmu.de-21.01.16-08:03:01-87702858-model-4',
+        '../models/8_obs_swarm_7-leucit.cip.ifi.lmu.de-21.01.16-08:03:01-96924183-model-4'
 
     ]
     print('PPO')

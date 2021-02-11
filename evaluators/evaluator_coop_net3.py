@@ -7,6 +7,7 @@ from multiprocessing import Process
 import numpy as np
 import scipy.stats as st
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+sys.path.append('..')
 from pipeline import Experiment
 
 
@@ -24,16 +25,14 @@ def load(id_, cfg_id, base_cfg_id, return_dict, use_full, shared):
     res = []
     for base_path in base_paths:
         ids_ = [
-            base_path + "/%s-*-F" + suffix,
-            base_path + "/%s-*-6" + suffix
+            '../' + base_path + "/%s-*-F" + suffix,
+            '../' + base_path + "/%s-*-6" + suffix
         ]
         # print(ids_)
         for id__ in ids_:
             print(id__ % cfg_id)
             res.extend(list(glob.glob(id__ % cfg_id)))
-    # print('####################')
     print('Now doing', id_)
-    # print(res)
 
     dead_fishes = []
     coop_ratios = []
@@ -41,7 +40,6 @@ def load(id_, cfg_id, base_cfg_id, return_dict, use_full, shared):
     for fname in res:
         if not shared:
             fname = fname[:-3]
-        # print(fname)
         for _ in range(10):
             exp = Experiment(base_cfg_id, show_gui=False, dump_cfg=False)
             exp.load_eval(fname, steps=3000, initial_survival_time=3000)
@@ -54,10 +52,6 @@ def load(id_, cfg_id, base_cfg_id, return_dict, use_full, shared):
                 failures.append(0.)
             else:
                 failures.append(1.)
-                # print('####### NO dead fishes! #######')
-                # TODO DUBIOUS! Should we maybe add a [0] if there's no dead fishes?
-                # lets try.
-                # coop_ratios.append(0)
 
     len_ = len(coop_ratios)
     coop_ratios_old = coop_ratios[:]
@@ -220,7 +214,7 @@ def main(id_):
     #     names_old.extend(names)
     #     valu
 
-    fname = 'pickles/' + id_ + '_coop_net3'
+    fname = '../pickles/' + id_ + '_coop_net3'
     if not use_full:
         fname += '_normal_coop'
     if shared:

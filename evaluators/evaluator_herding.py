@@ -4,6 +4,7 @@ import pickle
 import multiprocessing
 from multiprocessing import Process
 from collections import OrderedDict
+sys.path.append('..')
 from pipeline import Experiment
 
 
@@ -15,9 +16,9 @@ def load(id_, cfg_id, return_dict):
     res = []
     two_net = 'two_net' in cfg_id
     for base_path in base_paths:
-        id__ = base_path + "/%s-*-F"
+        id__ = '../' + base_path + "/%s-*-F"
         if two_net:
-            id__ = base_path + "/%s-*-F-m1"
+            id__ = '../' + base_path + "/%s-*-F-m1"
         res.extend(list(glob.glob(id__ % cfg_id)))
     # print(res)
     counter_coop = 0.
@@ -193,8 +194,9 @@ def main(id_):
     print(values)
     if two_net:
         id_ += '_two_net'
-    print('pickles/' + id_ + '_herding.pickle')
-    with open('pickles/' + id_ + '_herding.pickle', 'wb+') as f:
+    fname = '../pickles/' + id_ + '_herding.pickle'
+    print(fname)
+    with open(fname, 'wb+') as f:
         pickle.dump((names, values), f)
 
 
