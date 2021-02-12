@@ -528,15 +528,6 @@ class Experiment:
 
         return self.env.model
 
-    # def load_full(self, model_filename):
-    #     # TODO: Honestly the `load` function further below sucks.
-    #     # This one I like more.
-    #     loaded_model = tf.saved_model.load(model_filename)
-    #     model = self.create_model_obj()
-    #     model.train_model.trainable_variables = loaded_model.train_model.trainable_variables
-    #     # import pdb; pdb.set_trace()
-    #     return self.env.model
-
     def create_model_obj(self):
         network = self.cfg['ppo']['network']
         ent_coef = self.cfg['ppo']['ent_coef']
@@ -571,7 +562,6 @@ class Experiment:
         if len(model_filename) <= 10:
             # We got an id, not a full filename.
             base_path = 'models/'
-            # filenames = glob.glob(base_path + '*%s*-F*' % model_filename)
             filenames = glob.glob(base_path + '*-%s-*' % model_filename)
             if not filenames:
                 raise Exception('Id %s not found' % model_filename)
@@ -618,7 +608,7 @@ class Experiment:
         while not self.env.env.is_finished:
             i += 1
             action = model_inference(model, obs)
-            obs, reward, done, info = self.env.step(action, 'm1')
+            _, reward, done, _ = self.env.step(action, 'm1')
             if self.show_gui:
                 self.env.env.render()
             rewards.append(reward)
@@ -631,13 +621,13 @@ class Experiment:
         return rewards
 
     def evaluate_static(self, steps=1000, initial_survival_time=3000):
+        """Run an evaluation game using static algorithm."""
         self.env.env.max_steps = steps
         Shark.INITIAL_SURVIVAL_TIME = initial_survival_time
         self.env.env.seed = int(np.random.random() * 1e9)
 
         self.show_gui = True
 
-        """Run an evaluation game."""
         obs = self.env.reset()
         i = 0
         rewards = []
@@ -645,7 +635,7 @@ class Experiment:
         while not self.env.env.is_finished:
             i += 1
             action = DShark.get_action(**self.env.prepare_observation_for_controller(obs))
-            obs, reward, done, info = self.env.step([action], 'm1')
+            _, reward, done, _ = self.env.step([action], 'm1')
             if self.show_gui:
                 self.env.env.render()
             rewards.append(reward)
@@ -656,11 +646,11 @@ class Experiment:
         return rewards
 
     def evaluate_static_wait(self, steps=1000, initial_survival_time=3000):
+        """Run an evaluation game using static-wait algorithm.."""
         self.env.env.max_steps = steps
         Shark.INITIAL_SURVIVAL_TIME = initial_survival_time
         self.env.env.seed = int(np.random.random() * 1e9)
 
-        """Run an evaluation game."""
         obs = self.env.reset()
         i = 0
         rewards = []
@@ -671,7 +661,7 @@ class Experiment:
                 action = (0., 0., False)
             else:
                 action = DShark.get_action(**self.env.prepare_observation_for_controller(obs))
-            obs, reward, done, info = self.env.step([action], 'm1')
+            _, reward, done, _ = self.env.step([action], 'm1')
             if self.show_gui:
                 self.env.env.render()
             rewards.append(reward)
@@ -689,9 +679,7 @@ class Experiment:
         self.tb_logger.log_summary(self.env, rewards, n_episode, prefix='Eval')
 
     def perturb_weights(self):
-        # vars = self.env.model.train_model.trainable_variables
-        vars = []
-        vars.extend(self.env.model.train_model.trainable_variables)
+        vars = self.env.model.train_model.trainable_variables[:]
         for var in vars:
             noise = np.random.normal(scale=.001, size=var.shape)
             var.assign_add(noise)

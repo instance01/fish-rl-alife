@@ -46,7 +46,6 @@ class Logger:
             tf.summary.scalar(prefix + '/Last_Fish_Population', fish_pop[-1], n_episode)
             tf.summary.scalar(prefix + '/Last_Shark_Population', shark_pop[-1], n_episode)
             tf.summary.scalar(prefix + '/Coop_Kills', env.coop_kills, n_episode)
-            # print('fc', env.full_coop_kills)
             if env.dead_fishes > 0:
                 coop_kills_ratio = env.coop_kills / env.dead_fishes
                 full_coop_kills_ratio = env.full_coop_kills / env.dead_fishes
@@ -57,7 +56,7 @@ class Logger:
             tf.summary.scalar(prefix + '/Full_Coop_Kills_Ratio', full_coop_kills_ratio, n_episode)
             tf.summary.scalar(prefix + '/Stuns', env.n_stuns, n_episode)
             tf.summary.histogram(prefix + '/Last_Fish_Population_H', fish_pop, n_episode)
-            # TODO: January 10 - Got rid of shark pop histogram. Fuck that.
+            # TODO: January 10 - Got rid of shark pop histogram.
             # tf.summary.histogram(prefix + '/Last_Shark_Population_H', shark_pop, n_episode)
             tf.summary.histogram(prefix + '/Shark_Speed_H', env.shark_speed_history, n_episode)
             # msgpack is nice but whatever, let's disable this. We need speed.
@@ -67,7 +66,7 @@ class Logger:
                 name = prefix + '/Sharks/Shark%d_Tot_Reward' % i
                 tf.summary.scalar(name, tot_reward, n_episode)
 
-            # TODO: January 10 - Got rid of distances. Fuck that.
+            # TODO: January 10 - Got rid of distances.
             # # Let's not keep distances at evaluation phase..
             # if prefix != 'Eval':
             #     for (s1, s2) in combinations(list(env.shark_tot_reward.keys()), 2):
@@ -88,14 +87,13 @@ class Logger:
             tf.summary.scalar(k, v, step)
 
     def log_file(self, key, arr):
-        # TODO Here we'll just log to a file for later parsing for matplotlib
-        # or pgfplots. E.g. with matplotlib just use meshgrid (see axiros wiki)
+        # Here I just log to a file for later parsing for matplotlib or
+        # pgfplots. E.g. with matplotlib just use meshgrid (see axiros wiki).
         # Since I don't know how PPO runs environments in parallel, let's make
         # this thread safe in general.
         with lock:
             self.custom_metrics[key].append(arr)
             with open(self.custom_file, 'wb+') as f:
-                # pickle.dump(self.custom_metrics, f, protocol=3)
                 packed = msgpack.packb(self.custom_metrics)
                 f.write(packed)
 

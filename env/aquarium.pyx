@@ -185,11 +185,8 @@ class Aquarium:
         return self
 
     def select_shark_types(self, shark_agents=0):
-        # TODO: Update the docstring below.
-        """Derzeit gibt es not keine Möglichkeit, statische und normale Agent zu kombinieren
-           Das kommt noch"""
-        #self.shark_types['RandomShark'] = Random_Shark
-        #self.shark_types['DefaultShark'] = Default_Shark
+        # self.shark_types['RandomShark'] = Random_Shark
+        # self.shark_types['DefaultShark'] = Default_Shark
         self.shark_types['shark_agents'] = shark_agents
         return self
 
@@ -506,9 +503,6 @@ class Aquarium:
                 if speed < 0:
                     speed *= .01
                     angle *= .01
-                    # TODO REMOVE AGAIN
-                    # speed *= .5
-                    # angle *= .5
 
                 if shark.stun_steps > 0:
                     shark.stun_steps -= 1
