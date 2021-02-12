@@ -57,17 +57,25 @@ The paper in a short summary:
 
 1. We find emergent herding. PPO learning is in three stages: First stage where sharks are not able to catch fish effectively yet, second stage where they are extremely good at it and destroy the population, third stage where they learn to restrain themselves and thus become sustainable.
 
-![Herding over time](.github/herding.png)
+<p align="center">
+<img alt="Herding learnt over time" src=".github/herding.png" width="450">
+</p>
 
 2. We find that herding emerges much more in certain scenarios --- certain starving pressure and few starting fishes (thus inducing a sustainability scenario). Figure below shows from left to right the scenarios 10, 5 and 2 initial fishes.
 
-![Herding rate](.github/herding2.png)
+<p align="center">
+<img alt="Herding rate" src=".github/herding2.png" width="850">
+</p>
 
 3. We find that cooperation also emerges, due to environmental influences --- number of initial fishes (from left to right in figure below), maximum shark speed (lower increases hunting difficulty), kill zone radius and view distance.
 
-![Avg cooperation rate](.github/coop.png)
+<p align="center">
+<img alt="Avg cooperation rate" src=".github/coop.png" width="900">
+</p>
 
-![Avg cooperation rate](.github/coop2.png)
+<p align="center">
+<img alt="Avg cooperation rate" src=".github/coop2.png" width="550">
+</p>
 
 For more details check out the paper! TODO: Link it here.
 
