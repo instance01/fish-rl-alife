@@ -1,4 +1,6 @@
 
+![Environment](.github/coop_movie_frames2.png)
+
 MARL on predator-prey aquarium environment --- can sharks learn to cooperate? Or is the tragedy of the commons unavoidable?
 
 Using PPO.
@@ -9,6 +11,7 @@ Using PPO.
 |----|-------|
 |contrib/|Helper bash files for the compute pool.|
 |env/|Contains the aquarium environment with an API in accordance to OpenAI gym.|
+|evaluators/|Evaluator scripts for each figure.|
 |guide/|Contains a small guide to the environment.|
 |models/|Trained models are saved here.|
 |paper/|Configuration (json) handling|
@@ -50,8 +53,23 @@ You can change the cfg\_id to run the model in (ma8\_obs) and you can change the
 ## Results
 
 Accompanying blog post can be found [here](https://blog.xa0.de/post/Emergent-Behaviour-in-Multi-Agent-Reinforcement-Learning%20---%20Independent-PPO/).
+The paper in a short summary:
 
-TODO: Add a few pictures here.
+1. We find emergent herding. PPO learning is in three stages: First stage where sharks are not able to catch fish effectively yet, second stage where they are extremely good at it and destroy the population, third stage where they learn to restrain themselves and thus become sustainable.
+
+![Herding over time](.github/herding.png)
+
+2. We find that herding emerges much more in certain scenarios --- certain starving pressure and few starting fishes (thus inducing a sustainability scenario). Figure below shows from left to right the scenarios 10, 5 and 2 initial fishes.
+
+![Herding rate](.github/herding2.png)
+
+3. We find that cooperation also emerges, due to environmental influences --- number of initial fishes (from left to right in figure below), maximum shark speed (lower increases hunting difficulty), kill zone radius and view distance.
+
+![Avg cooperation rate](.github/coop.png)
+
+![Avg cooperation rate](.github/coop2.png)
+
+For more details check out the paper! TODO: Link it here.
 
 ## Citing
 
