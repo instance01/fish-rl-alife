@@ -20,7 +20,6 @@ Using PPO.
 |evaluators/|Evaluator scripts for each figure.|
 |guide/|Contains a small guide to the environment.|
 |models/|Trained models are saved here.|
-|paper/|Configuration (json) handling|
 |pickles/|Data created by evaluators.|
 |plots/|Plots for the collected data.|
 |profiles/|cProfile files used when I sped up the pipeline by using Cython.|
@@ -29,7 +28,6 @@ Using PPO.
 |config.pyx|Handles simulations.json. Can be executed directly to get all keys in simulations.json.|
 |custom\_logger.pyx|Logging KPIs to Tensorboard.|
 |main.py|Entry point.|
-|main\_ddpg.py|Out of date!|
 |network\_models.py|MLP (norm/batchnorm) neural network models for baselines PPO.|
 |pipeline.py|End to end training and evaluation of experiments from simulations.json. The meat of the project.|
 |run\_profile.py|For running cProfile.|
