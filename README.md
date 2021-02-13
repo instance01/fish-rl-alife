@@ -99,3 +99,7 @@ To cite this repository in publications:
   howpublished = {\url{https://github.com/instance01/fish-rl-alife}},
 }
 ```
+
+<p align="center">
+<img height="30" src=".github/lmu2.png">
+</p>
