@@ -79,6 +79,8 @@ The paper in a short summary:
 
 For more details check out the paper! TODO: Link it here.
 
+[Here](https://www.youtube.com/user/oORnetworkOo/videos) you can find a few videos of some of the emergent behavior.
+
 ## Citing
 
 To cite this repository in publications:
