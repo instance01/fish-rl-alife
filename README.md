@@ -1,6 +1,12 @@
 
 ![Environment](.github/coop_movie_frames2.png)
 
+<p float="left">
+<img alt="3 predators cooperating" src=".github/output.gif" width="30%">
+<img alt="2 predators cooperating" src=".github/output2.gif" width="30%">
+<img alt="2 predators herding" src=".github/output3.gif" width="30%">
+</p>
+
 MARL on predator-prey aquarium environment --- can sharks learn to cooperate? Or is the tragedy of the commons unavoidable?
 
 Using PPO.
