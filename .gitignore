@@ -1,21 +1,3 @@
-env/__pycache__/
-
-agents/__pycache__/
-
-projekt_parser/__pycache__/
-
-venv/
-
-.idea/
-
-.idea/workspace.xml
-
-/home/felix/PycharmProjects/fish-environment-master/.idea
-
-presentation/
-
-framework/__pycache__/
-
 guide/guide.bbl
 guide/guide.blg
 guide/guide.log
@@ -43,3 +25,4 @@ runs_tars/
 ../aquarium_experiments.egg-info/
 old/
 paper/
+*.egg-info
