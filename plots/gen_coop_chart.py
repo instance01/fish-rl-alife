@@ -55,7 +55,7 @@ def _prep(data, prefix='i10'):
 
 
 base_path = '../pickles/'
-stuns = False
+stuns = True
 if stuns:
     with open(base_path + 'i10_stun_coop.pickle', 'rb') as f:
         i10_data, i10_label_data = _prep(pickle.load(f))
@@ -76,7 +76,7 @@ def plot(data, label_data):
     y_labels = ['4', '6', '10']
     x_labels = ['.03', '.035', '.04', '.05']
 
-    cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
+    cmap_mod = truncate_colormap('Greens', minval=.4, maxval=.99)
     fig, ax = plt.subplots(1, 1, figsize=(3.5, 2.0), constrained_layout=True)
     im = ax.imshow(data, cmap=cmap_mod, vmin=0.0, vmax=1.0)
 
@@ -109,7 +109,7 @@ def plot_both():
     y_labels = ['4', '6', '10']
     x_labels = ['.03', '.035', '.04', '.05']
 
-    cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
+    cmap_mod = truncate_colormap('Greens', minval=.4, maxval=.99)
     fig, (ax, ax2) = plt.subplots(1, 2, figsize=(6, 2.0), constrained_layout=True)
     im = ax.imshow(i10_data, cmap=cmap_mod)
     im2 = ax2.imshow(i5_data, cmap=cmap_mod)

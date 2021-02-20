@@ -133,7 +133,7 @@ def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3,
     y_labels = ['4', '6', '10']
     x_labels = ['.03', '.04', '.05']
 
-    cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
+    cmap_mod = truncate_colormap('Greens', minval=.5, maxval=.99)
 
     data = [i5_data4, i5_data, i5_data2, i5_data3]
     label_data = [i5_label_data4, i5_label_data, i5_label_data2, i5_label_data3]

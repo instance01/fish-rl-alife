@@ -87,7 +87,7 @@ def doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_da
     y_labels = ['4', '6', '10']
     x_labels = ['.03', '.035', '.04', '.05']
 
-    cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
+    cmap_mod = truncate_colormap('Greens', minval=.4, maxval=.99)
     # fig, (ax, ax2, ax3, ax4, ax5) = plt.subplots(1, 5, figsize=(14.5, 2.0), constrained_layout=True)
     fig, (ax, ax3) = plt.subplots(1, 2, figsize=(14.5, 2.0), constrained_layout=True)
     im = ax.imshow(i5_data, cmap=cmap_mod, vmin=0, vmax=1)
@@ -151,7 +151,7 @@ def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2):
     y_labels = ['4', '6', '10']
     x_labels = ['.03', '.035', '.04', '.05']
 
-    cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
+    cmap_mod = truncate_colormap('Greens', minval=.4, maxval=.99)
 
     data = [i5_data, i5_data2]
     label_data = [i5_label_data, i5_label_data2]

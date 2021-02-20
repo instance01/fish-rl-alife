@@ -98,7 +98,7 @@ def doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_da
     y_labels = ['4', '6', '10']
     x_labels = ['.03', '.035', '.04', '.05']
 
-    cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
+    cmap_mod = truncate_colormap('Greens', minval=.4, maxval=.99)
     fig, (ax, ax2, ax3, ax4, ax5) = plt.subplots(1, 5, figsize=(14.5, 2.0), constrained_layout=True)
     im = ax.imshow(i5_data, cmap=cmap_mod, vmin=0, vmax=1)
     im2 = ax2.imshow(i5_data2, cmap=cmap_mod, vmin=0, vmax=1)
@@ -160,14 +160,17 @@ def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3,
     y_labels = ['4', '6', '10']
     x_labels = ['.03', '.035', '.04', '.05']
 
-    cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
+    cmap_mod = truncate_colormap('Greens', minval=.4, maxval=.99)
 
     data = [i5_data3]
     label_data = [i5_label_data3]
 
     for m in range(4):
-        d = data[m]
-        ld = label_data[m]
+        m = 2  # TODO: lol. This is used for the independent learning chart.
+        # d = data[m]
+        # ld = label_data[m]
+        d = data[0]
+        ld = label_data[0]
         if m > 1:
             fig, ax = plt.subplots(1, 1, figsize=(4.0, 2.0), constrained_layout=True)
         else:
@@ -195,6 +198,8 @@ def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3,
         print(id_ + "_coop_net3_" + str(m) + ".pdf")
         fig.savefig(id_ + "_coop_net3_" + str(m) + ".pdf", bbox_inches='tight')
         plt.show()
+
+        break
 
 
 print('DOING i5')
