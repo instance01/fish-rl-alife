@@ -23,7 +23,7 @@ print(len(a))
 
 fig = plt.figure(figsize=(4, 3))
 plt.plot(a, linewidth=.8, c='#ffffff')
-plt.ylabel('Fish population at the end of an episode')
+plt.ylabel('Prey population at the end of an episode')
 plt.xlabel('Steps in million')
 plt.xticks([0, 2000, 4000, 6000, 8000, 10000, 12000, 13980], ['0', '3', '6', '9', '12', '15', '18', '21'])
 plt.axvspan(0, 2000, facecolor='#00622c', alpha=1.0)

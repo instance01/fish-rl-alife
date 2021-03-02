@@ -50,9 +50,9 @@ def func(x, a, b, c, d, e):
 # Three plots.
 fig, axs = plt.subplots(1, 3, figsize=(9, 3), sharey=True)
 
-axs[0].set_title('10 initial fishes')
+axs[0].set_title('10 initial prey')
 axs[0].set_ylabel('Herding Rate')
-axs[0].set_xlabel('Initial shark survival time t * 100')
+axs[0].set_xlabel('Initial predator survival time t * 100')
 x = [str(int(x[1:]) // 100) for x in i10_p150[0]]
 y = [x[0] for x in i10_p150[1]]
 axs[0].bar(x, y, color='#009440')
@@ -62,9 +62,9 @@ y_fit = func(x, *fittedParameters)
 axs[0].plot(x, y_fit, 'k:')
 
 
-axs[1].set_title('5 initial fishes')
+axs[1].set_title('5 initial prey')
 # axs[1].set_ylabel('Herding Rate')
-axs[1].set_xlabel('Initial shark survival time t * 100')
+axs[1].set_xlabel('Initial predator survival time t * 100')
 x = [str(int(x[1:]) // 100) for x in i5_p150[0]]
 y = [x[0] for x in i5_p150[1]]
 axs[1].bar(x, y, color='#009440')
@@ -73,9 +73,9 @@ fittedParameters, pcov = curve_fit(func, x, y)
 y_fit = func(x, *fittedParameters)
 axs[1].plot(x, y_fit, 'k:')
 
-axs[2].set_title('2 initial fishes')
+axs[2].set_title('2 initial prey')
 # axs[2].set_ylabel('Herding Rate')
-axs[2].set_xlabel('Initial shark survival time t * 100')
+axs[2].set_xlabel('Initial predator survival time t * 100')
 x = [str(int(x[1:]) // 100) for x in i2_p150[0]]
 y = [x[0] for x in i2_p150[1]]
 axs[2].bar(x, y, color='#009440')

@@ -133,12 +133,12 @@ def doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_da
     ax5.set_yticks(np.arange(len(y_labels)))
     ax5.set_xticklabels(x_labels)
     ax5.set_yticklabels(y_labels)
-    ax.set_ylabel('Killzone Radius', rotation=90, va="bottom")
-    ax.set_xlabel('Shark speed', rotation=0, va="top")
-    ax2.set_xlabel('Shark speed', rotation=0, va="top")
-    ax3.set_xlabel('Shark speed', rotation=0, va="top")
-    ax4.set_xlabel('Shark speed', rotation=0, va="top")
-    ax5.set_xlabel('Shark speed', rotation=0, va="top")
+    ax.set_ylabel('Shared Catch Zone Radius', rotation=90, va="bottom", fontsize=9)
+    ax.set_xlabel('Predator Speed', rotation=0, va="top", fontsize=9)
+    ax2.set_xlabel('Predator Speed', rotation=0, va="top", fontsize=9)
+    ax3.set_xlabel('Predator Speed', rotation=0, va="top", fontsize=9)
+    ax4.set_xlabel('Predator Speed', rotation=0, va="top", fontsize=9)
+    ax5.set_xlabel('Predator Speed', rotation=0, va="top", fontsize=9)
 
     # Text annotations
     for i in range(len(y_labels)):
@@ -179,7 +179,7 @@ def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3,
 
         # Colorbar
         if m > 1:
-            cbar = ax.figure.colorbar(im, ax=[ax], aspect=20)
+            cbar = ax.figure.colorbar(im, ax=[ax], aspect=25)
             cbar.ax.set_ylabel('Avg Cooperation Rate', rotation=-90, va="bottom")
 
         # Ticks and labels
@@ -187,8 +187,8 @@ def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3,
         ax.set_yticks(np.arange(len(y_labels)))
         ax.set_xticklabels(x_labels)
         ax.set_yticklabels(y_labels)
-        ax.set_ylabel('Killzone Radius', rotation=90, va="bottom")
-        ax.set_xlabel('Shark speed', rotation=0, va="top")
+        ax.set_ylabel('Shared Catch Zone Radius', rotation=90, va="bottom", fontsize=9)
+        ax.set_xlabel('Predator Speed', rotation=0, va="top", fontsize=9)
 
         # Text annotations
         for i in range(len(y_labels)):

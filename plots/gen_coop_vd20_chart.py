@@ -56,15 +56,15 @@ def _prep(data, prefix='i10'):
 
 base_path = '../pickles/'
 # with open(base_path + 'vd20_fast_coop.pickle', 'rb') as f:
-id_ = 'vd35'
-# with open(base_path + 'vd20_coop.pickle', 'rb') as f:
-#     i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
+id_ = 'vd20'
+with open(base_path + 'vd20_coop.pickle', 'rb') as f:
+    i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
 # with open(base_path + 'vd25_coop.pickle', 'rb') as f:
 #     i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
 # with open(base_path + 'vd30_coop.pickle', 'rb') as f:
 #     i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
-with open(base_path + 'vd35_coop.pickle', 'rb') as f:
-    i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
+# with open(base_path + 'vd35_coop.pickle', 'rb') as f:
+#     i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
 
 
 print(i5_data)
@@ -79,16 +79,16 @@ def plot(data, label_data):
     im = ax.imshow(data, cmap=cmap_mod, vmin=0.0, vmax=1.0)
 
     # Colorbar
-    cbar = ax.figure.colorbar(im, ax=ax)
-    cbar.ax.set_ylabel('Avg Cooperation Rate', rotation=-90, va="bottom")
+    # cbar = ax.figure.colorbar(im, ax=ax)
+    # cbar.ax.set_ylabel('Avg Cooperation Rate', rotation=-90, va="bottom")
 
     # Ticks and labels
     ax.set_xticks(np.arange(len(x_labels)))
     ax.set_yticks(np.arange(len(y_labels)))
     ax.set_xticklabels(x_labels)
     ax.set_yticklabels(y_labels)
-    ax.set_ylabel('Killzone Radius', rotation=90, va="bottom")
-    ax.set_xlabel('Shark speed', rotation=0, va="top")
+    ax.set_ylabel('Shared Catch Zone Radius', rotation=90, va="bottom", fontsize=9)
+    ax.set_xlabel('Predator Speed', rotation=0, va="top", fontsize=9)
 
     # Text annotations
     for i in range(len(y_labels)):
@@ -125,9 +125,9 @@ def plot_both():
     ax2.set_yticks(np.arange(len(y_labels)))
     ax2.set_xticklabels(x_labels)
     ax2.set_yticklabels(y_labels)
-    ax.set_ylabel('Killzone Radius', rotation=90, va="bottom")
-    ax.set_xlabel('Shark speed', rotation=0, va="top")
-    ax2.set_xlabel('Shark speed', rotation=0, va="top")
+    ax.set_ylabel('Shared Catch Zone Radius', rotation=90, va="bottom")
+    ax.set_xlabel('Predator Speed', rotation=0, va="top")
+    ax2.set_xlabel('Predator Speed', rotation=0, va="top")
 
     # Text annotations
     for i in range(len(y_labels)):
