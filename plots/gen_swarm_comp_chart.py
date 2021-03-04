@@ -3,9 +3,9 @@ import os
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
-from matplotlib.patches import Circle
-from matplotlib.offsetbox import (TextArea, DrawingArea, OffsetImage,
-                                  AnnotationBbox)
+from matplotlib.offsetbox import (
+    OffsetImage, AnnotationBbox
+)
 from matplotlib.cbook import get_sample_data
 
 
@@ -14,9 +14,9 @@ plt.rc('font', family='Raleway')
 
 
 def bar_plot(
-        ax, data, err_data, data2, err_data2, colors=None, total_width=0.8,
-        single_width=1, legend=True
-    ):
+            ax, data, err_data, data2, err_data2, colors=None, total_width=0.8,
+            single_width=1, legend=True
+        ):
     """Draws a bar plot with multiple bars per data point.
 
     Parameters
@@ -93,7 +93,7 @@ def bar_plot(
         ax.legend(bars, data.keys())
 
 
-def plot(data, err_data, data2, err_data2, xxx=22):
+def plot(data, err_data, data2, err_data2, xxx=30):
     scenarios = ['static-wait', 'DQN Stage II', 'PPO']
     # fig, ax = plt.subplots(figsize=(4, 3.5))
     fig, ax = plt.subplots(figsize=(3.2, 4))
@@ -110,6 +110,46 @@ def plot(data, err_data, data2, err_data2, xxx=22):
         total_width=.5,
         single_width=.9
     )
+
+    fn = get_sample_data(os.getcwd() + "/fishpop.png", asfileobj=False)
+    arr_img = plt.imread(fn, format='png')
+    imagebox = OffsetImage(arr_img, zoom=0.07)
+    imagebox.image.axes = ax
+    xy = [0.75, xxx]
+    ab = AnnotationBbox(imagebox, xy,
+                        xybox=(-45., 35.),
+                        xycoords='data',
+                        boxcoords="offset points",
+                        pad=0.1,
+                        arrowprops=dict(
+                            arrowstyle="-|>,head_length=.2,head_width=.1",
+                            facecolor="w"
+                            # connectionstyle="angle,angleA=0,angleB=90,rad=3")
+                        ),
+                        bboxprops=dict(
+                            linewidth=0.0
+                        ))
+    ax.add_artist(ab)
+
+    fn = get_sample_data(os.getcwd() + "/deadfish.png", asfileobj=False)
+    arr_img = plt.imread(fn, format='png')
+    imagebox = OffsetImage(arr_img, zoom=0.015)
+    imagebox.image.axes = ax
+    xy = [0.75, 10]
+    ab = AnnotationBbox(imagebox, xy,
+                        xybox=(-45., 50.),
+                        xycoords='data',
+                        boxcoords="offset points",
+                        pad=0.1,
+                        arrowprops=dict(
+                            arrowstyle="-|>,head_length=.2,head_width=.1",
+                            facecolor="w"
+                            # connectionstyle="angle,angleA=0,angleB=90,rad=3")
+                        ),
+                        bboxprops=dict(
+                            linewidth=0.0
+                        ))
+    ax.add_artist(ab)
 
     plt.xticks([0, 1, 2], scenarios)
     plt.xlabel('Algorithm')
@@ -138,5 +178,5 @@ if __name__ == "__main__":
         "Swarm": [0.120000, 0.196203, 0.210000],
         "TurnAway": [0.070000, 0.252410, 0.060000]
     }
-    fig = plot(data, err_data, data2, err_data2, xxx=20)
+    fig = plot(data, err_data, data2, err_data2, xxx=21)
     fig.savefig("swarmcomp.pdf", bbox_inches='tight')
