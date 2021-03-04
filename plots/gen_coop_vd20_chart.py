@@ -54,23 +54,7 @@ def _prep(data, prefix='i10'):
     return data, label_data
 
 
-base_path = '../pickles/'
-# with open(base_path + 'vd20_fast_coop.pickle', 'rb') as f:
-id_ = 'vd20'
-with open(base_path + 'vd20_coop.pickle', 'rb') as f:
-    i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
-# with open(base_path + 'vd25_coop.pickle', 'rb') as f:
-#     i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
-# with open(base_path + 'vd30_coop.pickle', 'rb') as f:
-#     i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
-# with open(base_path + 'vd35_coop.pickle', 'rb') as f:
-#     i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
-
-
-print(i5_data)
-
-
-def plot(data, label_data):
+def plot(data, label_data, do_cbar=False):
     y_labels = ['4', '6', '10']
     x_labels = ['.03', '.035', '.04', '.05']
 
@@ -79,8 +63,9 @@ def plot(data, label_data):
     im = ax.imshow(data, cmap=cmap_mod, vmin=0.0, vmax=1.0)
 
     # Colorbar
-    # cbar = ax.figure.colorbar(im, ax=ax)
-    # cbar.ax.set_ylabel('Avg Cooperation Rate', rotation=-90, va="bottom")
+    if do_cbar:
+        cbar = ax.figure.colorbar(im, ax=ax)
+        cbar.ax.set_ylabel('Avg Cooperation Ratio', rotation=-90, va="bottom")
 
     # Ticks and labels
     ax.set_xticks(np.arange(len(x_labels)))
@@ -114,7 +99,7 @@ def plot_both():
 
     # Colorbar
     cbar = ax.figure.colorbar(im, ax=[ax, ax2])
-    cbar.ax.set_ylabel('Avg Cooperation Rate', rotation=-90, va="bottom")
+    cbar.ax.set_ylabel('Avg Cooperation Ratio', rotation=-90, va="bottom")
 
     # Ticks and labels
     ax.set_xticks(np.arange(len(x_labels)))
@@ -141,5 +126,23 @@ def plot_both():
     return fig
 
 
+base_path = '../pickles/'
+# with open(base_path + 'vd20_fast_coop.pickle', 'rb') as f:
+
+# vd20
+id_ = 'vd20'
+with open(base_path + id_ + '_coop.pickle', 'rb') as f:
+    i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
+
+print(i5_data)
 fig = plot(i5_data, i5_label_data)
+fig.savefig("i5_coop_%s_stuns.pdf" % id_, bbox_inches='tight')
+
+# vd30
+id_ = 'vd30'
+with open(base_path + id_ + '_coop.pickle', 'rb') as f:
+    i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
+
+print(i5_data)
+fig = plot(i5_data, i5_label_data, do_cbar=True)
 fig.savefig("i5_coop_%s_stuns.pdf" % id_, bbox_inches='tight')

@@ -108,9 +108,9 @@ def doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_da
 
     # Colorbar
     cbar = ax.figure.colorbar(im, ax=[ax, ax2, ax3, ax4, ax5], aspect=60)
-    cbar.ax.set_ylabel('Avg Cooperation Rate', rotation=-90, va="bottom")
+    cbar.ax.set_ylabel('Avg Cooperation Ratio', rotation=-90, va="bottom")
     if failure:
-        cbar.ax.set_ylabel('Avg Failure Rate', rotation=-90, va="bottom")
+        cbar.ax.set_ylabel('Avg Failure Ratio', rotation=-90, va="bottom")
 
     # Ticks and labels
     ax.set_xticks(np.arange(len(x_labels)))
@@ -180,7 +180,7 @@ def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3,
         # Colorbar
         if m > 1:
             cbar = ax.figure.colorbar(im, ax=[ax], aspect=25)
-            cbar.ax.set_ylabel('Avg Cooperation Rate', rotation=-90, va="bottom")
+            cbar.ax.set_ylabel('Avg Cooperation Ratio', rotation=-90, va="bottom")
 
         # Ticks and labels
         ax.set_xticks(np.arange(len(x_labels)))

@@ -54,25 +54,7 @@ def _prep(data, prefix='i10'):
     return data, label_data
 
 
-base_path = '../pickles/'
-stuns = False
-if stuns:
-    with open(base_path + 'i10_stun_coop.pickle', 'rb') as f:
-        i10_data, i10_label_data = _prep(pickle.load(f))
-    with open(base_path + 'i5_stun_coop.pickle', 'rb') as f:
-        i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
-else:
-    with open(base_path + 'i10_coop.pickle', 'rb') as f:
-        i10_data, i10_label_data = _prep(pickle.load(f))
-    with open(base_path + 'i5_coop.pickle', 'rb') as f:
-        i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
-
-
-print(i10_data)
-print(i5_data)
-
-
-def plot(data, label_data):
+def plot(data, label_data, do_cbar=False):
     y_labels = ['4', '6', '10']
     x_labels = ['.03', '.035', '.04', '.05']
 
@@ -81,8 +63,9 @@ def plot(data, label_data):
     im = ax.imshow(data, cmap=cmap_mod, vmin=0.0, vmax=1.0)
 
     # Colorbar
-    # cbar = ax.figure.colorbar(im, ax=ax)
-    # cbar.ax.set_ylabel('Avg Cooperation Rate', rotation=-90, va="bottom")
+    if do_cbar:
+        cbar = ax.figure.colorbar(im, ax=ax)
+        cbar.ax.set_ylabel('Avg Cooperation Ratio', rotation=-90, va="bottom")
 
     # Ticks and labels
     ax.set_xticks(np.arange(len(x_labels)))
@@ -116,7 +99,7 @@ def plot_both():
 
     # Colorbar
     cbar = ax.figure.colorbar(im, ax=[ax, ax2])
-    cbar.ax.set_ylabel('Avg Cooperation Rate', rotation=-90, va="bottom")
+    cbar.ax.set_ylabel('Avg Cooperation Ratio', rotation=-90, va="bottom")
 
     # Ticks and labels
     ax.set_xticks(np.arange(len(x_labels)))
@@ -143,13 +126,26 @@ def plot_both():
     return fig
 
 
+base_path = '../pickles/'
+
+# With stuns
+with open(base_path + 'i10_stun_coop.pickle', 'rb') as f:
+    i10_data, i10_label_data = _prep(pickle.load(f))
+with open(base_path + 'i5_stun_coop.pickle', 'rb') as f:
+    i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
+
 fig = plot(i5_data, i5_label_data)
-if stuns:
-    fig.savefig("i5_coop_stuns.pdf", bbox_inches='tight')
-else:
-    fig.savefig("i5_coop.pdf", bbox_inches='tight')
+fig.savefig("i5_coop_stuns.pdf", bbox_inches='tight')
+fig = plot(i10_data, i10_label_data, do_cbar=True)
+fig.savefig("i10_coop_stuns.pdf", bbox_inches='tight')
+
+# Without stuns
+with open(base_path + 'i10_coop.pickle', 'rb') as f:
+    i10_data, i10_label_data = _prep(pickle.load(f))
+with open(base_path + 'i5_coop.pickle', 'rb') as f:
+    i5_data, i5_label_data = _prep(pickle.load(f), prefix='i5')
+
+fig = plot(i5_data, i5_label_data)
+fig.savefig("i5_coop.pdf", bbox_inches='tight')
 fig = plot(i10_data, i10_label_data)
-if stuns:
-    fig.savefig("i10_coop_stuns.pdf", bbox_inches='tight')
-else:
-    fig.savefig("i10_coop.pdf", bbox_inches='tight')
+fig.savefig("i10_coop.pdf", bbox_inches='tight')

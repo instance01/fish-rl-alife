@@ -108,7 +108,7 @@ def plot(data, err_data, data2, err_data2, xxx=30):
         # total_width=.6,
         # single_width=.9
         total_width=.5,
-        single_width=.9
+        single_width=.8
     )
 
     fn = get_sample_data(os.getcwd() + "/fishpop.png", asfileobj=False)
