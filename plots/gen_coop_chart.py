@@ -65,7 +65,7 @@ def plot(data, label_data, do_cbar=False):
     # Colorbar
     if do_cbar:
         cbar = ax.figure.colorbar(im, ax=ax)
-        cbar.ax.set_ylabel('Avg Cooperation Ratio', rotation=-90, va="bottom")
+        cbar.ax.set_ylabel(r'Avg Cooperation Ratio $\kappa$', rotation=-90, va="bottom")
 
     # Ticks and labels
     ax.set_xticks(np.arange(len(x_labels)))

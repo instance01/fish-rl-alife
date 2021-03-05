@@ -122,7 +122,7 @@ def plot_both():
 
     # Colorbar
     cbar = ax.figure.colorbar(im, ax=[ax, ax2])
-    cbar.ax.set_ylabel('Avg Coop Ratio', rotation=-90, va="bottom")
+    cbar.ax.set_ylabel(r'Avg Coop Ratio $\phi$', rotation=-90, va="bottom")
 
     # Ticks and labels
     ax.set_xticks(np.arange(len(x_labels)))

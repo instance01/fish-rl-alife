@@ -153,7 +153,7 @@ def plot(data, err_data, data2, err_data2, xxx=30):
 
     plt.xticks([0, 1, 2], scenarios)
     plt.xlabel('Algorithm')
-    plt.ylabel('Sustainability')
+    plt.ylabel(r'Sustainability $\sigma$')
     plt.xlim(-0.5, 2.5)
     plt.tight_layout()
     plt.show()

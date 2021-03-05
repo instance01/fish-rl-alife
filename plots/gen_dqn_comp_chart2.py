@@ -149,7 +149,7 @@ def plot(data, err_data, data2, err_data2, xxx=22):
 
     plt.xticks([0, 1, 2], scenarios)
     plt.xlabel('Time until reproduction possible')
-    plt.ylabel('Sustainability')
+    plt.ylabel(r'Sustainability $\sigma$')
     plt.xlim(-0.5, 2.5)
     plt.tight_layout()
     plt.show()
