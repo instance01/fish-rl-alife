@@ -1,7 +1,5 @@
 import os
-import sys
 import glob
-from collections import defaultdict
 
 import numpy as np
 import tensorflow as tf
@@ -45,8 +43,6 @@ def aggregate_multi(paths_d100, paths_d300, paths_d500, paths_d700):
     plt.ylim((1, 7))
     plt.show()
 
-    return arr
-
 
 def aggregate(paths):
     aggregated = []
@@ -89,19 +85,12 @@ def aggregate(paths):
 
 
 def run():
-    use_percentile = True
-    pad_to_constant = True
-    pad_constant = 14000
-
-    paths_d100 = glob.glob('runs/*d100*')
-    paths_d300 = glob.glob('runs/*d300*')
-    paths_d500 = glob.glob('runs/*d500*')
-    paths_d700 = glob.glob('runs/*d700*')
+    paths_d100 = glob.glob('../runs/*d100*')
+    paths_d300 = glob.glob('../runs/*d300*')
+    paths_d500 = glob.glob('../runs/*d500*')
+    paths_d700 = glob.glob('../runs/*d700*')
 
     aggregate_multi(paths_d100, paths_d300, paths_d500, paths_d700)
-
-    # if len(sys.argv) > 1:
-    #     data = aggregate(sys.argv[1:])
 
 
 if __name__ == '__main__':
