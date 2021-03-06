@@ -14,7 +14,7 @@ Multi-agent reinforcement learning on predator-prey aquarium environment - can s
 
 Greedy agents in sustainable ecosystems need to refrain from over-exploitation. But are they even able to learn just from environmental influences (i.e. the response of the environment to over-exploitation) and not through reward shaping?
 
-The environment this is analysed with contains a set of sharks as predators and fishes as prey. Sharks are controlled by a continuos set of actions that control speed and angle. Killing a fish gives a reward of 10. The observation only contains the nearest few fishes/sharks. Thus, this is a POMDP.
+The environment this is analysed with contains a set of sharks as predators and fishes as prey. Sharks are controlled by a continuous set of actions that control speed and angle. Killing a fish gives a reward of 10. The observation only contains the nearest few fishes/sharks. Thus, this is a POMDP.
 
 Previous work analyses a single-agent scenario using a DQN. We find that PPO performs much better, which enables emergent behavior such as cooperation or herding. We end up adding multiple features to the environment (multiple predators, starvation, stunning, no walls, varying difficulty of hunting in terms of view distance and maximum speed).
 
