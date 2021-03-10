@@ -20,7 +20,6 @@ def load(id_, cfg_id, return_dict):
         if two_net:
             id__ = '../' + base_path + "/%s-*-F-m1"
         res.extend(list(glob.glob(id__ % cfg_id)))
-    # print(res)
     counter_coop = 0.
     counter_fail = 0.
     counter_greedy = 0.
@@ -39,19 +38,13 @@ def load(id_, cfg_id, return_dict):
             if fish_pop_hist[-1] >= 10:
                 counter_fail += 1
 
-            # TODO: For i2 !
-            # if fish_pop_hist[-1] > 0 and exp.env.dead_fishes > 0:
-            #     counter_coop += 1
-            # print(exp.env.dead_fishes)
-
         total = counter_coop + counter_greedy + counter_fail
-        print('c:%d' %counter_coop, 'f:%d' % counter_fail, 'g:%d' % counter_greedy, 't:%d' % total)
+        print('c:%d' % counter_coop, 'f:%d' % counter_fail, 'g:%d' % counter_greedy, 't:%d' % total)
 
     print('coop', counter_coop / total)
     print('greedy', counter_greedy / total)
     print('fail', counter_fail / total)
     return_dict[id_] = (counter_coop / total, total)
-    # return id_, (counter_coop / total, total)
 
 
 def main(id_):

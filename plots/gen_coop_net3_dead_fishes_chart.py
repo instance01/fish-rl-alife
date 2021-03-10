@@ -153,7 +153,7 @@ def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3,
         # Colorbar
         if m > 0:
             cbar = ax.figure.colorbar(im, ax=[ax], aspect=20)
-            cbar.ax.set_ylabel('Avg number of kills', rotation=-90, va="bottom")
+            cbar.ax.set_ylabel('Avg number of catches', rotation=-90, va="bottom")
 
         # Ticks and labels
         ax.set_xticks(np.arange(len(x_labels)))
