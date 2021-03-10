@@ -591,6 +591,8 @@ class Experiment:
         self.env.model1 = self.load(model_filename + '-m1')
         self.env.model2 = self.load(model_filename + '-m2')
         self.evaluate(self.env.model1, 0)
+        rewards = self.evaluate(self.env.model1, 0)
+        return self.env.fish_population_counter, rewards
 
     def _load_eval_n_nets(self, model_filename):
         for i in range(self.n_models):
@@ -598,6 +600,8 @@ class Experiment:
             id_ = 'm' + j
             self.env.models[id_] = self.load(model_filename + '-' + id_)
         self.evaluate(self.env.models['m1'], 0)
+        rewards = self.evaluate(self.env.model1, 0)
+        return self.env.fish_population_counter, rewards
 
     def evaluate(self, model, n_episode):
         """Run an evaluation game."""
