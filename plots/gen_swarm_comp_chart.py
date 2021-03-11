@@ -8,9 +8,49 @@ from matplotlib.offsetbox import (
 )
 from matplotlib.cbook import get_sample_data
 
+from matplotlib.image import BboxImage
+from matplotlib.transforms import TransformedBbox
+from matplotlib.transforms import Bbox
+from matplotlib.legend_handler import HandlerBase
+
+import matplotlib.patches as mpatches
+
 
 mpl.font_manager._rebuild()
 plt.rc('font', family='Raleway')
+
+
+class ImageHandler(HandlerBase):
+    def create_artists(self, legend, orig_handle,
+                       xdescent, ydescent, width, height, fontsize,
+                       trans):
+
+        # enlarge the image by these margins
+        sx, sy = self.image_stretch
+
+        if self.special:
+            ydescent += 5
+            xdescent += 2
+        xdescent -= 2
+        # create a bounding box to house the image
+        bb = Bbox.from_bounds(xdescent - sx,
+                              ydescent - sy,
+                              width + sx,
+                              height + sy)
+
+        tbb = TransformedBbox(bb, trans)
+        image = BboxImage(tbb)
+        image.set_data(self.image_data)
+
+        self.update_prop(image, orig_handle, legend)
+
+        return [image]
+
+    def set_image(self, image_path, image_stretch=(0, 0), special=False):
+        fn = get_sample_data(image_path, asfileobj=False)
+        self.image_data = plt.imread(fn, format='png')
+        self.image_stretch = image_stretch
+        self.special = special
 
 
 def bar_plot(
@@ -89,15 +129,16 @@ def bar_plot(
         bars.append(bar[0])
 
     # Draw legend if we need
-    if legend:
-        ax.legend(bars, data.keys())
+    # if legend:
+    #     ax.legend(bars, data.keys())
+    return bars, data.keys()
 
 
 def plot(data, err_data, data2, err_data2, xxx=30):
     scenarios = ['static-wait', 'DQN Stage II', 'PPO']
     # fig, ax = plt.subplots(figsize=(4, 3.5))
     fig, ax = plt.subplots(figsize=(3.2, 4))
-    bar_plot(
+    bars, data_keys = bar_plot(
         ax,
         data,
         err_data,
@@ -117,7 +158,7 @@ def plot(data, err_data, data2, err_data2, xxx=30):
     imagebox.image.axes = ax
     xy = [0.75, xxx]
     ab = AnnotationBbox(imagebox, xy,
-                        xybox=(-45., 35.),
+                        xybox=(-45., 20.),
                         xycoords='data',
                         boxcoords="offset points",
                         pad=0.1,
@@ -137,7 +178,7 @@ def plot(data, err_data, data2, err_data2, xxx=30):
     imagebox.image.axes = ax
     xy = [0.75, 10]
     ab = AnnotationBbox(imagebox, xy,
-                        xybox=(-45., 50.),
+                        xybox=(-45., 40.),
                         xycoords='data',
                         boxcoords="offset points",
                         pad=0.1,
@@ -150,6 +191,14 @@ def plot(data, err_data, data2, err_data2, xxx=30):
                             linewidth=0.0
                         ))
     ax.add_artist(ab)
+
+    custom_handler1 = ImageHandler()
+    custom_handler1.set_image(os.getcwd() + "/deadfish.png", image_stretch=(-6, -1))
+    custom_handler2 = ImageHandler()
+    custom_handler2.set_image(os.getcwd() + "/fishpop.png", image_stretch=(-2, 11), special=True)
+    p1 = mpatches.Patch()
+    p2 = mpatches.Patch()
+    ax.legend([*bars, p1, p2], [*data_keys, 'Prey caught', 'Left-over prey'], handler_map={p1: custom_handler1, p2: custom_handler2})
 
     plt.xticks([0, 1, 2], scenarios)
     plt.xlabel('Algorithm')
