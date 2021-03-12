@@ -29,7 +29,7 @@ class ImageHandler(HandlerBase):
         sx, sy = self.image_stretch
 
         if self.special:
-            ydescent += 5
+            ydescent += 6
             xdescent += 2
         xdescent -= 2
         # create a bounding box to house the image
