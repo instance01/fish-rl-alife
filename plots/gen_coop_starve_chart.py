@@ -4,6 +4,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 import matplotlib as mpl
+from lib import cmap_mod
 
 
 mpl.font_manager._rebuild()
@@ -101,7 +102,7 @@ def doit(i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3, i5_label_da
     y_labels = ['4', '6', '10']
     x_labels = ['.03', '.04', '.05']
 
-    cmap_mod = truncate_colormap('Greens', minval=.4, maxval=.99)
+    # cmap_mod = truncate_colormap('Greens', minval=.4, maxval=.99)
     fig, (ax, ax2, ax3, ax4) = plt.subplots(1, 4, figsize=(8.5, 2.0), constrained_layout=True)
     im = ax.imshow(i5_data4, cmap=cmap_mod, vmin=0, vmax=1)
     im2 = ax2.imshow(i5_data, cmap=cmap_mod, vmin=0, vmax=1)
@@ -154,7 +155,7 @@ def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3,
     y_labels = ['4', '6', '10']
     x_labels = ['.03', '.04', '.05']
 
-    cmap_mod = truncate_colormap('Greens', minval=.4, maxval=.99)
+    # cmap_mod = truncate_colormap('Greens', minval=.4, maxval=.99)
 
     data = [i5_data4, i5_data, i5_data2, i5_data3]
     label_data = [i5_label_data4, i5_label_data, i5_label_data2, i5_label_data3]
@@ -176,12 +177,15 @@ def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2, i5_data3,
         ax.set_xticklabels(x_labels)
         ax.set_yticklabels(y_labels)
         ax.set_ylabel('Shared Catch Zone Radius', rotation=90, va="bottom", fontsize=9)
-        ax.set_xlabel('Predator Speed', rotation=0, va="top", fontsize=9)
+        ax.set_xlabel('Predator Speed', rotation=0, va="top", fontsize=10)
 
         # Text annotations
         for i in range(len(y_labels)):
             for j in range(len(x_labels)):
-                ax.text(j, i, ld[i][j], ha="center", va="center", color="w")
+                col = 'w'
+                if d[i][j] < .55:
+                    col = 'black'
+                ax.text(j, i, ld[i][j], ha="center", va="center", color=col)
 
         print(id_ + "_coop_starve" + str(m) + ".pdf")
         fig.savefig(id_ + "_coop_starve" + str(m) + ".pdf", bbox_inches='tight')

@@ -4,6 +4,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 import matplotlib as mpl
+from lib import cmap_mod
 
 
 mpl.font_manager._rebuild()
@@ -58,7 +59,7 @@ def plot(data, label_data, do_cbar=False):
     y_labels = ['4', '6', '10']
     x_labels = ['.03', '.035', '.04', '.05']
 
-    cmap_mod = truncate_colormap('Greens', minval=.4, maxval=.99)
+    # cmap_mod = truncate_colormap('Greens', minval=.4, maxval=.99)
     fig, ax = plt.subplots(1, 1, figsize=(3.5, 2.0), constrained_layout=True)
     im = ax.imshow(data, cmap=cmap_mod, vmin=0.0, vmax=1.0)
 
@@ -73,12 +74,15 @@ def plot(data, label_data, do_cbar=False):
     ax.set_xticklabels(x_labels)
     ax.set_yticklabels(y_labels)
     ax.set_ylabel('Shared Catch Zone Radius', rotation=90, va="bottom", fontsize=9)
-    ax.set_xlabel('Predator Speed', rotation=0, va="top", fontsize=9)
+    ax.set_xlabel('Predator Speed', rotation=0, va="top", fontsize=10)
 
     # Text annotations
     for i in range(len(y_labels)):
         for j in range(len(x_labels)):
-            ax.text(j, i, label_data[i][j], ha="center", va="center", color="w")
+            col = 'w'
+            if data[i][j] < .55:
+                col = 'black'
+            ax.text(j, i, label_data[i][j], ha="center", va="center", color=col)
 
     # ax.set_title("Fish population: 10")
     # ax2.set_title("Fish population: 5")
@@ -92,7 +96,7 @@ def plot_both():
     y_labels = ['4', '6', '10']
     x_labels = ['.03', '.035', '.04', '.05']
 
-    cmap_mod = truncate_colormap('Greens', minval=.4, maxval=.99)
+    # cmap_mod = truncate_colormap('Greens', minval=.4, maxval=.99)
     fig, (ax, ax2) = plt.subplots(1, 2, figsize=(6, 2.0), constrained_layout=True)
     im = ax.imshow(i10_data, cmap=cmap_mod)
     im2 = ax2.imshow(i5_data, cmap=cmap_mod)

@@ -4,6 +4,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 import matplotlib as mpl
+from lib import cmap_mod
 
 
 mpl.font_manager._rebuild()
@@ -151,7 +152,7 @@ def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2):
     y_labels = ['4', '6', '10']
     x_labels = ['.03', '.035', '.04', '.05']
 
-    cmap_mod = truncate_colormap('Greens', minval=.4, maxval=.99)
+    # cmap_mod = truncate_colormap('Greens', minval=.4, maxval=.99)
 
     data = [i5_data, i5_data2]
     label_data = [i5_label_data, i5_label_data2]
@@ -172,13 +173,16 @@ def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2):
         ax.set_yticks(np.arange(len(y_labels)))
         ax.set_xticklabels(x_labels)
         ax.set_yticklabels(y_labels)
-        ax.set_ylabel('Shared Catch Zone Radius', rotation=90, va="bottom", fontsize=9)
-        ax.set_xlabel('Predator Speed', rotation=0, va="top", fontsize=9)
+        ax.set_ylabel('Shared Catch Zone Radius', rotation=90, va="bottom", fontsize=10)
+        ax.set_xlabel('Predator Speed', rotation=0, va="top", fontsize=11)
 
         # Text annotations
         for i in range(len(y_labels)):
             for j in range(len(x_labels)):
-                ax.text(j, i, ld[i][j], ha="center", va="center", color="w")
+                col = 'w'
+                if d[i][j] < .55:
+                    col = 'black'
+                ax.text(j, i, ld[i][j], ha="center", va="center", color=col)
 
         print(id_ + "_coop_net3_shared" + str(m) + ".pdf")
         fig.savefig(id_ + "_coop_net3_shared" + str(m) + ".pdf", bbox_inches='tight')
