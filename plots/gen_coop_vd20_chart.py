@@ -74,8 +74,9 @@ def plot(data, label_data, do_cbar=False):
     ax.set_xticklabels(x_labels)
     ax.set_yticklabels(y_labels)
     if not do_cbar:
-        ax.set_ylabel('Shared Catch Zone Radius', rotation=90, va="bottom", fontsize=10)
-    ax.set_xlabel('Predator Speed', rotation=0, va="top", fontsize=11)
+        ax.set_ylabel('Shared Catch Zone Radius', rotation=90, va="bottom", fontsize=11, loc="bottom")
+        ax.yaxis.set_label_coords(-.14, -.22)
+    ax.set_xlabel('Predator Speed', rotation=0, va="top", fontsize=12)
 
     # Text annotations
     for i in range(len(y_labels)):

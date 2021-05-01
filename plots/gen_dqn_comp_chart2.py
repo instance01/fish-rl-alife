@@ -114,15 +114,19 @@ def bar_plot(
         err = err_data[name]
         err2 = err_data2[name]
         values2 = data2[name]
+        hatch = None
+        if 'Static' in name:
+            hatch = '//'
         for x, y in enumerate(values):
             bar = ax.bar(
                 x + x_offset, y, yerr=err[x], width=bar_width * single_width,
-                color=colors[i % len(colors)], edgecolor='black', linewidth=.3
+                color=colors[i % len(colors)], edgecolor='black', linewidth=.3,
+                hatch=hatch
             )
             bar = ax.bar(
                 x + x_offset, values2[x], yerr=err2[x], width=bar_width *
                 single_width, color=colors[i % len(colors)], edgecolor='black',
-                linewidth=.3, bottom=y+.15
+                linewidth=.3, bottom=y+.15, hatch=hatch
             )
 
         # Add a handle to the last drawn bar, which we'll need for the legend
@@ -197,8 +201,8 @@ def plot(data, err_data, data2, err_data2, xxx=22):
     ax.legend([*bars, p1, p2], [*data_keys, 'Prey caught', 'Left-over prey'], handler_map={p1: custom_handler1, p2: custom_handler2})
 
     plt.xticks([0, 1, 2], scenarios)
-    plt.xlabel('Time until reproduction possible')
-    plt.ylabel(r'Sustainability $\sigma$')
+    plt.xlabel('Time until reproduction possible', fontsize=11)
+    plt.ylabel(r'Sustainability $\sigma$', fontsize=11)
     plt.xlim(-0.5, 2.5)
     plt.tight_layout()
     plt.show()

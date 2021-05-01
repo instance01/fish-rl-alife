@@ -173,7 +173,8 @@ def doit_single(id_, i5_data, i5_label_data, i5_data2, i5_label_data2):
         ax.set_yticks(np.arange(len(y_labels)))
         ax.set_xticklabels(x_labels)
         ax.set_yticklabels(y_labels)
-        ax.set_ylabel('Shared Catch Zone Radius', rotation=90, va="bottom", fontsize=10)
+        ax.set_ylabel('Shared Catch Zone Radius', rotation=90, va="bottom", fontsize=11, loc="bottom")
+        ax.yaxis.set_label_coords(-.14, -.22)
         ax.set_xlabel('Predator Speed', rotation=0, va="top", fontsize=11)
 
         # Text annotations

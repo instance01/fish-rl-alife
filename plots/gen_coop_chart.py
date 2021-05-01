@@ -73,8 +73,9 @@ def plot(data, label_data, do_cbar=False):
     ax.set_yticks(np.arange(len(y_labels)))
     ax.set_xticklabels(x_labels)
     ax.set_yticklabels(y_labels)
-    ax.set_ylabel('Shared Catch Zone Radius', rotation=90, va="bottom", fontsize=9)
-    ax.set_xlabel('Predator Speed', rotation=0, va="top", fontsize=10)
+    ax.set_xlabel('Predator Speed', rotation=0, va="top", fontsize=11)
+    ax.set_ylabel('Shared Catch Zone Radius', rotation=90, va="bottom", fontsize=10.8, loc="bottom")
+    ax.yaxis.set_label_coords(-.14, -.26)
 
     # Text annotations
     for i in range(len(y_labels)):

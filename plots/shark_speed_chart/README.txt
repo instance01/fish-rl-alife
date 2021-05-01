@@ -3,3 +3,5 @@ Used following command:
 Data from runs2.tar.bz2.
 
 Compile with `pdflatex a.tex`.
+
+convert a.pdf -density 300 a.pdf -quality 100 a.png

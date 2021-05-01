@@ -198,11 +198,16 @@ def plot(data, err_data, data2, err_data2, xxx=30):
     custom_handler2.set_image(os.getcwd() + "/fishpop.png", image_stretch=(-2, 11), special=True)
     p1 = mpatches.Patch()
     p2 = mpatches.Patch()
-    ax.legend([*bars, p1, p2], [*data_keys, 'Prey caught', 'Left-over prey'], handler_map={p1: custom_handler1, p2: custom_handler2})
+    ax.legend(
+        [*bars, p1, p2],
+        [*data_keys, 'Prey caught', 'Left-over prey'],
+        handler_map={p1: custom_handler1, p2: custom_handler2},
+        fontsize=11
+    )
 
     plt.xticks([0, 1, 2], scenarios)
-    plt.xlabel('Algorithm')
-    plt.ylabel(r'Sustainability $\sigma$')
+    plt.xlabel('Algorithm', fontsize=12)
+    plt.ylabel(r'Sustainability $\sigma$', fontsize=12)
     plt.xlim(-0.5, 2.5)
     plt.tight_layout()
     plt.show()

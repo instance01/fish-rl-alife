@@ -37,3 +37,8 @@ cmap_mod = truncate_colormap2(cmap_mod, minval=-.2, maxval=.9)
 # cmap_mod = cmap_mod(np.arange(cmap_mod.N))
 # cmap_mod[:, -1] = .95  # np.linspace(0, 1, n)
 # cmap_mod = ListedColormap(cmap_mod)
+print(cmap_mod(179))
+cutoff = .55
+col1 = cmap_mod(179)  # #37669e
+col2 = cmap_mod(159)
+col3 = cmap_mod(199)

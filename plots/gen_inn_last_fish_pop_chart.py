@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pickle
 import matplotlib as mpl
+from lib import col1, col2, col3
 
 
 mpl.font_manager._rebuild()
@@ -23,12 +24,15 @@ print(len(a))
 
 fig = plt.figure(figsize=(4, 3))
 plt.plot(a, linewidth=.8, c='#ffffff')
-plt.ylabel('Prey population at the end of an episode')
-plt.xlabel('Steps in million')
+plt.ylabel('Prey population at the end of an episode', fontsize=10)
+plt.xlabel('Steps in million', fontsize=11)
 plt.xticks([0, 2000, 4000, 6000, 8000, 10000, 12000, 13980], ['0', '3', '6', '9', '12', '15', '18', '21'])
-plt.axvspan(0, 2000, facecolor='#00622c', alpha=1.0)
-plt.axvspan(2000, 4800, facecolor='#007a35', alpha=1.0)
-plt.axvspan(4800, 13980, facecolor='#009440', alpha=1.0)
+# plt.axvspan(0, 2000, facecolor='#00622c', alpha=1.0)
+# plt.axvspan(2000, 4800, facecolor='#007a35', alpha=1.0)
+# plt.axvspan(4800, 13980, facecolor='#009440', alpha=1.0)
+plt.axvspan(0, 2000, facecolor=col3, alpha=1.0)
+plt.axvspan(2000, 4800, facecolor=col1, alpha=1.0)
+plt.axvspan(4800, 13980, facecolor=col2, alpha=1.0)
 plt.axvline(2000, color='black', linestyle='--' , linewidth=.2)
 plt.axvline(4800, color='black', linestyle='--', linewidth=.2)
 plt.axhline(2, color='black', linestyle='--', linewidth=.5)
