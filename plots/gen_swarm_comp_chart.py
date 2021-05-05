@@ -145,7 +145,8 @@ def plot(data, err_data, data2, err_data2, xxx=30):
         data2,
         err_data2,
         # colors=['#6497b1', '#005b96', '#9FD983', '#009440'],
-        colors=['#9FD983', '#009440'],
+        # colors=['#9FD983', '#009440'],   # First draft used these colors.
+        colors=['#aaaaaa', '#666666'],
         # total_width=.6,
         # single_width=.9
         total_width=.5,
