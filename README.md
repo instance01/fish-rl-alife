@@ -97,16 +97,16 @@ For more details check out the paper! TODO: Link it here.
 
 ## Citing
 
-To cite this repository in publications:
+To cite the publication this repository is for in publications:
 
 ```
-@misc{RRP+21,
-  author = {Ratke, Daniel and Ritz, Fabian and Phan, Thomy and Belzner, Lenz and Linnhoff-Popien, Claudia},
-  title = {fish-rl-alife},
+@inproceedings{RRP+21,
+  author = {Ritz, Fabian and Ratke, Daniel and Phan, Thomy and Belzner, Lenz and Linnhoff-Popien, Claudia},
+  title = {A Sustainable Ecosystem through Emergent Cooperation in Multi-Agent Reinforcement Learning},
+  booktitle = {Artificial Life (ALIFE’21) Conference Proceedings},
   year = {2021},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished = {\url{https://github.com/instance01/fish-rl-alife}},
+  publisher = {MIT Press},
+  note={Code available at \url{https://github.com/instance01/fish-rl-alife}}
 }
 ```
 
