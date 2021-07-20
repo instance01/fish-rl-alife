@@ -103,10 +103,11 @@ To cite the publication this repository is for in publications:
 @inproceedings{RRP+21,
   author = {Ritz, Fabian and Ratke, Daniel and Phan, Thomy and Belzner, Lenz and Linnhoff-Popien, Claudia},
   title = {A Sustainable Ecosystem through Emergent Cooperation in Multi-Agent Reinforcement Learning},
-  booktitle = {Artificial Life (ALIFE’21) Conference Proceedings},
   year = {2021},
   publisher = {MIT Press},
-  note={Code available at \url{https://github.com/instance01/fish-rl-alife}}
+  booktitle = {Artificial Life (ALIFE'21) Conference Proceedings},
+  url = {https://doi.org/10.1162/isal\_a\_00399},
+  eprint = {https://direct.mit.edu/isal/proceedings-pdf/isal/33/74/1930024/isal\_a\_00399.pdf},
 }
 ```
 
