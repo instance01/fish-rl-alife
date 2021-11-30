@@ -18,7 +18,7 @@ The environment this is analysed with contains a set of sharks as predators and 
 
 Previous work analyses a single-agent scenario using a DQN. We find that PPO performs much better, which enables emergent behavior such as cooperation or herding. We end up adding multiple features to the environment (multiple predators, starvation, stunning, no walls, varying difficulty of hunting in terms of view distance and maximum speed).
 
-See the results section further below for a set of charts and results.
+See the results section further below for a set of charts and results. A paper was published in [ALIFE 2021](https://direct.mit.edu/isal/proceedings/isal/74/102891).
 
 
 ## Project Structure
@@ -97,7 +97,8 @@ For more details check out the paper! TODO: Link it here.
 
 ## Citing
 
-To cite the publication this repository is for in publications:
+The corresponding publication can be found here: [ALIFE 2021](https://direct.mit.edu/isal/proceedings/isal/74/102891)
+To cite in publications:
 
 ```
 @inproceedings{RRP+21,
