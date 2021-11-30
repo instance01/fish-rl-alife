@@ -98,6 +98,7 @@ For more details check out the paper! TODO: Link it here.
 ## Citing
 
 The corresponding publication can be found here: [ALIFE 2021](https://direct.mit.edu/isal/proceedings/isal/74/102891)
+
 To cite in publications:
 
 ```
