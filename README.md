@@ -102,14 +102,18 @@ The corresponding publication can be found here: [ALIFE 2021](https://direct.mit
 To cite in publications:
 
 ```
-@inproceedings{RRP+21,
-  author = {Ritz, Fabian and Ratke, Daniel and Phan, Thomy and Belzner, Lenz and Linnhoff-Popien, Claudia},
-  title = {A Sustainable Ecosystem through Emergent Cooperation in Multi-Agent Reinforcement Learning},
-  year = {2021},
-  publisher = {MIT Press},
-  booktitle = {Artificial Life (ALIFE'21) Conference Proceedings},
-  url = {https://doi.org/10.1162/isal\_a\_00399},
-  eprint = {https://direct.mit.edu/isal/proceedings-pdf/isal/33/74/1930024/isal\_a\_00399.pdf},
+@proceedings{RRP+21,
+    author = {Ritz, Fabian and Ratke, Daniel and Phan, Thomy and Belzner, Lenz and Linnhoff-Popien, Claudia},
+    title = "{A Sustainable Ecosystem through Emergent Cooperation in Multi-Agent Reinforcement Learning}",
+    volume = {ALIFE 2021: The 2021 Conference on Artificial Life},
+    series = {ALIFE 2021: The 2021 Conference on Artificial Life},
+    year = {2021},
+    month = {07},
+    abstract = "{This paper considers sustainable and cooperative behavior in multi-agent systems. In the proposed predator-prey simulation, multiple selfish predators can learn to act sustainably by maintaining a herd of reproducing prey and further hunt cooperatively for long term benefit. Since the predators face starvation pressure, the scenario can also turn in a tragedy of the commons if selfish individuals decide to greedily hunt down the prey population before their conspecifics do, ultimately leading to extinction of prey and predators. This paper uses Multi-Agent Reinforcement Learning to overcome a collapse of the simulated ecosystem, analyzes the impact factors over multiple dimensions and proposes suitable metrics. We show that up to three predators are able to learn sustainable behavior in form of collective herding under starvation pressure. Complex cooperation in form of group hunting emerges between the predators as their speed is handicapped and the prey is given more degrees of freedom to escape. The implementation of environment and reinforcement learning pipeline is available online.}",
+    doi = {10.1162/isal_a_00399},
+    url = {https://doi.org/10.1162/isal\_a\_00399},
+    note = {74},
+    eprint = {https://direct.mit.edu/isal/proceedings-pdf/isal/33/74/1930024/isal\_a\_00399.pdf},
 }
 ```
 
